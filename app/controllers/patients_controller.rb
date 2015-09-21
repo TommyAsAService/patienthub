@@ -1,6 +1,6 @@
 class PatientsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_patient, only:[:show, :edit, :update]
+  before_action :set_patient, only:[:show, :edit, :update, :generate_qr]
   def index
     @patients = Patient.all
   end
@@ -35,6 +35,15 @@ class PatientsController < ApplicationController
         format.html { render :edit }
       end
     end
+  end
+
+  def generate_qr
+    qrcode = RQRCode::QRCode.new(@patient.token_authentication)
+    image = qrcode.as_png
+    name = Time.now.strftime('%Y%m%d%H%M%S%L') + ".png"
+    path = Rails.root + "tmp/" + name
+    image.save(path)
+    send_file path,:type=>"application/png", :x_sendfile=>true
   end
 
   private

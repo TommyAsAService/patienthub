@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   devise_for :users
   resources :medications
   resources :patients
+  get 'patients/:id/qr_code' => "patients#generate_qr", :as => 'patient_qr_download'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

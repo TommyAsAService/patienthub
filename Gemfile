@@ -44,7 +44,10 @@ gem 'bootstrap-sass', '~> 3.3.3 '
 
 gem 'sprockets-rails'
 
+gem 'jquery-ui-rails'
 
+gem 'rqrcode'
+ 
 gem 'rails_12factor', group: :production
 
 # Use Unicorn as the app server

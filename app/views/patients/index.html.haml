@@ -9,6 +9,7 @@
       %th Patient Number
       %th
       %th
+      %th
   %tbody
     - @patients.each do |patient|
       %tr
@@ -18,7 +19,8 @@
         %td= patient.contact_number
         %td= patient.patient_number
         %td= link_to 'Show', patient, class: "btn btn-xs btn-primary"
-        %td= link_to 'Edit', edit_patient_path(patient), class: "btn btn-xs btn-default"
+        %td= link_to 'Edit', edit_patient_path(patient), class: "btn btn-xs btn-default"       
+        %td= link_to 'QR Code', patient_qr_download_path(patient), class: "btn btn-xs btn-default"
 %br
   = link_to 'New Patient', new_patient_path, class: "btn btn btn-primary"
   %br
