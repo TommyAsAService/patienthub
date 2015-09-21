@@ -17,8 +17,9 @@
         %td= link_to 'Show', medication, class: "btn btn-xs btn-primary"
         %td= link_to 'Edit', edit_medication_path(medication), class: "btn btn-xs btn-default"
 %br
-  = link_to 'New Medication', new_medication_path, class: "btn btn btn-primary"
-  %br
+  = link_to 'New Medication', new_medication_path, class: "btn btn-primary"
+%br
+  = link_to "Back", root_path, class: 'btn btn-default'
 
 = javascript_include_tag 'jquery.dataTables.min', 'data-turbolinks-track' => true
 = javascript_include_tag 'datatables.config', 'data-turbolinks-track' => true
