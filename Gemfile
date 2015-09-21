@@ -47,6 +47,8 @@ gem 'sprockets-rails'
 gem 'jquery-ui-rails'
 
 gem 'rqrcode'
+
+gem 'rails4-autocomplete'
  
 gem 'rails_12factor', group: :production
 
