@@ -1,0 +1,35 @@
+!!!
+%html
+  %head
+    %title PatientInformation
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = stylesheet_link_tag    'welcome', media: 'all', 'data-turbolinks-track' => true
+    = stylesheet_link_tag    'jquery.dataTables.min', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    .navbar.navbar.inverse.navbar-top
+      .navbar-inner
+        .container-fluid
+          .navbar-header
+            %a.navbar-brand{:href => "/"} Patient Information
+          %ul.nav.navbar-nav.pull-right
+            %li.pull-right
+              - if user_signed_in?
+                = link_to('Logout', destroy_user_session_path, :method => :delete, :class => "navbar-brand logout")
+              - else
+                = link_to('Login', new_user_session_path, :class => "navbar-brand login")
+          .nav-collapse.collapse     
+    - if current_user
+      .container-fluid.user-greeting-wrap
+        %span.user-greeting
+          Hi, #{link_to current_user.email, edit_user_registration_path}
+    #wrap.container
+      - if notice
+        .alert.alert-success
+          = notice
+      - if alert
+        %div{:class => "alert alert-danger"}
+          = alert
+      = yield
+    %footer.footer

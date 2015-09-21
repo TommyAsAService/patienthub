@@ -1,0 +1,12 @@
+%p
+  %strong Medication Name:
+  = @medication.name
+%p
+  %strong Description:
+  = @medication.description
+%p
+  %strong Label:
+  = @medication.label
+= link_to 'Edit', edit_medication_path(@medication)
+%br
+  = link_to 'Back', medications_path

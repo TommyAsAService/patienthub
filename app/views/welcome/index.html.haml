@@ -1,0 +1,26 @@
+.row-fluid
+  .col-xs-12.col-md-6.col-lg-6
+    .panel.quick-panel
+      %h3 User
+      .quick-access
+        %ul.list-group
+          %li.list-group-item= link_to "Create Patient", new_patient_path
+          %li.list-group-item= link_to "Create Medication", new_medication_path
+          %li.list-group-item= link_to "Change Password", edit_user_registration_path
+  .col-xs-12.col-md-6.col-lg-6
+    .row
+      .col-xs-12.col-lg-12
+        .panel.quick-panel
+          %h3 Medication
+          .medication-column
+            %ul.list-group
+              %li.list-group-item= link_to "Medication List", medications_path
+              %li.list-group-item= link_to "Create Medication", new_medication_path
+    .row  
+      .col-xs-12.col-lg-12
+        .panel.quick-panel
+          %h3 Patient
+          .patient-column
+            %ul.list-group
+              %li.list-group-item= link_to "Patient List", patients_path
+              %li.list-group-item= link_to "Create Patient", new_patient_path

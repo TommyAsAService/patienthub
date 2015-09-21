@@ -1,0 +1,27 @@
+%h1 Listing Patient
+%table#datatable{:border => "1", :style => "width:100%"}
+  %thead
+    %tr
+      %th Name
+      %th Age
+      %th Address
+      %th Contact Number
+      %th Patient Number
+      %th
+      %th
+  %tbody
+    - @patients.each do |patient|
+      %tr
+        %td= patient.name
+        %td= patient.age
+        %td= patient.address
+        %td= patient.contact_number
+        %td= patient.patient_number
+        %td= link_to 'Show', patient, class: "btn btn-xs btn-primary"
+        %td= link_to 'Edit', edit_patient_path(patient), class: "btn btn-xs btn-default"
+%br
+  = link_to 'New Patient', new_patient_path, class: "btn btn btn-primary"
+  %br
+
+= javascript_include_tag 'jquery.dataTables.min', 'data-turbolinks-track' => true
+= javascript_include_tag 'datatables.config', 'data-turbolinks-track' => true

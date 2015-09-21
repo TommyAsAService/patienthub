@@ -1,0 +1,19 @@
+%p
+  %strong Patient Name:
+  = @patient.name
+%p
+  %strong Age:
+  = @patient.ages
+%p
+  %strong Patient Number:
+  = @patient.patient_number
+%p
+  %strong Contact Number:
+  = @patient.contact_number
+%p
+  %strong Address:
+  = @patient.address
+
+= link_to 'Edit', edit_patient_path(@patient)
+%br
+  = link_to 'Back', patients_path
