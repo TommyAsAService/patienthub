@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   end
   devise_for :users
   resources :medications
-  resources :patients
+  resources :patients do
+    get :autocomplete_medication_name, :on => :collection
+  end
   get 'patients/:id/qr_code' => "patients#generate_qr", :as => 'patient_qr_download'
 
   # The priority is based upon order of creation: first created -> highest priority.

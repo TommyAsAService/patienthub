@@ -12,6 +12,7 @@ Rails.application.config.assets.version = '1.0'
 
 Rails.application.config.assets.precompile += %w( welcome.css )
 Rails.application.config.assets.precompile += %w( jquery.dataTables.min.css )
+Rails.application.config.assets.precompile += %w( patients.css )
 
 
 Rails.application.config.assets.precompile += %w( jquery.dataTables.min.js )
