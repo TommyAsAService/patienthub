@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150921033519) do
+ActiveRecord::Schema.define(version: 20151002050018) do
 
   create_table "medications", force: :cascade do |t|
     t.string   "name"
@@ -21,6 +21,20 @@ ActiveRecord::Schema.define(version: 20150921033519) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "patient_medications", force: :cascade do |t|
+    t.string   "label"
+    t.datetime "start_time"
+    t.integer  "patient_id"
+    t.string   "notes"
+    t.integer  "time_take_per_day"
+    t.integer  "amount_given"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "medication_name"
+  end
+
+  add_index "patient_medications", ["patient_id"], name: "index_patient_medications_on_patient_id"
+
   create_table "patients", force: :cascade do |t|
     t.string   "name"
     t.string   "address"
@@ -29,8 +43,11 @@ ActiveRecord::Schema.define(version: 20150921033519) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.string   "token_authentication"
-    t.string   "age"
+    t.integer  "age"
+    t.integer  "user_id"
   end
+
+  add_index "patients", ["user_id"], name: "index_patients_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "uid",                    default: "", null: false
@@ -55,6 +72,8 @@ ActiveRecord::Schema.define(version: 20150921033519) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "provider",                            null: false
+    t.string   "contact"
+    t.string   "working_address"
   end
 
   add_index "users", ["email"], name: "index_users_on_email"
