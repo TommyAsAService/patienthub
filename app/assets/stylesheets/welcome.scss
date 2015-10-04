@@ -92,16 +92,6 @@ tr.shown td.details-control {
   text-align: center;
 }
 
-.orange {
-  color: orange;
-}
-.red {
-  color: red;
-}
-.green {
-  color: green;
-}
-
 html {
   position: relative;
   min-height: 100%
@@ -129,14 +119,9 @@ body a{
   background-color: #262626;
 }
 
-.balloon-col {
-  text-align: center;
-}
-
 .signin-container {
   margin-top: 5%;
 }
-
 
 .form-signin {
         max-width: 72.31233%;
@@ -170,7 +155,7 @@ body a{
 
 .checkbox {
   margin-left: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .login, .logout {
@@ -280,4 +265,10 @@ li.list-group-item:hover{
   }
 }
 .ui-helper-hidden-accessible { display:none; }
+  
+tfoot input {
+  width: 100%;
+  padding: 3px;
+  box-sizing: border-box;
+}
     

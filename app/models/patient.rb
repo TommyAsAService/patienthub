@@ -1,5 +1,7 @@
 class Patient < ActiveRecord::Base
   has_many :patient_medications
+  belongs_to :user
+  
   accepts_nested_attributes_for :patient_medications, reject_if: :all_blank, allow_destroy: true
   before_save :ensure_authentication_token!
 

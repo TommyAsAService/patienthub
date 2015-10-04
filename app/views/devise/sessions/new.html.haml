@@ -1,0 +1,16 @@
+%div.row.signin-container
+  .col-md-6.balloon-col
+    = image_tag("doctor-patient.svg", :height => 450, :width => 360)
+  .col-md-6.signin-col
+    = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'form-signin'}) do |f|
+      %h2.form-signin-heading Log in
+      = f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email Address"
+      = f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Password"
+      - if devise_mapping.rememberable?
+        %label.checkbox
+          %input{:type => "checkbox", :value => "remember-me"}
+            Remember me
+      %button.btn.btn-lg.btn-primary.btn-block{:type => "submit"} Log in
+      = render "devise/shared/links"
+%div.row.signin-container
+  %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ultrices hendrerit sapien in pretium. Etiam sed tellus tristique, dictum urna ut, placerat neque. Quisque in ullamcorper arcu. Quisque interdum libero eget fringilla elementum. Morbi id varius odio. Praesent a purus nec ligula imperdiet iaculis. In quis sodales diam. Suspendisse imperdiet felis et placerat bibendum. Duis aliquet diam a lacinia ornare. Vivamus accumsan vitae ipsum ut viverra. In blandit nisi nec lorem faucibus, sit amet mattis erat venenatis.

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
       get 'patient/' => 'patients#get_patient'
+      get 'patient/medications' => 'patients#get_medication'
     end
   end
   devise_for :users

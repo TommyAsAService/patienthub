@@ -12,12 +12,12 @@ class PatientsController < ApplicationController
   end
 
   def new
-    @patient = Patient.new    
-    @patient_medication = PatientMedication.new
+    @patient = Patient.new :user_id => current_user.id
   end
 
   def create
     @patient = Patient.create(patient_params)
+    @patient.user_id = current_user.id
     respond_to do |format|
       if @patient.save
         format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
