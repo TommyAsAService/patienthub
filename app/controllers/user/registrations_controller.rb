@@ -1,6 +1,6 @@
 class User::RegistrationsController < Devise::RegistrationsController
-  before_action :configure_sign_up_params, only: [:create]
-  before_action :configure_account_update_params, only: [:update]
+  before_action :configure_sign_up_params, only: [:create], if: :devise_controller?
+  before_action :configure_account_update_params, only: [:update], if: :devise_controller?
   include ApplicationHelper
 
   # GET /resource/sign_up
@@ -10,7 +10,25 @@ class User::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    super
+    pp sign_up_params
+    build_resource (sign_up_params)
+    resource.save
+    yield resource if block_given?
+    if resource.persisted?
+      if resource.active_for_authentication?
+        set_flash_message :notice, :signed_up if is_flashing_format?
+        sign_up(resource_name, resource)
+        respond_with resource, location: after_sign_up_path_for(resource)
+      else
+        set_flash_message :notice, :"sign_up_but_#{resource.inactive_message}" if is_flashing_format?
+        expire_data_after_sign_in!
+        respond_with resource, location: after_inactive_sign_up_path_for(resource)
+      end
+    else
+        clean_up_passwords resource
+        set_minimum_password_length
+        respond_with resource
+      end
   end
 
   # GET /resource/edit
@@ -41,12 +59,21 @@ class User::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.for(:sign_up) << :attribute
+    devise_parameter_sanitizer.for(:sign_up) do |u|
+      u.permit(:email, :password, :password_confirmation, :contact, :name, :working_address)
+    end
+    # params.require(:user).permit(:contact, :name, :working_address, :email, :password, :password_confirmation)
+  end
+
+  def sign_up_params
+    devise_parameter_sanitizer.sanitize(:sign_up)
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.for(:account_update) << :attribute
+    devise_parameter_sanitizer.for(:account_update) do |u| 
+      u.permit(:email, :password, :password_confirmation, :current_password, :contact, :name, :working_address)
+    end
   end
 
   # The path used after sign up.
