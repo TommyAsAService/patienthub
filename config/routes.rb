@@ -6,11 +6,12 @@ Rails.application.routes.draw do
       get 'patient/medications' => 'patients#get_medication'
     end
   end
-  devise_for :users
+  devise_for :users#, :controllers => { registrations: "user/registrations" }
   resources :medications
   resources :patients do
     get :autocomplete_medication_name, :on => :collection
   end
+  
   get 'patients/:id/qr_code' => "patients#generate_qr", :as => 'patient_qr_download'
 
   # The priority is based upon order of creation: first created -> highest priority.
