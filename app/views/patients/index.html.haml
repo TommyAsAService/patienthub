@@ -1,6 +1,16 @@
 %h1 Listing Patient
-%table#datatable{:border => "1", :style => "width:100%"}
+%table#datatable.table.table-striped.table-bordered{:border => "1", :style => "width:100%"}
   %thead
+    %tr
+      %th Name
+      %th Age
+      %th Address
+      %th Contact Number
+      %th Patient Number
+      %th
+      %th
+      %th
+  %tfoot
     %tr
       %th Name
       %th Age
@@ -18,9 +28,9 @@
         %td= patient.address
         %td= patient.contact_number
         %td= patient.patient_number
-        %td= link_to 'Show', patient, class: "btn btn-xs btn-primary"
-        %td= link_to 'Edit', edit_patient_path(patient), class: "btn btn-xs btn-default"       
-        %td= link_to 'QR Code', patient_qr_download_path(patient), class: "btn btn-xs btn-default"
+        %td= link_to 'Show', patient, class: "btn btn-sm btn-primary"
+        %td= link_to 'Edit', edit_patient_path(patient), class: "btn btn-sm btn-default"       
+        %td= link_to ' ', patient_qr_download_path(patient), class: "btn btn-sm btn-default glyphicon glyphicon-qrcode"
 %br
   = link_to 'New Patient', new_patient_path, class: "btn btn btn-primary"
   %br

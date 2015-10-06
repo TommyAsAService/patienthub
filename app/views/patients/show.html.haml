@@ -13,7 +13,26 @@
 %p
   %strong Address:
   = @patient.address
+= link_to 'Edit', edit_patient_path(@patient), class: 'btn btn btn-default'
 
-= link_to 'Edit', edit_patient_path(@patient)
+%h1 Listing Medication
+%table#datatable.table.table-striped.table-bordered{:border => "1", :style => "width:100%"}
+  %thead
+    %tr
+      %th Medication Name
+      %th Label
+      %th Time Take Per Day
+      %th Start Date
+      %th Notes
+  %tbody
+    - @patient.patient_medications.each do |patient_med|
+      %tr
+        %td= link_to patient_med.medication.name, patient_med.medication
+        %td= patient_med.label
+        %td= patient_med.time_take_per_day
+        %td= patient_med.start_time
+        %th= patient_med.notes
 %br
-  = link_to 'Back', patients_path
+= link_to 'Back', patients_path, class: 'btn btn btn-default'
+= javascript_include_tag 'jquery.dataTables.min', 'data-turbolinks-track' => true
+= javascript_include_tag 'datatables.config', 'data-turbolinks-track' => true

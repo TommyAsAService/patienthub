@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  label: MyString
+  start_time: 2015-09-22 11:23:05
+  medication_id: 
+  patient_id: 
+  notes: MyString
+  time_take_per_day: 
+  amount_given: 
+
+two:
+  label: MyString
+  start_time: 2015-09-22 11:23:05
+  medication_id: 
+  patient_id: 
+  notes: MyString
+  time_take_per_day: 
+  amount_given: 
