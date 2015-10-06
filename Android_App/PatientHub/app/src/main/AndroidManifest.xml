@@ -16,6 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".QR_Code"
+            android:label="@string/title_activity_qr__code" >
+
+        </activity>
+        <uses-feature android:name="android.hardware.camera" />
     </application>
 
 </manifest>
