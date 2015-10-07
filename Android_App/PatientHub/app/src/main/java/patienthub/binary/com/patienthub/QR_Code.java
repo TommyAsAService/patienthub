@@ -2,17 +2,23 @@ package patienthub.binary.com.patienthub;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.io.IOException;
 import java.net.URI;
+
+import patienthub.binary.com.patienthub.data.Medications;
+import patienthub.binary.com.patienthub.webservice.HttpManager;
 
 
 public class QR_Code extends ActionBarActivity {
@@ -22,6 +28,11 @@ public class QR_Code extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr__code);
         performScan();
+
+
+
+
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -31,6 +42,9 @@ public class QR_Code extends ActionBarActivity {
             if (contents != null) {
                 Toast.makeText(this,"SUCCESS",Toast.LENGTH_LONG).show();
                 Log.d("SUCCESS", result.toString());
+                AsyncTask getRequest = new PerformGetRequest();
+
+                AsyncTask test = getRequest.execute(new String[]{"http://patienthubstage.herokuapp.com/api/v1/patient/medications", contents});
             } else {
                 Toast.makeText(this,"FAILED",Toast.LENGTH_LONG).show();
                 Log.d("FAILED", result.toString());
@@ -64,5 +78,23 @@ public class QR_Code extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class PerformGetRequest extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String uri = strings[0];
+            String token = strings[1];
+            String test = HttpManager.getData(uri,token);
+            return test;
+        }
+
+        protected void onPostExecute(String result) {
+            TextView view = (TextView)findViewById(R.id.qr_code);
+            //Medications meds = new ObjectMapper().readValue(result, Medications.class);
+            view.setText(result);
+
+        }
     }
 }
