@@ -2,7 +2,6 @@ package patienthub.binary.com.patienthub;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -11,12 +10,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 public class QuizPage extends ActionBarActivity {
+
+    //TODO : make the button label change dynamically. Pass in extras including dosageID. Persist it!
 
     //REQUIRED FIELDS
     String options[] = {  };
@@ -24,9 +22,13 @@ public class QuizPage extends ActionBarActivity {
     private int currentRadioButtonSelection = -1;
     private String otherText = "";
 
+    //FOR EASY CONFIG
+    Class buttonDestination = QuizPage.class;
+    Class homeClass = MainActivity.class;
+    int numQuestions = 3;
+
     //PASS IN THESE FIELDS IN ORDER TO DYNAMICALLY CONFIGURE THE QUIZ PAGE
     String buttonString = "Next";
-    Class buttonDestination = QuizPage.class;
     int questionInt = 0;
     String medName = "medication";
 
@@ -70,8 +72,7 @@ public class QuizPage extends ActionBarActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String value = extras.getString("questionNum");
-            questionInt = Integer.parseInt(value);
+            questionInt = extras.getInt("questionNum");
         }
 
         selectQuestions(questionInt);
@@ -112,20 +113,20 @@ public class QuizPage extends ActionBarActivity {
                 //alert.setIcon(android.R.drawable.ic_dialog_alert);
                 //alert.show();
 
-                ++questionInt;
+                Intent myIntent = null;
 
-                if (questionInt <= 3) {
-                    Intent myIntent = new Intent(QuizPage.this, buttonDestination);
-                    String toPut = questionInt + "";
-                    myIntent.putExtra("questionNum", toPut);
-                    QuizPage.this.startActivity(myIntent);
-                    finish();
-                } else {
-                    Intent myIntent = new Intent(QuizPage.this, MainActivity.class);
-                    QuizPage.this.startActivity(myIntent);
-                    finish();
+                if (questionInt != 0) {
+                    ++questionInt;
                 }
 
+                if (questionInt <= numQuestions && questionInt != 0) {
+                    myIntent = new Intent(QuizPage.this, buttonDestination);
+                    myIntent.putExtra("questionNum", questionInt);
+                } else {
+                    myIntent = new Intent(QuizPage.this, homeClass);
+                }
+                QuizPage.this.startActivity(myIntent);
+                finish();
             }
         });
 
