@@ -41,6 +41,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
 
                 Intent myIntent = new Intent(MainActivity.this, QR_Code.class);
+                //Intent myIntent = new Intent(MainActivity.this, QuizPage.class);
                 MainActivity.this.startActivity(myIntent);
             }
 
