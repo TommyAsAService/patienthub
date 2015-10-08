@@ -134,13 +134,16 @@ public class QuizPage extends ActionBarActivity {
             public void onCheckedChanged(RadioGroup arg0, int selectedId) {
 
                 currentRadioButtonSelection = rg.getCheckedRadioButtonId();
+
                 EditText otherField = (EditText) findViewById(R.id.editTextOther);
 
                 if (currentRadioButtonSelection != -1) {
                     nextButton.setEnabled(true);
                 }
 
-                if (currentRadioButtonSelection == options.length) {
+                int lastID = rg.getChildAt(rg.getChildCount() - 1).getId();
+
+                if (currentRadioButtonSelection == lastID) {
                     otherField.setEnabled(true);
                     otherField.setHint("What's up?");
                 } else {
