@@ -17,12 +17,12 @@
     = f.input :contact_number, input_html: { class: "form-control" }
   .form-group
     = f.input :patient_number, input_html: { class: "form-control" }
-  #patient_medications
-    %h3 Medications
-    = f.simple_fields_for :patient_medications do |pm|
-      = render 'patient_medication_fields', f: pm
+  #dosages
+    %h3 Dosage
+    = f.simple_fields_for :dosages do |pm|
+      = render 'dosage_fields', f: pm
     .links
-      = link_to_add_association f, :patient_medications, class: 'btn btn-default btn' do
+      = link_to_add_association f, :dosages, class: 'btn btn-default btn' do
         .glyphicon.glyphicon-plus
   .submit-button
     = f.submit 'Create Patient', class: "btn btn-primary"
