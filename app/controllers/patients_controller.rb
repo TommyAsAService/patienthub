@@ -2,7 +2,7 @@ class PatientsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_patient, only:[:show, :edit, :update, :generate_qr]
 
-  autocomplete :medication, :name
+  autocomplete :treatment, :name
 
   def index
     @patients = Patient.all
@@ -59,6 +59,6 @@ class PatientsController < ApplicationController
   def patient_params
     params.require(:patient).permit(
       :name, :address, :contact_number, :age, :patient_number,
-      patient_medications_attributes: [:id, :_destroy, :label, :start_time, :notes, :time_take_per_day, :amount_given, :medication_id, :medication_name] )
+      dosages_attributes: [:id, :_destroy, :time_taken, :frequency, :start_date, :treatment_name, :patient_id] )
   end
 end
