@@ -16,6 +16,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        
         final Button button = (Button) findViewById(R.id.startButton);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -25,9 +26,6 @@ public class MainActivity extends ActionBarActivity {
                 MainActivity.this.startActivity(myIntent);
             }
         });
-
-
-
 
     }
 
