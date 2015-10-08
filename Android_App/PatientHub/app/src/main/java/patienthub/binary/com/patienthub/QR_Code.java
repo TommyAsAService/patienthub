@@ -29,11 +29,6 @@ public class QR_Code extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr__code);
         performScan();
-
-
-
-
-
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
