@@ -5,7 +5,7 @@ class PatientsController < ApplicationController
   autocomplete :treatment, :name
 
   def index
-    @patients = Patient.all
+    @patients = current_user.patients
   end
 
   def show
