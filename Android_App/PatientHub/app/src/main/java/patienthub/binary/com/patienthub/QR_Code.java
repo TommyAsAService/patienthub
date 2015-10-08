@@ -22,7 +22,7 @@ import patienthub.binary.com.patienthub.webservice.HttpManager;
 
 public class QR_Code extends Activity {
 
-    public final static String GET_MEDICATIONS_URL = "http://patienthubstage.herokuapp.com/api/v1/patient/medications";
+    public final static String GET_MEDICATIONS_URL = "http://patienthubstage.herokuapp.com/api/v1/patient/dosages";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +92,7 @@ public class QR_Code extends Activity {
                 Dosage[] dosages = new ObjectMapper().readValue(result, Dosage[].class);
 
                 // THIS SHOULD BE DONE IN THE MEDICATION LIST ACTIVITY
-                Log.d("IT WORKED", dosages[0].getMedication_name());
+                Log.d("IT WORKED", dosages[0].getTreatment_name());
             } catch (IOException e) {
                 e.printStackTrace();
             }

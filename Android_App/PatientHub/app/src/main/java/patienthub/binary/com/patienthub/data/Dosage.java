@@ -7,36 +7,25 @@ public class Dosage {
 
     private int patient_id;
     private int id;
-    private String label;
-    private String start_time;
-    private String notes;
-    private int time_take_per_day;
-    private int amount_given;
+    private String start_date;
+    private int frequency;
+    private String time_taken;
     private String created_at;
     private String updated_at;
-    private String medication_name;
-    private Treatment treatment;
+    private String treatment_name;
 
-    public Dosage(int patient_id, int id, String label, String start_time, String notes, int time_take_per_day, int amount_given, String created_at, String updated_at, String medication_name, Treatment treatment) {
+    public Dosage(int patient_id, int id, String start_date, int frequency, String time_taken, String created_at, String updated_at, String treatment_name) {
         this.patient_id = patient_id;
         this.id = id;
-        this.label = label;
-        this.start_time = start_time;
-        this.notes = notes;
-        this.time_take_per_day = time_take_per_day;
-        this.amount_given = amount_given;
+        this.start_date = start_date;
+        this.frequency = frequency;
+        this.time_taken = time_taken;
         this.created_at = created_at;
         this.updated_at = updated_at;
-        this.medication_name = medication_name;
-        this.treatment = treatment;
-
+        this.treatment_name = treatment_name;
     }
 
     public Dosage(){}
-
-    public Dosage(int patient_id){
-        this.patient_id = patient_id;
-    }
 
     public int getPatient_id() {
         return patient_id;
@@ -54,44 +43,28 @@ public class Dosage {
         this.id = id;
     }
 
-    public String getLabel() {
-        return label;
+    public String getStart_date() {
+        return start_date;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setStart_date(String start_date) {
+        this.start_date = start_date;
     }
 
-    public String getStart_time() {
-        return start_time;
+    public int getFrequency() {
+        return frequency;
     }
 
-    public void setStart_time(String start_time) {
-        this.start_time = start_time;
+    public void setFrequency(int frequency) {
+        this.frequency = frequency;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getTime_taken() {
+        return time_taken;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public int getTime_take_per_day() {
-        return time_take_per_day;
-    }
-
-    public void setTime_take_per_day(int time_take_per_day) {
-        this.time_take_per_day = time_take_per_day;
-    }
-
-    public int getAmount_given() {
-        return amount_given;
-    }
-
-    public void setAmount_given(int amount_given) {
-        this.amount_given = amount_given;
+    public void setTime_taken(String time_taken) {
+        this.time_taken = time_taken;
     }
 
     public String getCreated_at() {
@@ -110,22 +83,11 @@ public class Dosage {
         this.updated_at = updated_at;
     }
 
-    public String getMedication_name() {
-        return medication_name;
+    public String getTreatment_name() {
+        return treatment_name;
     }
 
-    public void setMedication_name(String medication_name) {
-        this.medication_name = medication_name;
+    public void setTreatment_name(String treatment_name) {
+        this.treatment_name = treatment_name;
     }
-
-    public Treatment getTreatment() {
-        return treatment;
-    }
-
-    public void setTreatment(Treatment treatment) {
-        this.treatment = treatment;
-    }
-
-
-
 }
