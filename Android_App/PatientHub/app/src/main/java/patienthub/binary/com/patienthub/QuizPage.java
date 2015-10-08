@@ -68,24 +68,24 @@ public class QuizPage extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_page);
 
-        //Bundle extras = getIntent().getExtras();
-        //if (extras != null) {
-        //    String value = extras.getString("questionNum");
-        //    questionInt = Integer.parseInt(value);
-      //  }
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String value = extras.getString("questionNum");
+            questionInt = Integer.parseInt(value);
+        }
 
         selectQuestions(questionInt);
 
         final LinearLayout rLayout = (LinearLayout) findViewById(R.id.quizView2);
 
-        TextView question =(TextView) findViewById(R.id.questionMessage);
+        final TextView question =(TextView) findViewById(R.id.questionMessage);
         question.setText(questionText);
 
         final RadioButton[] rb = new RadioButton[options.length];
         final RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroupQuiz);
 
         rg.setOrientation(RadioGroup.VERTICAL);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < options.length; i++) {
             rb[i] = new RadioButton(this);
             rb[i].setTextSize(22);
             rg.addView(rb[i]);
@@ -105,16 +105,27 @@ public class QuizPage extends ActionBarActivity {
                 otherText = otherField.getText().toString();
                 String publishString = "You chose option number " + currentRadioButtonSelection;
 
-                if (currentRadioButtonSelection == options.length)  publishString += " " + otherText;
+                if (currentRadioButtonSelection == options.length) publishString += " " + otherText;
 
                 //alert.setTitle(publishString);
                 //alert.setMessage("We will need to persist this and send it to the server");
                 //alert.setIcon(android.R.drawable.ic_dialog_alert);
                 //alert.show();
 
-                Intent myIntent = new Intent(QuizPage.this, buttonDestination);
-                //myIntent.putExtra("questionNum",questionInt+1);
-                QuizPage.this.startActivity(myIntent);
+                ++questionInt;
+
+                if (questionInt <= 3) {
+                    Intent myIntent = new Intent(QuizPage.this, buttonDestination);
+                    String toPut = questionInt + "";
+                    myIntent.putExtra("questionNum", toPut);
+                    QuizPage.this.startActivity(myIntent);
+                    finish();
+                } else {
+                    Intent myIntent = new Intent(QuizPage.this, MainActivity.class);
+                    QuizPage.this.startActivity(myIntent);
+                    finish();
+                }
+
             }
         });
 

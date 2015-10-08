@@ -41,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
 
                 //Intent myIntent = new Intent(MainActivity.this, QR_Code.class);
                 Intent myIntent = new Intent(MainActivity.this, QuizPage.class);
-                //myIntent.putExtra("questionNum",1);
+                myIntent.putExtra("questionNum","1");
                 MainActivity.this.startActivity(myIntent);
             }
 
