@@ -1,6 +1,7 @@
 package patienthub.binary.com.patienthub;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
@@ -29,10 +30,6 @@ public class QR_Code extends ActionBarActivity {
         setContentView(R.layout.activity_qr__code);
         performScan();
 
-
-
-
-
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -40,6 +37,9 @@ public class QR_Code extends ActionBarActivity {
         if (result != null) {
             String contents = result.getContents();
             if (contents != null) {
+
+
+
                 Toast.makeText(this,"SUCCESS",Toast.LENGTH_LONG).show();
                 Log.d("SUCCESS", result.toString());
                 AsyncTask getRequest = new PerformGetRequest();
@@ -94,6 +94,10 @@ public class QR_Code extends ActionBarActivity {
             TextView view = (TextView)findViewById(R.id.qr_code);
             //Medications meds = new ObjectMapper().readValue(result, Medications.class);
             view.setText(result);
+
+            SharedPreferences.Editor editor = getSharedPreferences("prefsFile", MODE_PRIVATE).edit();
+            editor.putString("jsonFile",result);
+            editor.commit();
 
         }
     }
