@@ -1,5 +1,6 @@
 package patienthub.binary.com.patienthub;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ public class QuizPage extends ActionBarActivity {
     String buttonString = "Next";
     Class buttonDestination = QuizPage.class;
 
+    private int currentRadioButtonSelection = -1;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +47,17 @@ public class QuizPage extends ActionBarActivity {
         nextButton.setEnabled(false);
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(QuizPage.this, buttonDestination);
-                QuizPage.this.startActivity(myIntent);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(QuizPage.this);
+                builder.setCancelable(true);
+                AlertDialog alert = builder.create();
+                alert.setTitle("You chose option number " + currentRadioButtonSelection);
+                alert.setMessage("We will need to persist this and send it to the server");
+                alert.setIcon(android.R.drawable.ic_dialog_alert);
+                alert.show();
+
+                //Intent myIntent = new Intent(QuizPage.this, buttonDestination);
+                //QuizPage.this.startActivity(myIntent);
             }
 
         });
@@ -54,7 +65,10 @@ public class QuizPage extends ActionBarActivity {
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup arg0, int selectedId) {
-                if (rg.getCheckedRadioButtonId() != -1) {
+
+                currentRadioButtonSelection = rg.getCheckedRadioButtonId();
+
+                if (currentRadioButtonSelection != -1) {
                     nextButton.setEnabled(true);
                 }
             }

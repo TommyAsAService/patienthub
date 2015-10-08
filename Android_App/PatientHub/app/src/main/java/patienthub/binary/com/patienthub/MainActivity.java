@@ -29,7 +29,6 @@ public class MainActivity extends ActionBarActivity {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(true);
-
             AlertDialog alert = builder.create();
             alert.setTitle("User already logged in");
             alert.setMessage("This will redirect to the list view screen");
