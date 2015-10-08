@@ -3,7 +3,7 @@ package patienthub.binary.com.patienthub.data;
 /**
  * Created by Mark Aziz on 7/10/2015.
  */
-public class Medication {
+public class Treatment {
 
     private int id;
     private String name;
@@ -12,8 +12,16 @@ public class Medication {
     private String created_at;
     private String updated_at;
 
-    public Medication(int id){
+    public Treatment(int id, String name, String description, String label, String created_at, String updated_at) {
         this.id = id;
+        this.name = name;
+        this.description = description;
+        this.label = label;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+    }
+
+    public Treatment() {
     }
 
     public int getId() {

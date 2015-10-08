@@ -1,9 +1,8 @@
 package patienthub.binary.com.patienthub;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,17 +10,19 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.io.IOException;
-import java.net.URI;
 
-import patienthub.binary.com.patienthub.data.Medications;
+import patienthub.binary.com.patienthub.data.Dosage;
 import patienthub.binary.com.patienthub.webservice.HttpManager;
 
 
-public class QR_Code extends ActionBarActivity {
+public class QR_Code extends Activity {
+
+    public final static String GET_MEDICATIONS_URL = "http://patienthubstage.herokuapp.com/api/v1/patient/medications";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class QR_Code extends ActionBarActivity {
                 Log.d("SUCCESS", result.toString());
                 AsyncTask getRequest = new PerformGetRequest();
 
-                AsyncTask test = getRequest.execute(new String[]{"http://patienthubstage.herokuapp.com/api/v1/patient/medications", contents});
+                AsyncTask test = getRequest.execute(new String[]{GET_MEDICATIONS_URL, contents});
             } else {
                 Toast.makeText(this,"FAILED",Toast.LENGTH_LONG).show();
                 Log.d("FAILED", result.toString());
@@ -92,7 +93,14 @@ public class QR_Code extends ActionBarActivity {
 
         protected void onPostExecute(String result) {
             TextView view = (TextView)findViewById(R.id.qr_code);
-            //Medications meds = new ObjectMapper().readValue(result, Medications.class);
+            try {
+                Dosage[] dosages = new ObjectMapper().readValue(result, Dosage[].class);
+
+                // THIS SHOULD BE DONE IN THE MEDICATION LIST ACTIVITY
+                Log.d("IT WORKED", dosages[0].getMedication_name());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             view.setText(result);
 
         }
