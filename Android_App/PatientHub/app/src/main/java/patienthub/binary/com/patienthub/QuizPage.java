@@ -112,6 +112,7 @@ public class QuizPage extends Activity {
         rg.setOrientation(RadioGroup.VERTICAL);
         for (int i = 0; i < options.length; i++) {
             rb[i] = new RadioButton(this);
+            rb[i].setPadding(0, 50, 0, 50);
             rb[i].setTextSize(22);
             rg.addView(rb[i]);
             rb[i].setText(options[i]);
