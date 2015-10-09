@@ -1,17 +1,27 @@
 package patienthub.binary.com.patienthub;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
+
+import patienthub.binary.com.patienthub.adapters.MedicationListAdapter;
 
 
-public class Medication_Screen extends ActionBarActivity {
+public class Medication_Screen extends Activity {
+
+    private ListView listview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medication__screen);
+        listview = (ListView) findViewById(R.id.medicationListView);
+        listview.setAdapter(new MedicationListAdapter(this, new String[] { "data1",
+                "data2" }));
     }
 
 
@@ -35,5 +45,10 @@ public class Medication_Screen extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void onCheckboxClicked(View v){
+
     }
 }
