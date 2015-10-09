@@ -105,7 +105,19 @@ public class QuizPage extends Activity {
         }
 
         final Button nextButton = (Button) findViewById(R.id.quizNextButton);
-        nextButton.setText(buttonString);
+
+        if(questionInt == 0){
+            if(dosageFeedbackIDs.length == 1){
+                nextButton.setText("Finish");
+            }else {
+                nextButton.setText("Next");
+            }
+        }else if (questionInt == numQuestions){
+            nextButton.setText("Finish");
+        }else{
+            nextButton.setText("Next");
+        }
+
         nextButton.setEnabled(false);
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -134,14 +146,10 @@ public class QuizPage extends Activity {
                             myIntent = new Intent(QuizPage.this, homeClass);
                         }
                     }
-                } else if (questionInt <= numQuestions)
-
-                {
+                } else if (questionInt <= numQuestions) {
                     myIntent = new Intent(QuizPage.this, buttonDestination);
                     myIntent.putExtra("questionNum", questionInt);
-                } else
-
-                {
+                } else                {
                     myIntent = new Intent(QuizPage.this, homeClass);
                 }
 
