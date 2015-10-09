@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.List;
+
 import patienthub.binary.com.patienthub.R;
 
 /**
@@ -15,10 +17,10 @@ import patienthub.binary.com.patienthub.R;
 public class MedicationListAdapter extends BaseAdapter {
 
     Context context;
-    String[] data;
+    List<String> data;
     private static LayoutInflater inflater = null;
 
-    public MedicationListAdapter(Context context, String[] data) {
+    public MedicationListAdapter(Context context, List<String> data) {
         // TODO Auto-generated constructor stub
         this.context = context;
         this.data = data;
@@ -26,14 +28,19 @@ public class MedicationListAdapter extends BaseAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+
+    public void addItem(String str){
+        data.add(str);
+    }
+
     @Override
     public int getCount() {
-        return data.length;
+        return data.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return data[position];
+        return data.get(position);
     }
 
     @Override
@@ -47,7 +54,7 @@ public class MedicationListAdapter extends BaseAdapter {
         if (vi == null)
             vi = inflater.inflate(R.layout.medication_cusom_listview_item, null);
         TextView text = (TextView) vi.findViewById(R.id.row_medicationName);
-        text.setText(data[position]);
+        text.setText(data.get(position));
         return vi;
     }
 }

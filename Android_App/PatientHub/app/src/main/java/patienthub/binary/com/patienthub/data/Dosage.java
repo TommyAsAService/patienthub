@@ -13,8 +13,12 @@ public class Dosage {
     private String created_at;
     private String updated_at;
     private String treatment_name;
+    private int quantity;
+    private String unit;
+    private Treatment treatment;
 
-    public Dosage(int patient_id, int id, String start_date, int frequency, String time_taken, String created_at, String updated_at, String treatment_name) {
+    public Dosage(int patient_id, int id, String start_date, int frequency, String time_taken, String created_at,
+                  String updated_at, String treatment_name, int quantity, String unit, Treatment treatment) {
         this.patient_id = patient_id;
         this.id = id;
         this.start_date = start_date;
@@ -23,6 +27,9 @@ public class Dosage {
         this.created_at = created_at;
         this.updated_at = updated_at;
         this.treatment_name = treatment_name;
+        this.quantity = quantity;
+        this.unit = unit;
+        this.treatment = treatment;
     }
 
     public Dosage(){}
@@ -89,5 +96,29 @@ public class Dosage {
 
     public void setTreatment_name(String treatment_name) {
         this.treatment_name = treatment_name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public Treatment getTreatment() {
+        return treatment;
+    }
+
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
     }
 }

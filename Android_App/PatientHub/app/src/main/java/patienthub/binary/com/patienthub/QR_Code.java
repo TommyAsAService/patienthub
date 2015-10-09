@@ -82,21 +82,14 @@ public class QR_Code extends Activity {
         protected String doInBackground(String... strings) {
             String uri = strings[0];
             String token = strings[1];
-            String test = HttpManager.getData(uri,token);
-            return test;
+            String getData = HttpManager.getData(uri,token);
+            return getData;
         }
 
         protected void onPostExecute(String result) {
-            TextView view = (TextView)findViewById(R.id.qr_code);
-            try {
-                Dosage[] dosages = new ObjectMapper().readValue(result, Dosage[].class);
-
-                // THIS SHOULD BE DONE IN THE MEDICATION LIST ACTIVITY
-                Log.d("IT WORKED", dosages[0].getTreatment_name());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            view.setText(result);
+            Intent i = new Intent(QR_Code.this, Medication_Screen.class);
+            i.putExtra("jsonDosages",result);
+            startActivity(i);
 
         }
     }

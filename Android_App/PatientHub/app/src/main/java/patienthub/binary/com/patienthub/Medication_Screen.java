@@ -8,20 +8,42 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import patienthub.binary.com.patienthub.adapters.MedicationListAdapter;
+import patienthub.binary.com.patienthub.data.Dosage;
 
 
 public class Medication_Screen extends Activity {
 
     private ListView listview;
+    private MedicationListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medication__screen);
         listview = (ListView) findViewById(R.id.medicationListView);
-        listview.setAdapter(new MedicationListAdapter(this, new String[] { "data1",
-                "data2" }));
+        List<String> dosageList = new ArrayList<>();
+
+         String json = getIntent().getStringExtra("jsonDosages");
+
+
+        try {
+            Dosage[] dosages = new ObjectMapper().readValue(json, Dosage[].class);
+            for(Dosage dose : dosages){
+                dosageList.add(dose.getTreatment_name());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        adapter  = new MedicationListAdapter(this,dosageList);
+        listview.setAdapter(adapter);
     }
 
 
