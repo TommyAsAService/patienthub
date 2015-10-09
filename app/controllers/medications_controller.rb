@@ -1,5 +1,4 @@
 class MedicationsController < ApplicationController
-
   before_action :authenticate_user!
   before_action :set_medication, only:[:show, :edit, :update]
   def index
