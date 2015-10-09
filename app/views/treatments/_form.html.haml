@@ -11,9 +11,5 @@
     = f.input :name, input_html: { class: "form-control" }
   .form-group
     = f.input :treatment_type, input_html: { class: "form-control" }, collection: [ "Exercise", "Medication"]
-  .form-group
-    = f.input :quantity, input_html: { class: "form-control" }
-  .form-group
-    = f.input :unit, input_html: { class: "form-control" }, collection: [ "m", "km", "minute(s)", "hour(s)", "ml", "tablet(s)"]
   .submit-button
     = f.submit 'Create Treatment', class: "btn btn-primary"

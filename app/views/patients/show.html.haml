@@ -24,13 +24,15 @@
       %th Time Taken
       %th Frequency
       %th Start Date
+      %th Quantity
   %tbody
     - @patient.dosages.each do |patient_dosage|
       %tr
         %td= link_to patient_dosage.treatment_name, patient_dosage.treatment
         %td= patient_dosage.time_taken
-        %td= patient_dosage.frequency
+        %td= patient_dosage.get_frequency_string
         %td= patient_dosage.start_date
+        %td= patient_dosage.get_quality_unit
 %br
 = link_to 'Back', patients_path, class: 'btn btn btn-default'
 = javascript_include_tag 'jquery.dataTables.min', 'data-turbolinks-track' => true

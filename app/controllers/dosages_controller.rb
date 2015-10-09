@@ -18,6 +18,6 @@ class DosagesController < ApplicationController
   end
   private
   def dosage_params
-    params.require(:dosage).permit(:patient_id, :time_taken, :frequency, :start_date, :treatment_name)
+    params.require(:dosage).permit(:patient_id, :time_taken, :frequency, :start_date, :treatment_name, :quantity, :unit)
   end
 end
