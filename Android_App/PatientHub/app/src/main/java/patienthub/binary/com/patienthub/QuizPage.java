@@ -12,15 +12,20 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import java.util.Arrays;
+
 public class QuizPage extends ActionBarActivity {
 
     //TODO : make the button label change dynamically. Pass in extras including dosageID. Persist it!
 
-    //REQUIRED FIELDS
+    //MISC FIELDS
     String options[] = {  };
     String questionText = "";
     private int currentRadioButtonSelection = -1;
     private String otherText = "";
+    private String patientID = null;
+    private String[] dosageFeedbackIDs = null;
+    private String[] doseageNames = null;
 
     //FOR EASY CONFIG
     Class buttonDestination = QuizPage.class;
@@ -48,8 +53,9 @@ public class QuizPage extends ActionBarActivity {
     private void selectQuestions(int intSelect){
         switch ( intSelect ) {
             case 0:
+                medName = doseageNames[0];
                 options = quizMedsA;
-                questionText = quizMedsQ;
+                questionText = "Why didn't you take your " + medName + " today?\n";
                 break;
             case 1:
                 options = quiz1a;
@@ -73,6 +79,9 @@ public class QuizPage extends ActionBarActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             questionInt = extras.getInt("questionNum");
+            patientID = extras.getString("patientID");
+            dosageFeedbackIDs = extras.getStringArray("dosageFeedbackIDs");
+            doseageNames = extras.getStringArray("doseageNames");
         }
 
         selectQuestions(questionInt);
@@ -119,7 +128,27 @@ public class QuizPage extends ActionBarActivity {
                     ++questionInt;
                 }
 
-                if (questionInt <= numQuestions && questionInt != 0) {
+                //DO API POST CALL WITH DATA!!!!
+
+                //if it is a 'treatment' question set
+                if (questionInt == 0) {
+                    if (dosageFeedbackIDs != null) {
+                        if (dosageFeedbackIDs.length > 1) {
+
+                            //take off the first of the IDs
+                            dosageFeedbackIDs = Arrays.copyOfRange(dosageFeedbackIDs, 1, dosageFeedbackIDs.length);
+                            doseageNames  = Arrays.copyOfRange(doseageNames, 1, doseageNames.length);
+
+                            myIntent = new Intent(QuizPage.this, QuizPage.class);
+                            myIntent.putExtra("questionNum", questionInt);
+                            myIntent.putExtra("dosageFeedbackIDs", dosageFeedbackIDs);
+                            myIntent.putExtra("doseageNames",doseageNames);
+                            myIntent.putExtra("patientID", patientID);
+                        } else {
+                            myIntent = new Intent(QuizPage.this, homeClass);
+                        }
+                    }
+                } else if (questionInt <= numQuestions) {
                     myIntent = new Intent(QuizPage.this, buttonDestination);
                     myIntent.putExtra("questionNum", questionInt);
                 } else {
