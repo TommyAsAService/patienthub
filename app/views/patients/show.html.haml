@@ -16,7 +16,7 @@
     = @patient.address
   = link_to 'Edit', edit_patient_path(@patient), class: 'btn btn btn-default'
 
-%h1 Listing Medication
+%h1 Listing Treatment
 %table#datatable.table.table-striped.table-bordered{:border => "1", :style => "width:100%"}
   %thead
     %tr
@@ -26,7 +26,7 @@
       %th Start Date
       %th Quantity
   %tbody
-    - @patient.dosages.each do |patient_dosage|
+    - @patient.dosages.order("created_at DESC").each do |patient_dosage|
       %tr
         %td= link_to patient_dosage.treatment_name, patient_dosage.treatment
         %td= patient_dosage.time_taken

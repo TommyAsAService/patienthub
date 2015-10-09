@@ -1,9 +1,10 @@
 class Patient < ActiveRecord::Base
-  has_many :dosages
   belongs_to :user
+  has_many :dosages
   has_many :quiz_feedbacks
   
   accepts_nested_attributes_for :dosages, reject_if: :all_blank, allow_destroy: true
+  
   before_save :ensure_authentication_token!
 
   validates :name, :age, :patient_number, presence: true
