@@ -4,7 +4,7 @@ class Dosage < ActiveRecord::Base
   has_one :feedback
   
   validates :frequency, :numericality => { :greater_than => 0 }
-  validates :patient_id, :time_taken, :frequency, :start_date, :treatment_name, :quantity, :unit, presence: true
+  validates :time_taken, :frequency, :start_date, :treatment_name, :quantity, :unit, presence: true
 
   def get_frequency_string
     if self.frequency == 1
