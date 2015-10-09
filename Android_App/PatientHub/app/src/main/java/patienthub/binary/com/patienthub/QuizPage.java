@@ -5,11 +5,13 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.BoringLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -84,11 +86,22 @@ public class QuizPage extends Activity {
             patientID = extras.getString("patientID");
             dosageFeedbackIDs = extras.getStringArray("dosageFeedbackIDs");
             dosageNames = extras.getStringArray("dosageNames");
+            numQuestions = extras.getInt("numQuestions");
         }
 
         selectQuestions(questionInt);
 
         final LinearLayout rLayout = (LinearLayout) findViewById(R.id.quizView2);
+        final ProgressBar bar = (ProgressBar) findViewById(R.id.quizProgressBar);
+        bar.setMax(numQuestions);
+
+        if(questionInt == 0){
+            int currentQuestion = numQuestions + 1 - dosageFeedbackIDs.length;
+            bar.setProgress(currentQuestion);
+        }else{
+            bar.setProgress(questionInt);
+        }
+
 
         final TextView question =(TextView) findViewById(R.id.questionMessage);
         question.setText(questionText);
@@ -142,6 +155,7 @@ public class QuizPage extends Activity {
                             myIntent.putExtra("dosageFeedbackIDs", dosageFeedbackIDs);
                             myIntent.putExtra("dosageNames", dosageNames);
                             myIntent.putExtra("patientID", patientID);
+                            myIntent.putExtra("numQuestions",numQuestions);
                         } else {
                             myIntent = new Intent(QuizPage.this, homeClass);
                         }
@@ -149,6 +163,8 @@ public class QuizPage extends Activity {
                 } else if (questionInt <= numQuestions) {
                     myIntent = new Intent(QuizPage.this, buttonDestination);
                     myIntent.putExtra("questionNum", questionInt);
+                    myIntent.putExtra("numQuestions",numQuestions);
+
                 } else                {
                     myIntent = new Intent(QuizPage.this, homeClass);
                 }
