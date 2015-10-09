@@ -46,7 +46,7 @@ public class MainActivity extends ActionBarActivity {
                 //NOTE: using '1' to start the feeling quiz
                 myIntent.putExtra("questionNum",0);
 
-                //NOTE: must include the patient ID if doing the quiz
+                //NOTE: must include the patient ID if doing the feeling quiz
                 String patientID = "1245";
                 myIntent.putExtra("patientID",patientID);
 
@@ -55,8 +55,8 @@ public class MainActivity extends ActionBarActivity {
                 myIntent.putExtra("dosageFeedbackIDs",dosageFeedbackIDs);
 
                 //NOTE: insert a string array of the dosage names of the dosage to provide feedback for (matching above)
-                String[] doseageNames = {"Aspirin","Warfarin","Ibuprofen"};
-                myIntent.putExtra("doseageNames",doseageNames);
+                String[] dosageNames = {"Aspirin","Warfarin","Ibuprofen"};
+                myIntent.putExtra("dosageNames",dosageNames);
 
                 MainActivity.this.startActivity(myIntent);
             }

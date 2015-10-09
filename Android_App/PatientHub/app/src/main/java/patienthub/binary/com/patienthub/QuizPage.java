@@ -1,9 +1,11 @@
 package patienthub.binary.com.patienthub;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +16,7 @@ import android.widget.TextView;
 
 import java.util.Arrays;
 
-public class QuizPage extends ActionBarActivity {
+public class QuizPage extends Activity {
 
     //TODO : make the button label change dynamically. Pass in extras including dosageID. Persist it!
 
@@ -25,7 +27,7 @@ public class QuizPage extends ActionBarActivity {
     private String otherText = "";
     private String patientID = null;
     private String[] dosageFeedbackIDs = null;
-    private String[] doseageNames = null;
+    private String[] dosageNames = null;
 
     //FOR EASY CONFIG
     Class buttonDestination = QuizPage.class;
@@ -53,7 +55,7 @@ public class QuizPage extends ActionBarActivity {
     private void selectQuestions(int intSelect){
         switch ( intSelect ) {
             case 0:
-                medName = doseageNames[0];
+                medName = dosageNames[0];
                 options = quizMedsA;
                 questionText = "Why didn't you take your " + medName + " today?\n";
                 break;
@@ -81,7 +83,7 @@ public class QuizPage extends ActionBarActivity {
             questionInt = extras.getInt("questionNum");
             patientID = extras.getString("patientID");
             dosageFeedbackIDs = extras.getStringArray("dosageFeedbackIDs");
-            doseageNames = extras.getStringArray("doseageNames");
+            dosageNames = extras.getStringArray("dosageNames");
         }
 
         selectQuestions(questionInt);
@@ -108,27 +110,11 @@ public class QuizPage extends ActionBarActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(QuizPage.this);
-                builder.setCancelable(true);
-                AlertDialog alert = builder.create();
-                EditText otherField = (EditText) findViewById(R.id.editTextOther);
-                otherText = otherField.getText().toString();
-                String publishString = "You chose option number " + currentRadioButtonSelection;
-
-                if (currentRadioButtonSelection == options.length) publishString += " " + otherText;
-
-                //alert.setTitle(publishString);
-                //alert.setMessage("We will need to persist this and send it to the server");
-                //alert.setIcon(android.R.drawable.ic_dialog_alert);
-                //alert.show();
+                apiPost(rg);
 
                 Intent myIntent = null;
 
-                if (questionInt != 0) {
-                    ++questionInt;
-                }
-
-                //DO API POST CALL WITH DATA!!!!
+                if (questionInt != 0) ++questionInt;
 
                 //if it is a 'treatment' question set
                 if (questionInt == 0) {
@@ -137,24 +123,32 @@ public class QuizPage extends ActionBarActivity {
 
                             //take off the first of the IDs
                             dosageFeedbackIDs = Arrays.copyOfRange(dosageFeedbackIDs, 1, dosageFeedbackIDs.length);
-                            doseageNames  = Arrays.copyOfRange(doseageNames, 1, doseageNames.length);
+                            dosageNames = Arrays.copyOfRange(dosageNames, 1, dosageNames.length);
 
                             myIntent = new Intent(QuizPage.this, QuizPage.class);
                             myIntent.putExtra("questionNum", questionInt);
                             myIntent.putExtra("dosageFeedbackIDs", dosageFeedbackIDs);
-                            myIntent.putExtra("doseageNames",doseageNames);
+                            myIntent.putExtra("dosageNames", dosageNames);
                             myIntent.putExtra("patientID", patientID);
                         } else {
                             myIntent = new Intent(QuizPage.this, homeClass);
                         }
                     }
-                } else if (questionInt <= numQuestions) {
+                } else if (questionInt <= numQuestions)
+
+                {
                     myIntent = new Intent(QuizPage.this, buttonDestination);
                     myIntent.putExtra("questionNum", questionInt);
-                } else {
+                } else
+
+                {
                     myIntent = new Intent(QuizPage.this, homeClass);
                 }
-                QuizPage.this.startActivity(myIntent);
+
+                QuizPage.this.
+
+                        startActivity(myIntent);
+
                 finish();
             }
         });
@@ -182,5 +176,36 @@ public class QuizPage extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    private void apiPost(RadioGroup rg){
+
+        String answer = "";
+
+        //get the ID of the 'other' radio button
+        int lastID = rg.getChildAt(rg.getChildCount() - 1).getId();
+
+        //if that button is selected, set answer to be the contents of it.
+        if (currentRadioButtonSelection == lastID) {
+            EditText otherField = (EditText) findViewById(R.id.editTextOther);
+            answer = otherField.getText().toString();
+            if(answer == null) answer = "...No response was provided...null";
+            if(answer.length() == 0) answer = "...No response was provided...empty";
+
+            //else set the answer to be the radio button label
+        } else {
+            RadioButton tempRadio = (RadioButton) rg.findViewById(rg.getCheckedRadioButtonId());
+            answer = tempRadio.getText().toString();
+        }
+
+        if(questionInt == 0){
+            dosageFeedbackIDs[0] = dosageFeedbackIDs[0]; // ready to be posted for medication question
+            boolean taken = false; // ready to be posted for medication question
+            answer = answer; // ready to be posted for both types of questions
+        }else{
+            questionText = questionText; //ready to be posted for quiz question
+            patientID = patientID; //ready to be posted for quiz question
+            answer = answer; // ready to be posted for both types of questions
+        }
     }
 }
