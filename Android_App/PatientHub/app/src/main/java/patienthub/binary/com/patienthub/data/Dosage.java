@@ -3,6 +3,12 @@ package patienthub.binary.com.patienthub.data;
 /**
  * Created by Mark Aziz on 7/10/2015.
  */
+
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 public class Dosage {
 
     private int patient_id;
@@ -32,7 +38,8 @@ public class Dosage {
         this.treatment = treatment;
     }
 
-    public Dosage(){}
+    public Dosage() {
+    }
 
     public int getPatient_id() {
         return patient_id;
@@ -120,5 +127,45 @@ public class Dosage {
 
     public void setTreatment(Treatment treatment) {
         this.treatment = treatment;
+    }
+
+    public boolean takeToday() {
+
+        System.out.println(this.getStart_date());
+
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date date = new Date();
+        try {
+            date = format.parse(this.getStart_date());
+            System.out.println(date);
+        } catch (Exception e) {
+            System.out.println(e.getStackTrace());
+        }
+
+        Date current = new Date();
+        Calendar currentDate = Calendar.getInstance();
+        currentDate.setTime(current);
+        Calendar startDate = Calendar.getInstance();
+        startDate.setTime(date);
+
+        System.out.println("DAYS BETWEEN: "+daysBetween(startDate, currentDate));
+        Long daysBetween = daysBetween(startDate,currentDate);
+        if(daysBetween % this.getFrequency()==0){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
+    private long daysBetween(Calendar startDate, Calendar endDate) {
+        Calendar date = (Calendar) startDate.clone();
+        long daysBetween = 0;
+        while (date.before(endDate)) {
+            date.add(Calendar.DAY_OF_MONTH, 1);
+            daysBetween++;
+        }
+        return daysBetween;
     }
 }

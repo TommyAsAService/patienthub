@@ -13,6 +13,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import patienthub.binary.com.patienthub.adapters.MedicationListAdapter;
 import patienthub.binary.com.patienthub.data.Dosage;
@@ -36,7 +40,9 @@ public class Medication_Screen extends Activity {
         try {
             Dosage[] dosages = new ObjectMapper().readValue(json, Dosage[].class);
             for(Dosage dose : dosages){
-                dosageList.add(dose.getTreatment_name());
+                if(dose.takeToday()) {
+                    dosageList.add(dose.getTreatment_name());
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
