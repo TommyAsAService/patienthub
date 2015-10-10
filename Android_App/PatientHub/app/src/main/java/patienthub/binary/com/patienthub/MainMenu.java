@@ -19,26 +19,37 @@ public class MainMenu extends ActionBarActivity {
         setContentView(R.layout.activity_main_menu);
 
         String json = getIntent().getStringExtra("json");
-
         ObjectMapper mapper = new ObjectMapper();
 
-        StringBuilder builder = new StringBuilder();
+        Dosage[] dosages = null;
 
         try {
-            Dosage[] dosages = mapper.readValue(json, Dosage[].class);
-            for(int i=0;i<dosages.length;i++){
-                //THIS SHOULD BE AN ENUM
-                Dosage dos = dosages[i];
-                Log.d("treatment type",dos.getTreatment_name());
-                if(dos.getTreatment().getTreatment_type().equals("Exercise")){
-                    builder.append(dos.getTreatment_name()+", ");
-
-                }
-            }
-
-
+            dosages = mapper.readValue(json, Dosage[].class);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        if(dosages!=null){
+            setupExerciseButton(dosages);
+        }
+
+    }
+
+
+    public void setupExerciseButton(Dosage[] dosages){
+        StringBuilder builder = new StringBuilder();
+        int numOfExercises = 0;
+        for(int i=0;i<dosages.length;i++){
+            //THIS SHOULD BE AN ENUM
+            Dosage dos = dosages[i];
+            Log.d("treatment type",dos.getTreatment_name());
+            if(dos.getTreatment().getTreatment_type().equals("Exercise")){
+                numOfExercises++;
+                builder.append(dos.getTreatment_name()+", ");
+                if(numOfExercises == 3){
+                    break;
+                }
+            }
         }
 
         Log.d("builderString",builder.toString());
@@ -46,7 +57,5 @@ public class MainMenu extends ActionBarActivity {
         // -2 to trim last comma
         text.setText(builder.substring(0,builder.length()-2)+"...");
     }
-
-
 
 }
