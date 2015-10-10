@@ -4,6 +4,8 @@
     <string name="app_name">Patient Hub</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_medication__screen">Medication_Screen</string>
+    <string name="medication_screen_header">Medication Taken</string>
     <string name="title_activity_qr__code">QR_Code</string>
 
 </resources>
