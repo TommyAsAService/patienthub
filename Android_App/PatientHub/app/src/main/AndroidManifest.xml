@@ -28,6 +28,10 @@
             android:name=".QuizPage"
             android:label="@string/title_activity_quiz_page" >
         </activity>
+        <activity
+            android:name=".ExercisePage"
+            android:label="@string/title_activity_exercise_page" >
+        </activity>
     </application>
 
 </manifest>

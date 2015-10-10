@@ -44,7 +44,7 @@ public class MainActivity extends ActionBarActivity {
 
                 //NOTE: use '0' to do the single medication question
                 //NOTE: using '1' to start the feeling quiz
-                myIntent.putExtra("questionNum",1);
+                myIntent.putExtra("questionNum",0);
 
                 //NOTE: number of questions in section (for progress bar)
                 myIntent.putExtra("numQuestions",3);
