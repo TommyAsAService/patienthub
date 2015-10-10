@@ -40,7 +40,13 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
 
                 //Intent myIntent = new Intent(MainActivity.this, QR_Code.class);
-                Intent myIntent = new Intent(MainActivity.this, QuizPage.class);
+                Intent myIntent = new Intent(MainActivity.this, ExercisePage.class);
+
+                //REQUIRED FOR EXERCISE PAGE
+                String[] exercises = {"Choose Exercise","Walk","Run","Swim"};
+                String[] times = {"Choose Duration","10min","30min","1hr"};
+                myIntent.putExtra("exercises", exercises);
+                myIntent.putExtra("times", times);
 
                 //NOTE: use '0' to do the single medication question
                 //NOTE: using '1' to start the feeling quiz

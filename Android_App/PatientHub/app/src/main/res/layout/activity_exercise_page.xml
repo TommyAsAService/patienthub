@@ -22,18 +22,30 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/exerciseMessage"
+            android:id="@+id/exerciseQ1"
             android:padding="10dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true" />
 
-
-        <EditText
-            android:layout_width="match_parent"
+        <Spinner
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/exerciseTextOther"
-            android:enabled="false"/>
+            android:id="@+id/exerciseSpinner1" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/exerciseQ2"
+            android:padding="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/exerciseSpinner2" />
 
     </LinearLayout>
 
