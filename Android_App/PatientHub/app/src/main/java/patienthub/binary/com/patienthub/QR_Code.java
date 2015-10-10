@@ -45,11 +45,15 @@ public class QR_Code extends Activity {
         }else{
             try {
                 String json = readFromFile(DOSAGES_FILENAME);
-                
+                Intent i = new Intent(this,MainMenu.class);
+                i.putExtra("json",json);
+
+                startActivity(i);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Toast.makeText(QR_Code.this, "FILE EXISTS", Toast.LENGTH_SHORT).show();
+
         }
 
     }

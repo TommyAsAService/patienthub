@@ -7,5 +7,8 @@
     <string name="title_activity_medication__screen">Medication_Screen</string>
     <string name="medication_screen_header">Medication Taken</string>
     <string name="title_activity_qr__code">QR_Code</string>
+    <string name="main_menu_header">Today</string>
+    <string name="exercise_title">Exercise</string>
+    <string name="title_activity_main_menu">MainMenu</string>
 
 </resources>
