@@ -9,6 +9,9 @@
     <string name="title_activity_qr__code">QR_Code</string>
     <string name="main_menu_header">Today</string>
     <string name="exercise_title">Exercise</string>
+    <string name="medication_title">Medication</string>
+    <string name="quiz_title">Quiz</string>
     <string name="title_activity_main_menu">MainMenu</string>
+    <string name="quiz_snippet">How are you feeling today?</string>
 
 </resources>

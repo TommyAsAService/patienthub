@@ -7,9 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.io.File;
 
 
 public class MainActivity extends ActionBarActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,32 @@ public class MainActivity extends ActionBarActivity {
                 MainActivity.this.startActivity(myIntent);
             }
         });
+
+        Button resetButton = (Button)findViewById(R.id.resetButton);
+        String filePath = MainActivity.this.getFilesDir()+ File.separator+QR_Code.DOSAGES_FILENAME;
+
+        if(!(new File(filePath).exists())) {
+            resetButton.setVisibility(View.GONE);
+        }else{
+            resetButton.setVisibility(View.VISIBLE);
+        }
+
+
+        resetButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                String filePath = MainActivity.this.getFilesDir()+ File.separator+QR_Code.DOSAGES_FILENAME;
+
+                if((new File(filePath).exists())) {
+                    File file = new File(filePath);
+                    file.delete();
+                    Toast.makeText(MainActivity.this, "Reset Patient Data", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
     }
 
 

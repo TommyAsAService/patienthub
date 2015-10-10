@@ -49,6 +49,7 @@ public class QR_Code extends Activity {
                 i.putExtra("json",json);
 
                 startActivity(i);
+                finish();
 
             } catch (IOException e) {
                 e.printStackTrace();
