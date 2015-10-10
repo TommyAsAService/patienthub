@@ -13,13 +13,15 @@
         android:layout_margin="5dp"
         android:text="@string/medication_screen_header"
         android:textColor="#000"
-        android:textSize="20sp" />
+        android:textSize="25sp" />
 
     <CheckBox android:id="@+id/checkbox_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Taken"
-        android:layout_alignParentRight="true"
-        android:onClick="onCheckboxClicked"/>
+        android:layout_margin="5dp"
+        android:layout_alignParentEnd="true"
+        android:onClick="onCheckboxClicked"
+        android:textSize="25sp"/>
 
 </RelativeLayout>
