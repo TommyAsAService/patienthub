@@ -18,6 +18,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import patienthub.binary.com.patienthub.Scheduling.Scheduler;
 import patienthub.binary.com.patienthub.adapters.MedicationListAdapter;
 import patienthub.binary.com.patienthub.data.Dosage;
 
@@ -40,7 +41,7 @@ public class Medication_Screen extends Activity {
         try {
             Dosage[] dosages = new ObjectMapper().readValue(json, Dosage[].class);
             for(Dosage dose : dosages){
-                if(dose.takeToday()) {
+                if(dose.isScheduledToday() && dose.getTime_taken()== Scheduler.timeOfDay()) {
                     dosageList.add(dose.getTreatment_name());
                 }
             }

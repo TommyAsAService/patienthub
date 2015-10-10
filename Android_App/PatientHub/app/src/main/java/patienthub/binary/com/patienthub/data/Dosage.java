@@ -9,6 +9,9 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import patienthub.binary.com.patienthub.Scheduling.Scheduler;
+
 public class Dosage {
 
     private int patient_id;
@@ -129,19 +132,10 @@ public class Dosage {
         this.treatment = treatment;
     }
 
-    public boolean takeToday() {
-
-        Date date = getStartDateAsDateType();
-
-        //Get current/start date as Calendar types
-        Date current = new Date();
-        Calendar currentDate = Calendar.getInstance();
-        currentDate.setTime(current);
-        Calendar startDate = Calendar.getInstance();
-        startDate.setTime(date);
+    public boolean isScheduledToday() {
 
         //If days since start matches frequency taken return true
-        Long daysBetween = daysBetween(startDate,currentDate);
+        int daysBetween = Scheduler.daysSince(this.getStart_date());
         if(daysBetween % this.getFrequency()==0){
             return true;
         } else {
@@ -149,26 +143,8 @@ public class Dosage {
         }
 
     }
-    //Converts String date from database to Date type
-    private Date getStartDateAsDateType(){
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        Date date = new Date();
-        try {
-            date = format.parse(this.getStart_date());
-            System.out.println(date);
-        } catch (Exception e) {
-            System.out.println(e.getStackTrace());
-        }
-        return date;
-    }
 
-    private long daysBetween(Calendar startDate, Calendar endDate) {
-        Calendar date = (Calendar) startDate.clone();
-        long daysBetween = 0;
-        while (date.before(endDate)) {
-            date.add(Calendar.DAY_OF_MONTH, 1);
-            daysBetween++;
-        }
-        return daysBetween;
-    }
+
+
+
 }
