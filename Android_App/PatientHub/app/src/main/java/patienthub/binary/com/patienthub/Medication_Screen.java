@@ -34,7 +34,7 @@ public class Medication_Screen extends Activity {
         listview = (ListView) findViewById(R.id.medicationListView);
         List<String> dosageList = new ArrayList<>();
 
-         String json = getIntent().getStringExtra("jsonDosages");
+        String json = getIntent().getStringExtra("jsonDosages");
 
 
         try {

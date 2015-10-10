@@ -131,24 +131,16 @@ public class Dosage {
 
     public boolean takeToday() {
 
-        System.out.println(this.getStart_date());
+        Date date = getStartDateAsDateType();
 
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        Date date = new Date();
-        try {
-            date = format.parse(this.getStart_date());
-            System.out.println(date);
-        } catch (Exception e) {
-            System.out.println(e.getStackTrace());
-        }
-
+        //Get current/start date as Calendar types
         Date current = new Date();
         Calendar currentDate = Calendar.getInstance();
         currentDate.setTime(current);
         Calendar startDate = Calendar.getInstance();
         startDate.setTime(date);
 
-        System.out.println("DAYS BETWEEN: "+daysBetween(startDate, currentDate));
+        //If days since start matches frequency taken return true
         Long daysBetween = daysBetween(startDate,currentDate);
         if(daysBetween % this.getFrequency()==0){
             return true;
@@ -157,7 +149,18 @@ public class Dosage {
         }
 
     }
-
+    //Converts String date from database to Date type
+    private Date getStartDateAsDateType(){
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date date = new Date();
+        try {
+            date = format.parse(this.getStart_date());
+            System.out.println(date);
+        } catch (Exception e) {
+            System.out.println(e.getStackTrace());
+        }
+        return date;
+    }
 
     private long daysBetween(Calendar startDate, Calendar endDate) {
         Calendar date = (Calendar) startDate.clone();
