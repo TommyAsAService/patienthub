@@ -3,8 +3,6 @@
   %thead
     %tr
       %th Name
-      %th Quantity
-      %th Unit
       %th Type
       %th
       %th
@@ -13,8 +11,6 @@
     - @treatments.each do |treatment|
       %tr
         %td= treatment.name
-        %td= treatment.quantity
-        %td= treatment.unit
         %td= treatment.treatment_type
         %td= link_to 'Show', treatment, class: "btn btn-xs btn-primary"
         %td= link_to 'Edit', edit_treatment_path(treatment), class: "btn btn-xs btn-default"

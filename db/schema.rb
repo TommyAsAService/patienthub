@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151008020328) do
+ActiveRecord::Schema.define(version: 20151009021155) do
 
   create_table "dosages", force: :cascade do |t|
     t.integer  "patient_id"
@@ -21,10 +21,22 @@ ActiveRecord::Schema.define(version: 20151008020328) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.string   "treatment_name"
+    t.float    "quantity"
+    t.string   "unit"
   end
 
   add_index "dosages", ["patient_id"], name: "index_dosages_on_patient_id"
   add_index "dosages", ["treatment_name"], name: "index_dosages_on_treatment_name"
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.integer  "dosage_id"
+    t.boolean  "taken"
+    t.string   "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "feedbacks", ["dosage_id"], name: "index_feedbacks_on_dosage_id"
 
   create_table "patients", force: :cascade do |t|
     t.string   "name"
@@ -40,10 +52,18 @@ ActiveRecord::Schema.define(version: 20151008020328) do
 
   add_index "patients", ["user_id"], name: "index_patients_on_user_id"
 
+  create_table "quiz_feedbacks", force: :cascade do |t|
+    t.string   "question"
+    t.string   "answer"
+    t.integer  "patient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "quiz_feedbacks", ["patient_id"], name: "index_quiz_feedbacks_on_patient_id"
+
   create_table "treatments", force: :cascade do |t|
     t.string   "name"
-    t.float    "quantity"
-    t.string   "unit"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.string   "treatment_type"

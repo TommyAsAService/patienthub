@@ -8,13 +8,19 @@
         - @dosage.errors.full_messages.each do |message|
           %li= message
   .form-group
-    = f.input :time_taken, input_html: { class: "form-control" }
+    = f.input :time_taken, input_html: { class: "form-control" }, collection: ["Morning", "Afternoon", "Evening"]
   .form-group
-    = f.input :frequency, input_html: { class: "form-control" }
+    = f.input :frequency, input_html: { class: "form-control", value: "" }
+    %em
+      Number of repeating days. E.g. Everyday = 1, every 2 days = 2.
   .form-group
     = f.input :start_date, input_html: { class: "form-control" }
   .form-group
     = f.input :treatment_name, :url => autocomplete_treatment_name_patients_path, :as => :autocomplete, input_html: { class: "form-control" }
+  .form-group
+    = f.input :quantity, input_html: { class: "form-control" }
+  .form-group
+    = f.input :unit, input_html: { class: "form-control" }, collection: [ "m", "km", "minute(s)", "hour(s)", "ml", "tablet(s)"]
   .form-group.hidden
     = f.input :patient_id
   .submit-button

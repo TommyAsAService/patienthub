@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       get 'patient/' => 'patients#get_patient'
       get 'patient/dosages' => 'patients#get_dosages'
+      post 'patient/quiz_feedback' => 'quiz_feedbacks#create'
+      post 'patient/medication_feedback' => 'feedbacks#create'
     end
   end
   devise_for :users#, :controllers => { registrations: "user/registrations" }
