@@ -65,7 +65,7 @@ public class QR_Code extends Activity {
         if (result != null) {
             String contents = result.getContents();
 
-            String tokenFilePath = QR_Code.this.getFilesDir()+File.separator+"token.txt";
+            String tokenFilePath = "token.txt";
 
             writeToNewFile(tokenFilePath,contents);
 
@@ -140,7 +140,6 @@ public class QR_Code extends Activity {
 
         try{
             fop = openFileOutput(fileName,Context.MODE_PRIVATE);
-            fop.write(data.getBytes());
             fop.write(data.getBytes());
             fop.close();
             Log.d("path",file.getPath());
