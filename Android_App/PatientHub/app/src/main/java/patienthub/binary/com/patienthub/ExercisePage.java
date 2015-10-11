@@ -11,8 +11,20 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.apache.http.HttpResponse;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+
+import patienthub.binary.com.patienthub.webservice.HttpManager;
 
 public class ExercisePage extends Activity {
 
@@ -23,6 +35,7 @@ public class ExercisePage extends Activity {
     private boolean exerciseSelected = false;
     private boolean durationSelected = false;
     private int dosageID = -1;
+    private String token = "";
 
 
     @Override
@@ -35,6 +48,7 @@ public class ExercisePage extends Activity {
             exercises = extras.getStringArray("exercises");
             times = extras.getStringArray("times");
             dosageID = extras.getInt("dosageID");
+            token = extras.getString("token");
         }
 
         final TextView question1 =(TextView) findViewById(R.id.exerciseQ1);
@@ -74,10 +88,18 @@ public class ExercisePage extends Activity {
 
                 dosageID = dosageID; //POST THIS
 
+                HttpManager pOSTer = new HttpManager();
 
-                Intent myIntent = new Intent(ExercisePage.this, MainActivity.class);
-                ExercisePage.this.startActivity(myIntent);
-                finish();
+                try {
+                    System.out.println(pOSTer.postMedicationData(q1Answer + q2Answer, token, dosageID,true));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                // Intent myIntent = new Intent(ExercisePage.this, MainActivity.class);
+              //  ExercisePage.this.startActivity(myIntent);
+               // finish();
             }
         });
 
@@ -102,17 +124,17 @@ public class ExercisePage extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
-                if(arg2 == 0) durationSelected = false;
+                if (arg2 == 0) durationSelected = false;
                 else durationSelected = true;
 
-                if(exerciseSelected && durationSelected) nextButton.setEnabled(true);
+                if (exerciseSelected && durationSelected) nextButton.setEnabled(true);
                 else nextButton.setEnabled(false);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
-
 
     }
 
