@@ -2,10 +2,12 @@
 
 one:
   name: MyString
-  description: MyString
-  label: MyString
+  quantity: 1.5
+  isExercise: false
+  unit: MyString
 
 two:
   name: MyString
-  description: MyString
-  label: MyString
+  quantity: 1.5
+  isExercise: false
+  unit: MyString

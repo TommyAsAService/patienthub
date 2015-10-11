@@ -1,8 +1,10 @@
 class Patient < ActiveRecord::Base
-  has_many :patient_medications
   belongs_to :user
+  has_many :dosages
+  has_many :quiz_feedbacks
   
-  accepts_nested_attributes_for :patient_medications, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :dosages, reject_if: :all_blank, allow_destroy: true
+  
   before_save :ensure_authentication_token!
 
   validates :name, :age, :patient_number, presence: true
@@ -23,7 +25,7 @@ class Patient < ActiveRecord::Base
 
   def generate_authentication_token
     loop do
-      token = Devise.friendly_token + self.id.to_s
+      token = Devise.friendly_token
       break token unless Patient.where(token_authentication: token).first
     end
   end

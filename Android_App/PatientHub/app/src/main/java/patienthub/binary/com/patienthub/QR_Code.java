@@ -3,6 +3,7 @@ package patienthub.binary.com.patienthub;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,6 +65,9 @@ public class QR_Code extends Activity {
         if (result != null) {
             String contents = result.getContents();
             if (contents != null) {
+
+
+
                 Toast.makeText(this,"SUCCESS",Toast.LENGTH_LONG).show();
                 Log.d("SUCCESS", result.toString());
                 AsyncTask getRequest = new PerformGetRequest();

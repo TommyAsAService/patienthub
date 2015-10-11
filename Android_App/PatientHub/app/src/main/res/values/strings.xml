@@ -15,5 +15,7 @@
     <string name="quiz_title">Quiz</string>
     <string name="title_activity_main_menu">MainMenu</string>
     <string name="quiz_snippet">How are you feeling?</string>
+    <string name="title_activity_quiz_page">QuizPage</string>
+    <string name="title_activity_exercise_page">ExercisePage</string>
 
 </resources>
