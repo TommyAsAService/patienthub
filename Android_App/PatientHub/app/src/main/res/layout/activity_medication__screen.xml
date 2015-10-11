@@ -26,13 +26,28 @@
             android:textSize="20sp" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/medication_button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
     <Button
         android:id="@+id/submit_medication_taken_button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/back_button"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/back_medication_taken_button"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/submit_button"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_weight="1"/>
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/medicationListView"
@@ -40,7 +55,7 @@
         android:layout_height="fill_parent"
         android:layout_below="@id/header"
         android:divider="@null"
-        android:layout_above="@id/submit_medication_taken_button">
+        android:layout_above="@id/medication_button_layout">
     </ListView>
 
 

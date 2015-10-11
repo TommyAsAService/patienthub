@@ -1,10 +1,12 @@
 package patienthub.binary.com.patienthub;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +35,7 @@ import patienthub.binary.com.patienthub.data.Dosage;
 public class Medication_Screen extends Activity {
 
     public final static String DOSAGES_FILENAME = "dosages.txt";
+    private static LayoutInflater inflater = null;
 
     private ListView listview;
     private MedicationListAdapter adapter;
@@ -42,7 +45,7 @@ public class Medication_Screen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medication__screen);
         listview = (ListView) findViewById(R.id.medicationListView);
-        List<String> dosageList = new ArrayList<>();
+        List<Dosage> dosageList = new ArrayList<>();
 
         String json = "";
         try {
@@ -57,7 +60,7 @@ public class Medication_Screen extends Activity {
             for(Dosage dose : dosages){
                 //if dose is today ***LOGIC TO ADD*** && time matches intent time.
                 if(dose.isScheduledToday()) {
-                    dosageList.add(dose.getTreatment_name());
+                    dosageList.add(dose);
                 }
             }
         } catch (IOException e) {
@@ -65,6 +68,11 @@ public class Medication_Screen extends Activity {
         }
 
         adapter  = new MedicationListAdapter(this,dosageList);
+
+        inflater = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View footer = inflater.inflate(R.layout.medication_listview_footer, null);
+        listview.addFooterView(footer);
         listview.setAdapter(adapter);
     }
 

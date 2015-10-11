@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import patienthub.binary.com.patienthub.R;
+import patienthub.binary.com.patienthub.data.Dosage;
 
 /**
  * Created by Mark on 9/10/2015.
@@ -17,20 +18,15 @@ import patienthub.binary.com.patienthub.R;
 public class MedicationListAdapter extends BaseAdapter {
 
     Context context;
-    List<String> data;
+    List<Dosage> data;
     private static LayoutInflater inflater = null;
 
-    public MedicationListAdapter(Context context, List<String> data) {
+    public MedicationListAdapter(Context context, List<Dosage> data) {
         // TODO Auto-generated constructor stub
         this.context = context;
         this.data = data;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-
-    public void addItem(String str){
-        data.add(str);
     }
 
     @Override
@@ -53,8 +49,12 @@ public class MedicationListAdapter extends BaseAdapter {
         View vi = convertView;
         if (vi == null)
             vi = inflater.inflate(R.layout.medication_cusom_listview_item, null);
-        TextView text = (TextView) vi.findViewById(R.id.row_medicationName);
-        text.setText(data.get(position));
+        TextView name = (TextView) vi.findViewById(R.id.row_medicationName);
+        name.setText(data.get(position).getTreatment_name());
+
+        TextView qty = (TextView) vi.findViewById(R.id.dosageQuantity);
+        qty.setText(data.get(position).getQuantity() +" "+data.get(position).getUnit());
         return vi;
     }
+
 }
