@@ -47,6 +47,8 @@ public class Medication_Screen extends Activity {
         listview = (ListView) findViewById(R.id.medicationListView);
         List<Dosage> dosageList = new ArrayList<>();
 
+        String timeOfDay = getIntent().getStringExtra("timeOfDay");
+
         String json = "";
         try {
             json = readFromFile(DOSAGES_FILENAME);
@@ -58,8 +60,7 @@ public class Medication_Screen extends Activity {
         try {
             Dosage[] dosages = new ObjectMapper().readValue(json, Dosage[].class);
             for(Dosage dose : dosages){
-                //if dose is today ***LOGIC TO ADD*** && time matches intent time.
-                if(dose.isScheduledToday()) {
+                if(dose.isScheduledToday() && timeOfDay.equals(dose.getTime_taken())) {
                     dosageList.add(dose);
                 }
             }
