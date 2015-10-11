@@ -1,8 +1,10 @@
 package patienthub.binary.com.patienthub;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,7 +12,12 @@ import android.widget.ListView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.text.SimpleDateFormat;
@@ -25,6 +32,8 @@ import patienthub.binary.com.patienthub.data.Dosage;
 
 public class Medication_Screen extends Activity {
 
+    public final static String DOSAGES_FILENAME = "dosages.txt";
+
     private ListView listview;
     private MedicationListAdapter adapter;
 
@@ -35,7 +44,12 @@ public class Medication_Screen extends Activity {
         listview = (ListView) findViewById(R.id.medicationListView);
         List<String> dosageList = new ArrayList<>();
 
-        String json = getIntent().getStringExtra("jsonDosages");
+        String json = "";
+        try {
+            json = readFromFile(DOSAGES_FILENAME);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         try {
@@ -79,5 +93,35 @@ public class Medication_Screen extends Activity {
 
     public void onCheckboxClicked(View v){
 
+    }
+
+    private String readFromFile(String filename) throws IOException{
+
+        String ret = "";
+
+        try {
+            InputStream inputStream = openFileInput(filename);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
     }
 }
