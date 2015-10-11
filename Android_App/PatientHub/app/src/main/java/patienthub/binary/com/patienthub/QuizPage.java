@@ -159,6 +159,7 @@ public class QuizPage extends Activity {
                             myIntent.putExtra("dosageFeedbackIDs", dosageFeedbackIDs);
                             myIntent.putExtra("dosageNames", dosageNames);
                             myIntent.putExtra("numQuestions",numQuestions);
+                            myIntent.putExtra("token",token);
                         } else {
                             myIntent = new Intent(QuizPage.this, homeClass);
                         }
@@ -233,7 +234,7 @@ public class QuizPage extends Activity {
 
             HttpManager pOSTer = new HttpManager();
             try {
-                System.out.println(pOSTer.postMedicationData(answer, token, dosageID, true));
+                System.out.println(pOSTer.postMedicationData(answer, token, dosageID, false));
             } catch (IOException e) {
                 e.printStackTrace();
             }
