@@ -49,10 +49,10 @@ public class QuizPage extends Activity {
     String quiz1a[] = { "I slept well", "I woke a few times", "I slept very badly", "Other" };
 
     String quiz2q = "Are you feeling in control of your recovery?\n";
-    String quiz2a[] = { "Yes", "I need some more guidance", "I feeling very confused", "Other" };
+    String quiz2a[] = { "Yes", "I need some more guidance", "I am feeling very confused", "Other" };
 
     String quiz3q = "Are you feeling motivated about your recovery?\n";
-    String quiz3a[] = { "Very motivated", "A bit lacking", "I am struggle to motivate myself", "Other" };
+    String quiz3a[] = { "Very motivated", "A bit lacking", "I am struggling to motivate myself", "Other" };
 
     String quizMedsQ = "Why didn't you take your " + medName + " today?\n";
     String quizMedsA[] = { "It makes me feel sick", "I'm feeling better", "I've run out", "It's too expensive", "Other" };
