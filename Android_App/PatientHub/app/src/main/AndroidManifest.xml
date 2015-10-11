@@ -21,8 +21,17 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Medication_Screen"
+            android:label="@string/title_activity_medication__screen" >
+        </activity>
+        <activity
             android:name=".QR_Code"
             android:label="@string/title_activity_qr__code" >
+        </activity>
+        <activity
+
+            android:name=".MainMenu"
+            android:label="@string/title_activity_main_menu" >
         </activity>
         <activity
             android:name=".QuizPage"

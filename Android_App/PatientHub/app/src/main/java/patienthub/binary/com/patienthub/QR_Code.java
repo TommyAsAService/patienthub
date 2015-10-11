@@ -1,10 +1,10 @@
 package patienthub.binary.com.patienthub;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
+
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,23 +12,51 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
-import patienthub.binary.com.patienthub.data.Medications;
+import patienthub.binary.com.patienthub.data.Dosage;
 import patienthub.binary.com.patienthub.webservice.HttpManager;
 
 
-public class QR_Code extends ActionBarActivity {
+public class QR_Code extends Activity {
+
+    public final static String GET_MEDICATIONS_URL = "http://patienthubstage.herokuapp.com/api/v1/patient/dosages";
+    public final static String DOSAGES_FILENAME = "dosages.txt";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr__code);
-        performScan();
+        String filePath = QR_Code.this.getFilesDir()+File.separator+DOSAGES_FILENAME;
+
+        if(!(new File(filePath).exists())){
+            performScan();
+        }else{
+            try {
+                String json = readFromFile(DOSAGES_FILENAME);
+                Intent i = new Intent(this,MainMenu.class);
+                i.putExtra("json",json);
+
+                startActivity(i);
+                finish();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
 
     }
 
@@ -43,8 +71,7 @@ public class QR_Code extends ActionBarActivity {
                 Toast.makeText(this,"SUCCESS",Toast.LENGTH_LONG).show();
                 Log.d("SUCCESS", result.toString());
                 AsyncTask getRequest = new PerformGetRequest();
-
-                AsyncTask test = getRequest.execute(new String[]{"http://patienthubstage.herokuapp.com/api/v1/patient/medications", contents});
+                getRequest.execute(new String[]{GET_MEDICATIONS_URL, contents});
             } else {
                 Toast.makeText(this,"FAILED",Toast.LENGTH_LONG).show();
                 Log.d("FAILED", result.toString());
@@ -86,19 +113,64 @@ public class QR_Code extends ActionBarActivity {
         protected String doInBackground(String... strings) {
             String uri = strings[0];
             String token = strings[1];
-            String test = HttpManager.getData(uri,token);
-            return test;
+            String getData = HttpManager.getData(uri,token);
+            return getData;
         }
 
         protected void onPostExecute(String result) {
-            TextView view = (TextView)findViewById(R.id.qr_code);
-            //Medications meds = new ObjectMapper().readValue(result, Medications.class);
-            view.setText(result);
 
-            SharedPreferences.Editor editor = getSharedPreferences("prefsFile", MODE_PRIVATE).edit();
-            editor.putString("jsonFile",result);
-            editor.commit();
+            writeToNewFile(DOSAGES_FILENAME,result);
+
+            Intent i = new Intent(QR_Code.this, Medication_Screen.class);
+            i.putExtra("jsonDosages",result);
+            startActivity(i);
 
         }
+    }
+
+
+    private void writeToNewFile(String fileName, String data) {
+        File file = new File(QR_Code.this.getFilesDir(),fileName);
+        FileOutputStream fop;
+
+        try{
+            fop = openFileOutput(fileName,Context.MODE_PRIVATE);
+            fop.write(data.getBytes());
+            fop.write(data.getBytes());
+            fop.close();
+            Log.d("path",file.getPath());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private String readFromFile(String filename) throws IOException{
+
+        String ret = "";
+
+        try {
+            InputStream inputStream = openFileInput(filename);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
     }
 }

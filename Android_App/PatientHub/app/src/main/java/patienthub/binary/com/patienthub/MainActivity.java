@@ -11,9 +11,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.io.File;
 
 
 public class MainActivity extends ActionBarActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,37 +47,37 @@ public class MainActivity extends ActionBarActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                //Intent myIntent = new Intent(MainActivity.this, QR_Code.class);
-                //Intent myIntent = new Intent(MainActivity.this, ExercisePage.class);
-                Intent myIntent = new Intent(MainActivity.this, QuizPage.class);
-
-                //REQUIRED FOR EXERCISE PAGE
-                String[] exercises = {"Choose Exercise","Walk","Run","Swim"};
-                String[] times = {"Choose Duration","10min","30min","1hr"};
-                myIntent.putExtra("exercises", exercises);
-                myIntent.putExtra("times", times);
-                myIntent.putExtra("dosageID", 6);
-                myIntent.putExtra("token", "dKxUDRoJLsxSHFtec9Nm");
-
-                //NOTE: use '0' to do the single medication question
-                //NOTE: using '1' to start the feeling quiz
-                myIntent.putExtra("questionNum",1);
-
-                //NOTE: number of questions in section (for progress bar)
-                myIntent.putExtra("numQuestions",3);
-
-                //NOTE: insert a string array of the dosage IDs of the dosage to provide feedback for
-                String[] dosageFeedbackIDs = {"6","6","6"};
-                myIntent.putExtra("dosageFeedbackIDs",dosageFeedbackIDs);
-
-                //NOTE: insert a string array of the dosage names of the dosage to provide feedback for (matching above)
-                String[] dosageNames = {"Aspirin","Warfarin","Ibuprofen"};
-                myIntent.putExtra("dosageNames",dosageNames);
-
+                Intent myIntent = new Intent(MainActivity.this, QR_Code.class);
                 MainActivity.this.startActivity(myIntent);
             }
-
         });
+
+        Button resetButton = (Button)findViewById(R.id.resetButton);
+        String filePath = MainActivity.this.getFilesDir()+ File.separator+QR_Code.DOSAGES_FILENAME;
+
+        if(!(new File(filePath).exists())) {
+            resetButton.setVisibility(View.GONE);
+        }else{
+            resetButton.setVisibility(View.VISIBLE);
+        }
+
+
+        resetButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                String filePath = MainActivity.this.getFilesDir()+ File.separator+QR_Code.DOSAGES_FILENAME;
+
+                if((new File(filePath).exists())) {
+                    File file = new File(filePath);
+                    file.delete();
+                    Toast.makeText(MainActivity.this, "Reset Patient Data", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+
     }
 
     @Override

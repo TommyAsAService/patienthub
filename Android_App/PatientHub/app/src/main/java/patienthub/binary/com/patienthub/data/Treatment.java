@@ -3,17 +3,23 @@ package patienthub.binary.com.patienthub.data;
 /**
  * Created by Mark Aziz on 7/10/2015.
  */
-public class Medication {
+public class Treatment {
 
     private int id;
     private String name;
-    private String description;
-    private String label;
+    private String treatment_type;
     private String created_at;
     private String updated_at;
 
-    public Medication(int id){
+    public Treatment(int id, String name, String created_at, String updated_at, String treatment_type) {
         this.id = id;
+        this.name = name;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.treatment_type = treatment_type;
+    }
+
+    public Treatment() {
     }
 
     public int getId() {
@@ -32,22 +38,6 @@ public class Medication {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
     public String getCreated_at() {
         return created_at;
     }
@@ -62,5 +52,13 @@ public class Medication {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getTreatment_type() {
+        return treatment_type;
+    }
+
+    public void setTreatment_type(String treatment_type) {
+        this.treatment_type = treatment_type;
     }
 }
