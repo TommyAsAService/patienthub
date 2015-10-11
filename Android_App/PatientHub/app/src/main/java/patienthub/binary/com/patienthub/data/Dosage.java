@@ -4,6 +4,8 @@ package patienthub.binary.com.patienthub.data;
  * Created by Mark Aziz on 7/10/2015.
  */
 
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -136,6 +138,7 @@ public class Dosage {
 
         //If days since start matches frequency taken return true
         int daysBetween = Scheduler.daysSince(this.getStart_date());
+        Log.d("days between", String.valueOf(daysBetween));
         if(daysBetween % this.getFrequency()==0){
             return true;
         } else {

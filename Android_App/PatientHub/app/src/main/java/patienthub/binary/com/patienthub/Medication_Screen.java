@@ -41,7 +41,7 @@ public class Medication_Screen extends Activity {
         try {
             Dosage[] dosages = new ObjectMapper().readValue(json, Dosage[].class);
             for(Dosage dose : dosages){
-                if(dose.isScheduledToday() && dose.getTime_taken()== Scheduler.timeOfDay()) {
+                if(dose.isScheduledToday() && dose.getTime_taken().equals(Scheduler.timeOfDay())) {
                     dosageList.add(dose.getTreatment_name());
                 }
             }

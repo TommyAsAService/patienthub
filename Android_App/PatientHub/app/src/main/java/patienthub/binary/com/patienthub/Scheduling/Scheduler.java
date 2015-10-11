@@ -1,5 +1,7 @@
 package patienthub.binary.com.patienthub.Scheduling;
 
+import android.util.Log;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,6 +23,10 @@ public class Scheduler {
         Date current = new Date();
         Calendar currentDate = Calendar.getInstance();
         currentDate.setTime(current);
+        currentDate.set(Calendar.HOUR_OF_DAY, 0);
+        currentDate.set(Calendar.MINUTE, 0);
+        currentDate.set(Calendar.SECOND, 0);
+        currentDate.set(Calendar.MILLISECOND, 0);
         Calendar startDate = Calendar.getInstance();
         startDate.setTime(date);
 
@@ -64,6 +70,7 @@ public class Scheduler {
     private static int daysBetween(Calendar startDate, Calendar endDate) {
         Calendar date = (Calendar) startDate.clone();
         int daysBetween = 0;
+        Log.d("dates",date.toString()+ " "+endDate.toString());
         while (date.before(endDate)) {
             date.add(Calendar.DAY_OF_MONTH, 1);
             daysBetween++;
