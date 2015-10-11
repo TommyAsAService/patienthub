@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,6 +19,9 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         SharedPreferences prefs = getSharedPreferences("prefsFile", MODE_PRIVATE);
         String restoredText = prefs.getString("jsonFile", null);
@@ -40,14 +44,16 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
 
                 //Intent myIntent = new Intent(MainActivity.this, QR_Code.class);
-                Intent myIntent = new Intent(MainActivity.this, ExercisePage.class);
+                //Intent myIntent = new Intent(MainActivity.this, ExercisePage.class);
+                Intent myIntent = new Intent(MainActivity.this, QuizPage.class);
 
                 //REQUIRED FOR EXERCISE PAGE
                 String[] exercises = {"Choose Exercise","Walk","Run","Swim"};
                 String[] times = {"Choose Duration","10min","30min","1hr"};
                 myIntent.putExtra("exercises", exercises);
                 myIntent.putExtra("times", times);
-                myIntent.putExtra("dosageID", 999);
+                myIntent.putExtra("dosageID", 6);
+                myIntent.putExtra("token", "dKxUDRoJLsxSHFtec9Nm");
 
                 //NOTE: use '0' to do the single medication question
                 //NOTE: using '1' to start the feeling quiz
@@ -61,7 +67,7 @@ public class MainActivity extends ActionBarActivity {
                 myIntent.putExtra("patientID",patientID);
 
                 //NOTE: insert a string array of the dosage IDs of the dosage to provide feedback for
-                String[] dosageFeedbackIDs = {"111","222","333"};
+                String[] dosageFeedbackIDs = {"6","6","6"};
                 myIntent.putExtra("dosageFeedbackIDs",dosageFeedbackIDs);
 
                 //NOTE: insert a string array of the dosage names of the dosage to provide feedback for (matching above)

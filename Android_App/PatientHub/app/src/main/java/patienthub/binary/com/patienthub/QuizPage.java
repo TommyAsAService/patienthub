@@ -16,7 +16,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.Arrays;
+
+import patienthub.binary.com.patienthub.webservice.HttpManager;
 
 public class QuizPage extends Activity {
 
@@ -30,6 +33,7 @@ public class QuizPage extends Activity {
     private String patientID = null;
     private String[] dosageFeedbackIDs = null;
     private String[] dosageNames = null;
+    private String token = "";
 
     //FOR EASY CONFIG
     Class buttonDestination = QuizPage.class;
@@ -87,6 +91,7 @@ public class QuizPage extends Activity {
             dosageFeedbackIDs = extras.getStringArray("dosageFeedbackIDs");
             dosageNames = extras.getStringArray("dosageNames");
             numQuestions = extras.getInt("numQuestions");
+            token = extras.getString("token");
         }
 
         selectQuestions(questionInt);
@@ -225,7 +230,18 @@ public class QuizPage extends Activity {
 
         if(questionInt == 0){
             dosageFeedbackIDs[0] = dosageFeedbackIDs[0]; // ready to be posted for medication question
-            boolean taken = false; // ready to be posted for medication question
+
+            int dosageID = Integer.parseInt(dosageFeedbackIDs[0]);
+
+            HttpManager pOSTer = new HttpManager();
+            try {
+                System.out.println(pOSTer.postMedicationData(answer, token, dosageID, true));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            // ready to be posted for medication question
             answer = answer; // ready to be posted for both types of questions
         }else{
             questionText = questionText; //ready to be posted for quiz question
