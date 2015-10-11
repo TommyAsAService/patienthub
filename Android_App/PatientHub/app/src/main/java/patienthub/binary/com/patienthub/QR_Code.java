@@ -64,9 +64,14 @@ public class QR_Code extends Activity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (result != null) {
             String contents = result.getContents();
+
+            String tokenFilePath = "token.txt";
+
+            writeToNewFile(tokenFilePath,contents);
+
+            System.out.println("THE FILE WRITE PATH " + tokenFilePath);
+
             if (contents != null) {
-
-
 
                 Toast.makeText(this,"SUCCESS",Toast.LENGTH_LONG).show();
                 Log.d("SUCCESS", result.toString());
@@ -135,7 +140,6 @@ public class QR_Code extends Activity {
 
         try{
             fop = openFileOutput(fileName,Context.MODE_PRIVATE);
-            fop.write(data.getBytes());
             fop.write(data.getBytes());
             fop.close();
             Log.d("path",file.getPath());

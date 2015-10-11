@@ -33,10 +33,6 @@ public class MainActivity extends Activity {
         String restoredText = prefs.getString("jsonFile", null);
         if (restoredText != null) {
 
-            //@@@@@@@@@@@
-            // INSERT REDIRECT HERE TO MAIN 'LIST VIEW' SCREEN
-            //@@@@@@@@@@@
-
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(true);
             AlertDialog alert = builder.create();
@@ -69,12 +65,20 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 String filePath = MainActivity.this.getFilesDir()+ File.separator+QR_Code.DOSAGES_FILENAME;
+                String tokenFile = MainActivity.this.getFilesDir()+ File.separator+"token.txt";
 
                 if((new File(filePath).exists())) {
                     File file = new File(filePath);
                     file.delete();
-                    Toast.makeText(MainActivity.this, "Reset Patient Data", Toast.LENGTH_SHORT).show();
+
                 }
+
+                if((new File(tokenFile).exists())) {
+                    File file = new File(tokenFile);
+                    file.delete();
+                }
+
+                Toast.makeText(MainActivity.this, "Reset Patient Data", Toast.LENGTH_SHORT).show();
 
             }
         });
