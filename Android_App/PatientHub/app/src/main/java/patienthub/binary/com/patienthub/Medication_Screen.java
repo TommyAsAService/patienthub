@@ -30,6 +30,7 @@ import java.util.Locale;
 import patienthub.binary.com.patienthub.Scheduling.Scheduler;
 import patienthub.binary.com.patienthub.adapters.MedicationListAdapter;
 import patienthub.binary.com.patienthub.data.Dosage;
+import patienthub.binary.com.patienthub.webservice.HttpManager;
 
 
 public class Medication_Screen extends Activity {
@@ -134,4 +135,23 @@ public class Medication_Screen extends Activity {
 
         return ret;
     }
+
+    private void postMedsTaken(List<Dosage> dosagesList){
+        String token = "";
+        HttpManager httpMan = new HttpManager();
+        try {
+            token = readFromFile("token.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for(Dosage dosage : dosagesList){
+            try {
+                httpMan.postMedicationData("The medication was taken",token,dosage.getId(),true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
+
