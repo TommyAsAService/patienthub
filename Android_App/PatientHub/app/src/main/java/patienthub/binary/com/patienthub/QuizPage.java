@@ -30,7 +30,6 @@ public class QuizPage extends Activity {
     String questionText = "";
     private int currentRadioButtonSelection = -1;
     private String otherText = "";
-    private String patientID = null;
     private String[] dosageFeedbackIDs = null;
     private String[] dosageNames = null;
     private String token = "";
@@ -87,7 +86,6 @@ public class QuizPage extends Activity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             questionInt = extras.getInt("questionNum");
-            patientID = extras.getString("patientID");
             dosageFeedbackIDs = extras.getStringArray("dosageFeedbackIDs");
             dosageNames = extras.getStringArray("dosageNames");
             numQuestions = extras.getInt("numQuestions");
@@ -160,7 +158,6 @@ public class QuizPage extends Activity {
                             myIntent.putExtra("questionNum", questionInt);
                             myIntent.putExtra("dosageFeedbackIDs", dosageFeedbackIDs);
                             myIntent.putExtra("dosageNames", dosageNames);
-                            myIntent.putExtra("patientID", patientID);
                             myIntent.putExtra("numQuestions",numQuestions);
                         } else {
                             myIntent = new Intent(QuizPage.this, homeClass);
@@ -170,6 +167,7 @@ public class QuizPage extends Activity {
                     myIntent = new Intent(QuizPage.this, buttonDestination);
                     myIntent.putExtra("questionNum", questionInt);
                     myIntent.putExtra("numQuestions",numQuestions);
+                    myIntent.putExtra("token",token);
 
                 } else                {
                     myIntent = new Intent(QuizPage.this, homeClass);
@@ -245,8 +243,15 @@ public class QuizPage extends Activity {
             answer = answer; // ready to be posted for both types of questions
         }else{
             questionText = questionText; //ready to be posted for quiz question
-            patientID = patientID; //ready to be posted for quiz question
             answer = answer; // ready to be posted for both types of questions
+
+            HttpManager pOSTer = new HttpManager();
+            try {
+                System.out.println(pOSTer.postQuizData(questionText, token, answer));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 }

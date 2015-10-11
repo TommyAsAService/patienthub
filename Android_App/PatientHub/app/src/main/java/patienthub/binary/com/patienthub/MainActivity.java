@@ -57,14 +57,10 @@ public class MainActivity extends ActionBarActivity {
 
                 //NOTE: use '0' to do the single medication question
                 //NOTE: using '1' to start the feeling quiz
-                myIntent.putExtra("questionNum",0);
+                myIntent.putExtra("questionNum",1);
 
                 //NOTE: number of questions in section (for progress bar)
                 myIntent.putExtra("numQuestions",3);
-
-                //NOTE: must include the patient ID if doing the feeling quiz
-                String patientID = "1245";
-                myIntent.putExtra("patientID",patientID);
 
                 //NOTE: insert a string array of the dosage IDs of the dosage to provide feedback for
                 String[] dosageFeedbackIDs = {"6","6","6"};
