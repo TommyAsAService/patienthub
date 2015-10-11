@@ -31,10 +31,6 @@ public class MainActivity extends ActionBarActivity {
         String restoredText = prefs.getString("jsonFile", null);
         if (restoredText != null) {
 
-            //@@@@@@@@@@@
-            // INSERT REDIRECT HERE TO MAIN 'LIST VIEW' SCREEN
-            //@@@@@@@@@@@
-
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(true);
             AlertDialog alert = builder.create();
