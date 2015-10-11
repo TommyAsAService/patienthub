@@ -1,5 +1,5 @@
 class Feedback < ActiveRecord::Base
   belongs_to :dosage
   
-  validates :taken, :comment, presence: true
+  validates :comment, presence: true
 end
