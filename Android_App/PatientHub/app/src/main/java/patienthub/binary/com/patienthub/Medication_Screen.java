@@ -30,11 +30,11 @@ import java.util.Locale;
 import patienthub.binary.com.patienthub.Scheduling.Scheduler;
 import patienthub.binary.com.patienthub.adapters.MedicationListAdapter;
 import patienthub.binary.com.patienthub.data.Dosage;
+import patienthub.binary.com.patienthub.data.TreatmentType;
 
 
 public class Medication_Screen extends Activity {
 
-    public final static String DOSAGES_FILENAME = "dosages.txt";
     private static LayoutInflater inflater = null;
 
     private ListView listview;
@@ -51,7 +51,7 @@ public class Medication_Screen extends Activity {
 
         String json = "";
         try {
-            json = readFromFile(DOSAGES_FILENAME);
+            json = readFromFile(QR_Code.DOSAGES_FILENAME);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,7 +60,7 @@ public class Medication_Screen extends Activity {
         try {
             Dosage[] dosages = new ObjectMapper().readValue(json, Dosage[].class);
             for(Dosage dose : dosages){
-                if(dose.isScheduledToday() && timeOfDay.equals(dose.getTime_taken())) {
+                if(dose.getTreatment().getTreatment_type().equals("Medication") && dose.isScheduledToday() && timeOfDay.equals(dose.getTime_taken())) {
                     dosageList.add(dose);
                 }
             }
