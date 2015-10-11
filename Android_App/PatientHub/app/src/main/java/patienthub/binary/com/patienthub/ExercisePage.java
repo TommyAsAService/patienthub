@@ -22,6 +22,7 @@ public class ExercisePage extends Activity {
     private String[] times = null;
     private boolean exerciseSelected = false;
     private boolean durationSelected = false;
+    private int dosageID = -1;
 
 
     @Override
@@ -33,6 +34,7 @@ public class ExercisePage extends Activity {
         if (extras != null) {
             exercises = extras.getStringArray("exercises");
             times = extras.getStringArray("times");
+            dosageID = extras.getInt("dosageID");
         }
 
         final TextView question1 =(TextView) findViewById(R.id.exerciseQ1);
@@ -67,10 +69,10 @@ public class ExercisePage extends Activity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                String q1Answer = q1Spinner.getSelectedItem().toString();
-                String q2Answer = q2Spinner.getSelectedItem().toString();
+                String q1Answer = q1Spinner.getSelectedItem().toString();//POST THIS
+                String q2Answer = q2Spinner.getSelectedItem().toString();//POST THIS
 
-
+                dosageID = dosageID; //POST THIS
 
 
                 Intent myIntent = new Intent(ExercisePage.this, MainActivity.class);

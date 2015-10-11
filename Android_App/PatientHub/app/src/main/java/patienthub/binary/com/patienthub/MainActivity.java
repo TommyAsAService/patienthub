@@ -47,6 +47,7 @@ public class MainActivity extends ActionBarActivity {
                 String[] times = {"Choose Duration","10min","30min","1hr"};
                 myIntent.putExtra("exercises", exercises);
                 myIntent.putExtra("times", times);
+                myIntent.putExtra("dosageID", 999);
 
                 //NOTE: use '0' to do the single medication question
                 //NOTE: using '1' to start the feeling quiz
