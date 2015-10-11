@@ -3,6 +3,17 @@ package patienthub.binary.com.patienthub.data;
 /**
  * Created by Mark Aziz on 7/10/2015.
  */
+
+import android.util.Log;
+
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+import patienthub.binary.com.patienthub.Scheduling.Scheduler;
+
 public class Dosage {
 
     private int patient_id;
@@ -32,7 +43,8 @@ public class Dosage {
         this.treatment = treatment;
     }
 
-    public Dosage(){}
+    public Dosage() {
+    }
 
     public int getPatient_id() {
         return patient_id;
@@ -121,4 +133,21 @@ public class Dosage {
     public void setTreatment(Treatment treatment) {
         this.treatment = treatment;
     }
+
+    public boolean isScheduledToday() {
+
+        //If days since start matches frequency taken return true
+        int daysBetween = Scheduler.daysSince(this.getStart_date());
+        Log.d("days between", String.valueOf(daysBetween));
+        if(daysBetween % this.getFrequency()==0){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
+
+
 }
