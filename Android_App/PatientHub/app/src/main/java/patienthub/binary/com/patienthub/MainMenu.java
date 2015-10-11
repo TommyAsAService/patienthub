@@ -1,14 +1,21 @@
 package patienthub.binary.com.patienthub;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import patienthub.binary.com.patienthub.data.Dosage;
 import patienthub.binary.com.patienthub.data.Treatment;
@@ -67,6 +74,27 @@ public class MainMenu extends ActionBarActivity {
             setupMenuItem(dosages, TreatmentType.Medication, R.id.evening_med_snippet);
         }
 
+        LinearLayout quizItem = (LinearLayout) findViewById(R.id.quizItem);
+        quizItem.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent myIntent = new Intent(MainMenu.this, QuizPage.class);
+                try {
+                    myIntent.putExtra("token", readFromFile("token.txt"));
+                    System.out.println("```````THE FUCKIN TOKEN!!!!!!!!!!!" + readFromFile("token.txt"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                myIntent.putExtra("questionNum",1);
+                myIntent.putExtra("numQuestions",3);
+
+                startActivity(myIntent);
+            }
+        });
+
+
+
+
     }
 
 
@@ -121,6 +149,36 @@ public class MainMenu extends ActionBarActivity {
                 text.setText("");
             }
 
+    }
+
+    private String readFromFile(String filename) throws IOException{
+
+        String ret = "";
+
+        try {
+            InputStream inputStream = openFileInput(filename);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
     }
 
 }
