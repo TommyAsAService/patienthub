@@ -1,0 +1,17 @@
+.panel.panel-page
+  %p
+    %strong Treatment Name:
+    = @treatment.name
+  %p
+    %strong Unit:
+    = @treatment.unit
+  %p
+    %strong Quantity:
+    = @treatment.quantity
+  %p
+    %strong Type:
+    = @treatment.treatment_type
+
+  = link_to 'Edit', edit_treatment_path(@treatment)
+  %br
+    = link_to 'Back to List Treatment', treatments_path

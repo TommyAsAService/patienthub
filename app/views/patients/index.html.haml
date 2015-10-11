@@ -10,6 +10,7 @@
       %th
       %th
       %th
+      %th
   %tfoot
     %tr
       %th Name
@@ -17,6 +18,7 @@
       %th Address
       %th Contact Number
       %th Patient Number
+      %th
       %th
       %th
       %th
@@ -28,6 +30,7 @@
         %td= patient.address
         %td= patient.contact_number
         %td= patient.patient_number
+        %td= link_to 'Add Treatment', {:controller => "dosages", :action => "new", :patient => patient.id }, class: "btn btn-sm btn-primary"
         %td= link_to 'Show', patient, class: "btn btn-sm btn-primary"
         %td= link_to 'Edit', edit_patient_path(patient), class: "btn btn-sm btn-default"       
         %td= link_to ' ', patient_qr_download_path(patient), class: "btn btn-sm btn-default glyphicon glyphicon-qrcode"

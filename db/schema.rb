@@ -11,29 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151005004209) do
+ActiveRecord::Schema.define(version: 20151008020328) do
 
-  create_table "medications", force: :cascade do |t|
-    t.string   "name"
-    t.string   "description"
-    t.string   "label"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  create_table "patient_medications", force: :cascade do |t|
-    t.string   "label"
-    t.datetime "start_time"
+  create_table "dosages", force: :cascade do |t|
     t.integer  "patient_id"
-    t.string   "notes"
-    t.integer  "time_take_per_day"
-    t.integer  "amount_given"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.string   "medication_name"
+    t.string   "time_taken"
+    t.integer  "frequency"
+    t.date     "start_date"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "treatment_name"
   end
 
-  add_index "patient_medications", ["patient_id"], name: "index_patient_medications_on_patient_id"
+  add_index "dosages", ["patient_id"], name: "index_dosages_on_patient_id"
+  add_index "dosages", ["treatment_name"], name: "index_dosages_on_treatment_name"
 
   create_table "patients", force: :cascade do |t|
     t.string   "name"
@@ -48,6 +39,15 @@ ActiveRecord::Schema.define(version: 20151005004209) do
   end
 
   add_index "patients", ["user_id"], name: "index_patients_on_user_id"
+
+  create_table "treatments", force: :cascade do |t|
+    t.string   "name"
+    t.float    "quantity"
+    t.string   "unit"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "treatment_type"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "encrypted_password",     default: "", null: false

@@ -5,8 +5,8 @@ module Api
         render :json => @patient.to_json(except:["token_authentication"])
       end
 
-      def get_medication
-        render :json => @patient.patient_medications.to_json(:include => :medication)
+      def get_dosages
+        render :json => @patient.dosages.to_json(:include => :treatment )
       end
     end
   end

@@ -3,14 +3,15 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
       get 'patient/' => 'patients#get_patient'
-      get 'patient/medications' => 'patients#get_medication'
+      get 'patient/dosages' => 'patients#get_dosages'
     end
   end
   devise_for :users#, :controllers => { registrations: "user/registrations" }
-  resources :medications
+  resources :treatments
   resources :patients do
-    get :autocomplete_medication_name, :on => :collection
+    get :autocomplete_treatment_name, :on => :collection
   end
+  resources :dosages  
   
   get 'patients/:id/qr_code' => "patients#generate_qr", :as => 'patient_qr_download'
 
