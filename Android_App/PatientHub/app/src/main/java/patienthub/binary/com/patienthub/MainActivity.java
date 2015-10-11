@@ -1,5 +1,7 @@
 package patienthub.binary.com.patienthub;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,7 +18,7 @@ import android.widget.Toast;
 import java.io.File;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
 
     @Override
@@ -30,10 +32,6 @@ public class MainActivity extends ActionBarActivity {
         SharedPreferences prefs = getSharedPreferences("prefsFile", MODE_PRIVATE);
         String restoredText = prefs.getString("jsonFile", null);
         if (restoredText != null) {
-
-            //@@@@@@@@@@@
-            // INSERT REDIRECT HERE TO MAIN 'LIST VIEW' SCREEN
-            //@@@@@@@@@@@
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(true);

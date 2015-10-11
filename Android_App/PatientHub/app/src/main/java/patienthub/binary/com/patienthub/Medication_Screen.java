@@ -1,8 +1,12 @@
 package patienthub.binary.com.patienthub;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,15 +14,28 @@ import android.widget.ListView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
 
+import patienthub.binary.com.patienthub.Scheduling.Scheduler;
 import patienthub.binary.com.patienthub.adapters.MedicationListAdapter;
 import patienthub.binary.com.patienthub.data.Dosage;
 
 
 public class Medication_Screen extends Activity {
+
+    public final static String DOSAGES_FILENAME = "dosages.txt";
+    private static LayoutInflater inflater = null;
 
     private ListView listview;
     private MedicationListAdapter adapter;
@@ -28,21 +45,35 @@ public class Medication_Screen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medication__screen);
         listview = (ListView) findViewById(R.id.medicationListView);
-        List<String> dosageList = new ArrayList<>();
+        List<Dosage> dosageList = new ArrayList<>();
 
-         String json = getIntent().getStringExtra("jsonDosages");
+        String timeOfDay = getIntent().getStringExtra("timeOfDay");
+
+        String json = "";
+        try {
+            json = readFromFile(DOSAGES_FILENAME);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         try {
             Dosage[] dosages = new ObjectMapper().readValue(json, Dosage[].class);
             for(Dosage dose : dosages){
-                dosageList.add(dose.getTreatment_name());
+                if(dose.isScheduledToday() && timeOfDay.equals(dose.getTime_taken())) {
+                    dosageList.add(dose);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         adapter  = new MedicationListAdapter(this,dosageList);
+
+        inflater = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View footer = inflater.inflate(R.layout.medication_listview_footer, null);
+        listview.addFooterView(footer);
         listview.setAdapter(adapter);
     }
 
@@ -72,5 +103,35 @@ public class Medication_Screen extends Activity {
 
     public void onCheckboxClicked(View v){
 
+    }
+
+    private String readFromFile(String filename) throws IOException{
+
+        String ret = "";
+
+        try {
+            InputStream inputStream = openFileInput(filename);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
     }
 }
