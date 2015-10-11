@@ -29,8 +29,17 @@
             android:label="@string/title_activity_qr__code" >
         </activity>
         <activity
+
             android:name=".MainMenu"
             android:label="@string/title_activity_main_menu" >
+        </activity>
+        <activity
+            android:name=".QuizPage"
+            android:label="@string/title_activity_quiz_page" >
+        </activity>
+        <activity
+            android:name=".ExercisePage"
+            android:label="@string/title_activity_exercise_page" >
         </activity>
     </application>
 

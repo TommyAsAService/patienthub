@@ -21,6 +21,12 @@
 
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/exercise_manu_item"
@@ -36,29 +42,76 @@
             android:background="@drawable/customborder">
 
             <ImageView
-                android:layout_width="200px"
-                android:layout_height="200px"
+                android:layout_width="150px"
+                android:layout_height="150px"
                 android:src="@drawable/exercise"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50px"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="550px"
                     android:layout_height="wrap_content"
                     android:text="@string/exercise_title"
                     style="@style/MainMenuItem"/>
+
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="550px"
                     android:layout_height="wrap_content"
-                    android:id="@+id/exercise_snippets"
+                    android:id="@+id/exercise_snippet"
+                    android:text="test test test test and more more testing"
                     style="@style/MainMenuSubItem"/>
 
             </LinearLayout>
 
+            <ImageView
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/black_arrow_right"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginBottom="100px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/morning_med_item"
+            android:background="@drawable/customborder">
+
+            <ImageView
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:src="@drawable/medication"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50px"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="550px"
+                    android:layout_height="wrap_content"
+                    android:text="@string/morning_medication_title"
+                    style="@style/MainMenuItem"/>
+
+                <TextView
+                    android:layout_width="550px"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/morning_med_snippet"
+                    style="@style/MainMenuSubItem"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/black_arrow_right"/>
 
         </LinearLayout>
 
@@ -66,6 +119,7 @@
             android:layout_marginBottom="100px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/afternoon_med_item"
             android:orientation="horizontal"
             android:background="@drawable/customborder">
 
@@ -75,29 +129,78 @@
                 android:src="@drawable/medication"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50px"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="550px"
                     android:layout_height="wrap_content"
-                    android:text="@string/medication_title"
+                    android:text="@string/afternoon_medication_title"
                     style="@style/MainMenuItem"/>
+
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="550px"
                     android:layout_height="wrap_content"
-                    android:id="@+id/medication_snippets"
+                    android:id="@+id/afternoon_med_snippet"
                     style="@style/MainMenuSubItem"/>
+
+
 
             </LinearLayout>
 
+            <ImageView
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/black_arrow_right"/>
 
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginBottom="100px"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/evening_med_item"
+            android:background="@drawable/customborder">
+
+            <ImageView
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:src="@drawable/medication"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50px"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="550px"
+                    android:layout_height="wrap_content"
+                    android:text="@string/evening_medication_title"
+                    style="@style/MainMenuItem"/>
+
+                <TextView
+                    android:layout_width="550px"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/evening_med_snippet"
+                    style="@style/MainMenuSubItem"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/black_arrow_right"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginBottom="100px"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="@drawable/customborder">
@@ -114,23 +217,30 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="550px"
                     android:layout_height="wrap_content"
                     android:text="@string/quiz_title"
                     style="@style/MainMenuItem"/>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="550px"
                     android:layout_height="wrap_content"
                     android:id="@+id/quiz_snippet"
                     android:text="@string/quiz_snippet"
                     style="@style/MainMenuSubItem"/>
 
             </LinearLayout>
-
+            <ImageView
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/black_arrow_right"/>
 
         </LinearLayout>
 
 
+
     </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

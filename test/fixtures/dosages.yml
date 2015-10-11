@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  patient_id: 
+  time_taken: MyString
+  frequency: 1
+  start_date: 2015-10-08
+
+two:
+  patient_id: 
+  time_taken: MyString
+  frequency: 1
+  start_date: 2015-10-08

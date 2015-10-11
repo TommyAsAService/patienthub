@@ -2,6 +2,12 @@ package patienthub.binary.com.patienthub;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.StrictMode;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,13 +25,31 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        SharedPreferences prefs = getSharedPreferences("prefsFile", MODE_PRIVATE);
+        String restoredText = prefs.getString("jsonFile", null);
+        if (restoredText != null) {
+
+            //@@@@@@@@@@@
+            // INSERT REDIRECT HERE TO MAIN 'LIST VIEW' SCREEN
+            //@@@@@@@@@@@
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(true);
+            AlertDialog alert = builder.create();
+            alert.setTitle("User already logged in");
+            alert.setMessage("This will redirect to the list view screen");
+            alert.setIcon(android.R.drawable.ic_dialog_alert);
+            alert.show();
+        }
         final Button button = (Button) findViewById(R.id.startButton);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 Intent myIntent = new Intent(MainActivity.this, QR_Code.class);
-                myIntent.putExtra("key", 1); //Optional parameters
                 MainActivity.this.startActivity(myIntent);
             }
         });
@@ -55,8 +79,8 @@ public class MainActivity extends Activity {
             }
         });
 
-    }
 
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

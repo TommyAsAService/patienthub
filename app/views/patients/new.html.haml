@@ -1,3 +1,30 @@
 %h1 Creating patient
-= render 'form'
+= simple_form_for @patient, html:{class: 'form_horizontal'} do |f|
+  - if @patient.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@patient.errors.count, "error")
+        prohibited this Patient from being saved:
+      %ul
+        - @patient.errors.full_messages.each do |message|
+          %li= message
+  .form-group
+    = f.input :name, input_html: { class: "form-control" }
+  .form-group
+    = f.input :age, input_html: { class: "form-control" }
+  .form-group
+    = f.input :address, input_html: { class: "form-control" }
+  .form-group
+    = f.input :contact_number, input_html: { class: "form-control" }
+  .form-group
+    = f.input :patient_number, input_html: { class: "form-control" }
+  #dosages
+    %h3 Dosage
+    = f.simple_fields_for :dosages do |pm|
+      = render 'dosage_fields', f: pm
+    .links
+      = link_to_add_association f, :dosages, class: 'btn btn-default btn' do
+        .glyphicon.glyphicon-plus
+  .submit-button
+    = f.submit 'Create Patient', class: "btn btn-primary"
 = link_to 'Back', patients_path, class: 'btn btn btn-default'
