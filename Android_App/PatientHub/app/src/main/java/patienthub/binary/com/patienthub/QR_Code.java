@@ -126,8 +126,8 @@ public class QR_Code extends Activity {
 
             writeToNewFile(DOSAGES_FILENAME,result);
 
-            Intent i = new Intent(QR_Code.this, Medication_Screen.class);
-            i.putExtra("jsonDosages",result);
+            Intent i = new Intent(QR_Code.this, MainMenu.class);
+            i.putExtra("json",result);
             startActivity(i);
 
         }

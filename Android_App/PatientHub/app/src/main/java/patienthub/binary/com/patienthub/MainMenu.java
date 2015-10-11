@@ -31,6 +31,42 @@ public class MainMenu extends ActionBarActivity {
         String json = getIntent().getStringExtra("json");
         ObjectMapper mapper = new ObjectMapper();
 
+        LinearLayout morningMedsLayout = (LinearLayout)findViewById(R.id.morning_med_item);
+        LinearLayout afternoonMedsLayout = (LinearLayout)findViewById(R.id.afternoon_med_item);
+        LinearLayout eveningMedsLayout = (LinearLayout)findViewById(R.id.evening_med_item);
+
+        morningMedsLayout.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainMenu.this,Medication_Screen.class);
+                i.putExtra("timeOfDay","Morning");
+                startActivity(i);
+            }
+        });
+
+
+        afternoonMedsLayout.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainMenu.this,Medication_Screen.class);
+                i.putExtra("timeOfDay","Afternoon");
+                startActivity(i);
+            }
+        });
+
+        eveningMedsLayout.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainMenu.this,Medication_Screen.class);
+                i.putExtra("timeOfDay","Evening");
+                startActivity(i);
+            }
+        });
+
+
         Dosage[] dosages = null;
         int morningMeds = 0;
         int afternoonMeds =0;
