@@ -73,12 +73,10 @@ public class QR_Code extends Activity {
 
             if (contents != null) {
 
-                Toast.makeText(this,"SUCCESS",Toast.LENGTH_LONG).show();
                 Log.d("SUCCESS", result.toString());
                 AsyncTask getRequest = new PerformGetRequest();
                 getRequest.execute(new String[]{GET_MEDICATIONS_URL, contents});
             } else {
-                Toast.makeText(this,"FAILED",Toast.LENGTH_LONG).show();
                 Log.d("FAILED", result.toString());
             }
         }

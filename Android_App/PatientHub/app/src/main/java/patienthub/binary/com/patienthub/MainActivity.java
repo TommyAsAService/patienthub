@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -41,7 +43,7 @@ public class MainActivity extends Activity {
             alert.setIcon(android.R.drawable.ic_dialog_alert);
             alert.show();
         }
-        final Button button = (Button) findViewById(R.id.startButton);
+        final ImageView button = (ImageView) findViewById(R.id.startButton);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
