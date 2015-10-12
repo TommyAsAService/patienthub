@@ -88,7 +88,6 @@ class DoctorMailer < ActionMailer::Base
     feedbacks.each do |feedback|
       if !feedback.comment.nil?
         splited_comment = feedback.comment.split
-        pp splited_comment
         @total_exercise += splited_comment[0].to_i
       end
     end
