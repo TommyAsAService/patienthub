@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -45,7 +47,9 @@ public class Medication_Screen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medication__screen);
         listview = (ListView) findViewById(R.id.medicationListView);
-        List<Dosage> dosageList = new ArrayList<>();
+        final List<Dosage> dosageList = new ArrayList<>();
+        final ArrayList<Dosage> dosageNotTaken = new ArrayList<>();
+        final ArrayList<Dosage> dosageTaken = new ArrayList<>();
 
         String timeOfDay = getIntent().getStringExtra("timeOfDay");
 
@@ -55,7 +59,6 @@ public class Medication_Screen extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         try {
             Dosage[] dosages = new ObjectMapper().readValue(json, Dosage[].class);
@@ -75,6 +78,50 @@ public class Medication_Screen extends Activity {
         View footer = inflater.inflate(R.layout.medication_listview_footer, null);
         listview.addFooterView(footer);
         listview.setAdapter(adapter);
+
+        Button submitButton= (Button) findViewById(R.id.submit_medication_taken_button);
+        submitButton.setOnClickListener(new View.OnClickListener()
+        {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                dosageTaken.clear();
+                dosageNotTaken.clear();
+                StringBuilder result = new StringBuilder();
+                for(int i=0;i<adapter.mCheckStates.size();i++)
+                {
+                    if(adapter.mCheckStates.get(i)==true)
+                    {
+                        dosageTaken.add(dosageList.get(i));
+                    } else {
+                        dosageNotTaken.add(dosageList.get(i));
+                    }
+                }
+                result.append("TAKEN: ");
+                for(Dosage d : dosageTaken){
+                    result.append(d.getTreatment_name() + " ");
+                }
+                result.append("\n"+"NOT TAKEN: ");
+                for(Dosage d : dosageNotTaken){
+                    result.append(d.getTreatment_name() + " ");
+                }
+                Toast.makeText(Medication_Screen.this, result, Toast.LENGTH_LONG).show();
+            }
+
+        });
+
+        Button backButton= (Button) findViewById(R.id.back_medication_taken_button);
+        backButton.setOnClickListener(new View.OnClickListener()
+        {
+
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+
+        });
+
     }
 
 
