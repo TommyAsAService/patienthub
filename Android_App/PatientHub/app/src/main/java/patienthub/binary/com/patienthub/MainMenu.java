@@ -216,10 +216,15 @@ public class MainMenu extends Activity {
                 } else {
                     String trimmed = builder.substring(0, builder.length() - 2);
 
-                    int lastComma = trimmed.lastIndexOf(",");
-                    String part1 = trimmed.substring(0,lastComma);
-                    String part2 = trimmed.substring(lastComma+1,trimmed.length());
-                    text.setText(part1+" or"+part2);
+                    if(trimmed.contains(",")){
+                        int lastComma = trimmed.lastIndexOf(",");
+                        String part1 = trimmed.substring(0,lastComma);
+                        String part2 = trimmed.substring(lastComma+1,trimmed.length());
+                        text.setText(part1+" or"+part2);
+                    }else{
+                        text.setText(trimmed);
+                    }
+
                 }
             }
 
