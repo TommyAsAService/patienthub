@@ -1,6 +1,7 @@
 %div.row.signin-container
   .col-md-6.balloon-col
-    = image_tag("loginScreenLogo.png", :height => 410, :width => 600)
+    %a{:href => "https://docs.google.com/presentation/d/1PEnR1EveAnljWA18a1Je8XIaHfpYMFZBkcLMdh-kNpI/edit#slide=id.g35f391192_00"}
+      = image_tag("loginScreenLogo.png", :height => 410, :width => 600)
   .col-md-6.signin-col
     = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'form-signin'}) do |f|
       %h2.form-signin-heading Log in
