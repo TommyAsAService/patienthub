@@ -1,7 +1,7 @@
 class Dosage < ActiveRecord::Base
   belongs_to :patient
   belongs_to :treatment, :foreign_key => :treatment_name, :primary_key => :name
-  has_one :feedback
+  has_many :feedbacks
   
   validates :frequency, :numericality => { :greater_than => 0 }
   validates :time_taken, :frequency, :start_date, :treatment_name, :quantity, :unit, presence: true
@@ -21,4 +21,12 @@ class Dosage < ActiveRecord::Base
       self.quantity.to_s + " " + self.unit.to_s
     end
   end
+
+  # def check_for_validity_of_treatment
+  #   treatment = Treatment.where(name: self.treatment_name)
+  #   if treatment == nil
+  #     errors.add('Treatment must be selected from the list')
+  #     raise "Unable to add treatment."
+  #   end
+  # end
 end
