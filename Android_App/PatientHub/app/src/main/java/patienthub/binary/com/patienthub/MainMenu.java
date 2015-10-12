@@ -31,6 +31,14 @@ public class MainMenu extends Activity {
 
 
         String json = getIntent().getStringExtra("json");
+
+        if(json == null){
+            try {
+                json = readFromFile(QR_Code.DOSAGES_FILENAME);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         ObjectMapper mapper = new ObjectMapper();
 
         LinearLayout morningMedsLayout = (LinearLayout)findViewById(R.id.morning_med_item);
@@ -179,6 +187,7 @@ public class MainMenu extends Activity {
                         }
                     }
                 } else{
+
                     addDotDotDot = false;
                     System.out.println("I IS "+i+" length is "+dosages.length);
                     if(i == dosages.length-1){
