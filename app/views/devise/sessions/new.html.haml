@@ -1,6 +1,6 @@
 %div.row.signin-container
   .col-md-6.balloon-col
-    = image_tag("doctor-patient.svg", :height => 450, :width => 360)
+    = image_tag("logo2.png", :height => 410, :width => 600)
   .col-md-6.signin-col
     = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'form-signin'}) do |f|
       %h2.form-signin-heading Log in
@@ -13,6 +13,5 @@
       %button.btn.btn-lg.btn-primary.btn-block{:type => "submit"} Log in
       = render "devise/shared/links"
 %div.row.signin-container
-  %p PatientHub is a web-service that allows doctors and patients keeping track of their progress. Patients can use our friendly mobile application to utilise the services we provide. Doctors can use our web-application to consume our services.
-  %p Your truly,
-  %p The Binary Team
+  %p PatientHub is a mobile application which allows healthcare professionals to keep track of their Patients’ recovery process. Patients use our friendly app to provide feedback which is delivered back to interested parties via a weekly email summary.
+  %p The purpose of this website is for the configuration of PatientHub.

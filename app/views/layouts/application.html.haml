@@ -12,7 +12,8 @@
       .navbar-inner
         .container
           .navbar-header
-            %a.navbar-brand{:href => "/"} PatientHub
+            %a.navbar-brand.no-padding
+              = image_tag("bannerLogoWhite.png", :height => 45, :width => 145)
           %ul.nav.navbar-nav.pull-right
             %li.pull-right
               - if user_signed_in?
