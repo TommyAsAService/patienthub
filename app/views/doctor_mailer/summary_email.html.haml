@@ -3,24 +3,24 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
   %body
-    %h1
+    %p
       Dear Dr #{@user.name}
     %p
       This is your weekly summary for 
       %b #{@patient.name} 
       who is recovering from their ACS event.
     %p
-      %li
-        %ul  
-          Treatments Missed: #{@total_misses} out of #{@total_treatments}
-        %ul 
-          Most common reason for missing medication: #{@comment_answer}
-        %ul 
-          Feeling Quiz ‘Score’: #{@total_score} out of #{@total_quiz_score}
-        %ul 
-          Total exercise in past week: #{@total_exercise} minutes
+      %dl
+        %dd  
+          \- Treatments Missed: #{@total_misses} out of #{@total_treatments}
+        %dd 
+          \- Most common reason for missing medication: #{@comment_answer}
+        %dd 
+          \- Feeling Quiz ‘Score’: #{@total_score} out of #{@total_quiz_score}
+        %dd 
+          \- Total exercise in past week: #{@total_exercise} minutes
 
     %p 
       Suggested Action:
-      %li
-        %ul= @suggest_action
+      %dl
+        %dd= "- " + @suggest_action

@@ -223,7 +223,7 @@ DEPENDENCIES
   cancancan
   cocoon
   coffee-rails (~> 4.1.0)
-  devise (~> 3.5.2)
+  devise (~> 3.5.1)
   haml-rails
   jbuilder (~> 2.0)
   jquery-rails
