@@ -44,6 +44,11 @@ public class MainMenu extends Activity {
     LinearLayout exerciseLinearLayout;
     LinearLayout quizItem;
 
+    int morningMeds = 0;
+    int afternoonMeds =0;
+    int eveningMeds = 0;
+    int exercises = 0;
+
     LinearLayout greenTickLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,10 +180,7 @@ public class MainMenu extends Activity {
 
 
         Dosage[] dosages = null;
-        int morningMeds = 0;
-        int afternoonMeds =0;
-        int eveningMeds = 0;
-        int exercises = 0;
+
 
         try {
             dosages = mapper.readValue(json, Dosage[].class);
@@ -280,7 +282,12 @@ public class MainMenu extends Activity {
                 if(snippetsId == R.id.morning_med_snippet && treatmentType.equals(TreatmentType.Medication)){
                     if(dos.getTime_taken().equals("Morning") && dos.isScheduledToday()){
                         num++;
-                        builder.append(dos.getTreatment_name()+", ");
+                        if(morningMeds == 1){
+                            builder.append(dos.getTreatment_name());
+                        }else{
+                            builder.append(dos.getTreatment_name()+", ");
+                        }
+
                         if(num == 3){
                             break;
                         }
@@ -288,7 +295,11 @@ public class MainMenu extends Activity {
                 }else if(snippetsId == R.id.afternoon_med_snippet && treatmentType.equals(TreatmentType.Medication)){
                     if(dos.getTime_taken().equals("Afternoon") && dos.isScheduledToday()){
                         num++;
-                        builder.append(dos.getTreatment_name()+", ");
+                        if(afternoonMeds == 1){
+                            builder.append(dos.getTreatment_name());
+                        }else{
+                            builder.append(dos.getTreatment_name()+", ");
+                        }
                         if(num == 3){
                             break;
                         }
@@ -296,7 +307,11 @@ public class MainMenu extends Activity {
                 } else if (snippetsId == R.id.evening_med_snippet && treatmentType.equals(TreatmentType.Medication)){
                     if(dos.getTime_taken().equals("Evening") && dos.isScheduledToday()){
                         num++;
-                        builder.append(dos.getTreatment_name()+", ");
+                        if(morningMeds == 1){
+                            builder.append(dos.getTreatment_name());
+                        }else{
+                            builder.append(dos.getTreatment_name()+", ");
+                        }
                         if(num == 3){
                             break;
                         }
@@ -305,7 +320,9 @@ public class MainMenu extends Activity {
 
                     addDotDotDot = false;
                     System.out.println("I IS "+i+" length is "+dosages.length);
-                    if(i == dosages.length-1){
+                    if(exercises == 1){
+                        builder.append(dos.getTreatment_name());
+                    }else if(i == dosages.length-1){
                         builder.append(dos.getTreatment_name()+" or ");
                     }else{
                         builder.append(dos.getTreatment_name()+", ");
@@ -321,21 +338,28 @@ public class MainMenu extends Activity {
             TextView text = (TextView) findViewById(snippetsId);
             // -2 to trim last comma
             if(builder.length() > 2) {
-                if (addDotDotDot) {
-                    text.setText(builder.substring(0, builder.length() - 2) + "...");
-                } else {
-                    String trimmed = builder.substring(0, builder.length() - 2);
+                if(builder.toString().contains(",")){
+                    if (addDotDotDot) {
 
-                    if(trimmed.contains(",")){
-                        int lastComma = trimmed.lastIndexOf(",");
-                        String part1 = trimmed.substring(0,lastComma);
-                        String part2 = trimmed.substring(lastComma+1,trimmed.length());
-                        text.setText(part1+" or"+part2);
-                    }else{
-                        text.setText(trimmed);
+                        text.setText(builder.substring(0, builder.length() - 2) + "...");
+                    } else {
+                        String trimmed = builder.substring(0, builder.length() - 2);
+
+                        if(trimmed.contains(",")){
+                            int lastComma = trimmed.lastIndexOf(",");
+                            String part1 = trimmed.substring(0,lastComma);
+                            String part2 = trimmed.substring(lastComma+1,trimmed.length());
+                            text.setText(part1+" or"+part2);
+                        }else{
+                            text.setText(trimmed);
+                        }
+
                     }
-
+                }else{
+                    text.setText(builder.toString());
                 }
+
+
             }
 
     }
