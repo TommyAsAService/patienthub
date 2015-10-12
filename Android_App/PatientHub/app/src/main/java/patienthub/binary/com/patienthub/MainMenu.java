@@ -1,5 +1,6 @@
 package patienthub.binary.com.patienthub;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -21,7 +22,7 @@ import patienthub.binary.com.patienthub.data.Dosage;
 import patienthub.binary.com.patienthub.data.Treatment;
 import patienthub.binary.com.patienthub.data.TreatmentType;
 
-public class MainMenu extends ActionBarActivity {
+public class MainMenu extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

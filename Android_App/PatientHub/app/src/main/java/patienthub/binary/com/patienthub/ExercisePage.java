@@ -115,7 +115,7 @@ public class ExercisePage extends Activity {
                 String q1Answer = q1Spinner.getSelectedItem().toString();//POST THIS
                 String q2Answer = q2Spinner.getSelectedItem().toString();//POST THIS
 
-                dosageID = dosageList.get(q1Spinner.getSelectedItemPosition()).getId();
+                dosageID = dosageList.get(q1Spinner.getSelectedItemPosition()-1).getId();
                 System.out.println("THE ID IS: "+dosageID);
 
                 HttpManager POSTer = new HttpManager();
@@ -129,9 +129,9 @@ public class ExercisePage extends Activity {
                 }
 
 
-                // Intent myIntent = new Intent(ExercisePage.this, MainActivity.class);
-              //  ExercisePage.this.startActivity(myIntent);
-               // finish();
+                Intent myIntent = new Intent(ExercisePage.this, MainMenu.class);
+                ExercisePage.this.startActivity(myIntent);
+               finish();
             }
         });
 
@@ -140,12 +140,15 @@ public class ExercisePage extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
-                dosageID = dosageList.get(q1Spinner.getSelectedItemPosition()).getId();
-                System.out.println("THE ID IS: " + dosageID);
+
+
 
                 if (arg2 == 0) {
+
                     exerciseSelected = false;
                 } else {
+                    dosageID = dosageList.get(arg2-1).getId();
+                    System.out.println("THE ID IS: " + dosageID);
                     exerciseSelected = true;
                 }
 
