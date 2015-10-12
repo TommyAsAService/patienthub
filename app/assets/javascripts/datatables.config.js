@@ -2,7 +2,7 @@ $(document).ready(function() {
     // Setup - add a text input to each footer cell
     var total_columns =$('#datatable tfoot th').length;
     var column_count = 1;
-    var columns_without_search = 4;
+    var columns_without_search = 5;
     console.log(total_columns);
     $('#datatable tfoot th').each( function () {
         var title = $('#datatable thead th').eq( $(this).index() ).text();
