@@ -18,5 +18,6 @@
     = f.input :contact_number, input_html: { class: "form-control" }
   .form-group
     = f.input :patient_number, input_html: { class: "form-control" }
-%br
+  .submit-button
+    = f.submit 'Edit Patient', class: "btn btn-primary"
 = link_to 'Back', patients_path, class: "btn btn btn-default"
