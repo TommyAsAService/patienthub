@@ -3,6 +3,7 @@ package patienthub.binary.com.patienthub;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,16 +24,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.ListIterator;
 import java.util.Locale;
 
 import patienthub.binary.com.patienthub.Scheduling.Scheduler;
 import patienthub.binary.com.patienthub.adapters.MedicationListAdapter;
 import patienthub.binary.com.patienthub.data.Dosage;
 import patienthub.binary.com.patienthub.data.TreatmentType;
+import patienthub.binary.com.patienthub.webservice.HttpManager;
 
 
 public class Medication_Screen extends Activity {
@@ -80,8 +85,7 @@ public class Medication_Screen extends Activity {
         listview.setAdapter(adapter);
 
         Button submitButton= (Button) findViewById(R.id.submit_medication_taken_button);
-        submitButton.setOnClickListener(new View.OnClickListener()
-        {
+        submitButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -89,24 +93,25 @@ public class Medication_Screen extends Activity {
                 dosageTaken.clear();
                 dosageNotTaken.clear();
                 StringBuilder result = new StringBuilder();
-                for(int i=0;i<adapter.mCheckStates.size();i++)
-                {
-                    if(adapter.mCheckStates.get(i)==true)
-                    {
+                for (int i = 0; i < adapter.mCheckStates.size(); i++) {
+                    if (adapter.mCheckStates.get(i) == true) {
                         dosageTaken.add(dosageList.get(i));
                     } else {
                         dosageNotTaken.add(dosageList.get(i));
                     }
                 }
                 result.append("TAKEN: ");
-                for(Dosage d : dosageTaken){
+                for (Dosage d : dosageTaken) {
                     result.append(d.getTreatment_name() + " ");
                 }
-                result.append("\n"+"NOT TAKEN: ");
-                for(Dosage d : dosageNotTaken){
+                result.append("\n" + "NOT TAKEN: ");
+                for (Dosage d : dosageNotTaken) {
                     result.append(d.getTreatment_name() + " ");
                 }
                 Toast.makeText(Medication_Screen.this, result, Toast.LENGTH_LONG).show();
+
+                postMedsTaken(dosageTaken);
+                launchQuizForNotTakenMeds(dosageNotTaken);
             }
 
         });
@@ -117,6 +122,8 @@ public class Medication_Screen extends Activity {
 
             @Override
             public void onClick(View v) {
+                Intent myIntent = new Intent(Medication_Screen.this, MainMenu.class);
+                startActivity(myIntent);
                 finish();
             }
 
@@ -181,4 +188,62 @@ public class Medication_Screen extends Activity {
 
         return ret;
     }
+
+    private void postMedsTaken(List<Dosage> dosagesList){
+        String token = "";
+        HttpManager httpMan = new HttpManager();
+        try {
+            token = readFromFile("token.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for(Dosage dosage : dosagesList){
+            try {
+                httpMan.postMedicationData("The medication was taken",token,dosage.getId(),true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void launchQuizForNotTakenMeds(List<Dosage> dosagesList){
+        String token = "";
+        HttpManager httpMan = new HttpManager();
+        try {
+            token = readFromFile("token.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        List<String> dosageIdsList = new ArrayList<String>();
+        String [] dosageIds;
+        List<String> dosageNamesList = new ArrayList<String>();
+        String [] dosageNames;
+
+        for(Dosage dosage : dosagesList){
+            dosageIdsList.add(dosage.getId() + "");
+            dosageNamesList.add(dosage.getTreatment_name());
+        }
+        dosageIds = dosageIdsList.toArray(new String[dosageIdsList.size()]);
+        dosageNames = dosageNamesList.toArray(new String[dosageNamesList.size()]);
+
+        if(!dosagesList.isEmpty()) {
+            Intent myIntent = new Intent(Medication_Screen.this, QuizPage.class);
+            myIntent.putExtra("questionNum", 0);
+            myIntent.putExtra("dosageFeedbackIDs", dosageIds);
+            myIntent.putExtra("dosageNames", dosageNames);
+            myIntent.putExtra("numQuestions", dosageIds.length);
+            myIntent.putExtra("token", token);
+            startActivity(myIntent);
+            finish();
+        } else {
+            Intent myIntent = new Intent(Medication_Screen.this, MainMenu.class);
+            startActivity(myIntent);
+            finish();
+        }
+    }
+
+
 }
+
