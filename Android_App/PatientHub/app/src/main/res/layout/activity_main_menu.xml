@@ -61,9 +61,7 @@
                 <TextView
                     android:layout_width="550px"
                     android:layout_height="wrap_content"
-                    android:id="@+id/exercise_snippet"
-                    android:text="test test test test and more more testing"
-                    style="@style/MainMenuSubItem"/>
+                    android:id="@+id/exercise_snippet"/>
 
             </LinearLayout>
 
