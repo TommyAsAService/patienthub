@@ -104,12 +104,12 @@ public class ExercisePage extends Activity {
         dosageID = dosageList.get(q1Spinner.getSelectedItemPosition()).getId();
         System.out.println("THE ID IS: "+dosageID);
 
-        final Button nextButton = (Button) findViewById(R.id.exerciseButton);
+        final Button submitButton = (Button) findViewById(R.id.exercise_button);
 
-        nextButton.setEnabled(false);
+        submitButton.setEnabled(false);
 
-        nextButton.setText("Finish");
-        nextButton.setOnClickListener(new View.OnClickListener() {
+        submitButton.setText("Finish");
+        submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 String q1Answer = q1Spinner.getSelectedItem().toString();//POST THIS
@@ -122,7 +122,6 @@ public class ExercisePage extends Activity {
 
                 try {
                     System.out.println(POSTer.postMedicationData(q1Answer + q2Answer, token, dosageID,true));
-                    finish();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -132,6 +131,16 @@ public class ExercisePage extends Activity {
                 Intent myIntent = new Intent(ExercisePage.this, MainMenu.class);
                 ExercisePage.this.startActivity(myIntent);
                finish();
+            }
+        });
+
+        Button backButton = (Button)findViewById(R.id.exercise_back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ExercisePage.this,MainMenu.class);
+                startActivity(i);
+                finish();
             }
         });
 
@@ -153,9 +162,9 @@ public class ExercisePage extends Activity {
                 }
 
                 if(exerciseSelected && durationSelected){
-                    nextButton.setEnabled(true);
+                    submitButton.setEnabled(true);
                 }else{
-                    nextButton.setEnabled(false);
+                    submitButton.setEnabled(false);
                 }
             }
 
@@ -175,9 +184,9 @@ public class ExercisePage extends Activity {
                 }
 
                 if(exerciseSelected && durationSelected){
-                    nextButton.setEnabled(true);
+                    submitButton.setEnabled(true);
                 }else{
-                    nextButton.setEnabled(false);
+                    submitButton.setEnabled(false);
                 }
             }
 
