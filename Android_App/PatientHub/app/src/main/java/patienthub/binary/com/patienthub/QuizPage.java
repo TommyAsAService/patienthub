@@ -36,7 +36,7 @@ public class QuizPage extends Activity {
 
     //FOR EASY CONFIG
     Class buttonDestination = QuizPage.class;
-    Class homeClass = MainActivity.class;
+    Class homeClass = MainMenu.class;
     int numQuestions = 3;
 
     //PASS IN THESE FIELDS IN ORDER TO DYNAMICALLY CONFIGURE THE QUIZ PAGE
@@ -184,9 +184,7 @@ public class QuizPage extends Activity {
                     myIntent = new Intent(QuizPage.this, homeClass);
                 }
 
-                QuizPage.this.
-
-                        startActivity(myIntent);
+                QuizPage.this.startActivity(myIntent);
 
                 finish();
             }

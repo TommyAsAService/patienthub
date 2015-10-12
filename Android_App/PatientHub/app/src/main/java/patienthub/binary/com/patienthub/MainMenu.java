@@ -29,6 +29,14 @@ public class MainMenu extends ActionBarActivity {
         setContentView(R.layout.activity_main_menu);
 
         String json = getIntent().getStringExtra("json");
+
+        if(json == null){
+            try {
+                json = readFromFile(QR_Code.DOSAGES_FILENAME);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         ObjectMapper mapper = new ObjectMapper();
 
         LinearLayout morningMedsLayout = (LinearLayout)findViewById(R.id.morning_med_item);
@@ -168,7 +176,7 @@ public class MainMenu extends ActionBarActivity {
                     }
                 } else{
                     num++;
-                    builder.append(dos.getTreatment_name()+", ");
+                    builder.append(dos.getTreatment_name() + ", ");
                     if(num == 3){
                         break;
                     }
