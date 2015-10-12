@@ -53,6 +53,7 @@ public class MainMenu extends Activity {
                 Intent i = new Intent(MainMenu.this,Medication_Screen.class);
                 i.putExtra("timeOfDay","Morning");
                 startActivity(i);
+                finish();
             }
         });
 
@@ -64,6 +65,7 @@ public class MainMenu extends Activity {
                 Intent i = new Intent(MainMenu.this,Medication_Screen.class);
                 i.putExtra("timeOfDay","Afternoon");
                 startActivity(i);
+                finish();
             }
         });
 
@@ -74,6 +76,7 @@ public class MainMenu extends Activity {
                 Intent i = new Intent(MainMenu.this,Medication_Screen.class);
                 i.putExtra("timeOfDay","Evening");
                 startActivity(i);
+                finish();
             }
         });
 
@@ -82,6 +85,7 @@ public class MainMenu extends Activity {
             public void onClick(View v) {
                 Intent i = new Intent(MainMenu.this,ExercisePage.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -144,6 +148,7 @@ public class MainMenu extends Activity {
                 myIntent.putExtra("numQuestions",3);
 
                 startActivity(myIntent);
+                finish();
             }
         });
 
