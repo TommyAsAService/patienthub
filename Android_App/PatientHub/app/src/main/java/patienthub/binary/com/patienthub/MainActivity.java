@@ -66,6 +66,7 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 String filePath = MainActivity.this.getFilesDir()+ File.separator+QR_Code.DOSAGES_FILENAME;
                 String tokenFile = MainActivity.this.getFilesDir()+ File.separator+"token.txt";
+                String completedFile = MainActivity.this.getFilesDir()+ File.separator+MainMenu.completedFileName;
 
                 if((new File(filePath).exists())) {
                     File file = new File(filePath);
@@ -75,6 +76,11 @@ public class MainActivity extends Activity {
 
                 if((new File(tokenFile).exists())) {
                     File file = new File(tokenFile);
+                    file.delete();
+                }
+
+                if((new File(completedFile).exists())) {
+                    File file = new File(completedFile);
                     file.delete();
                 }
 

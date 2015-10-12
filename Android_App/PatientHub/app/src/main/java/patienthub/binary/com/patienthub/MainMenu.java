@@ -1,6 +1,7 @@
 package patienthub.binary.com.patienthub;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -12,11 +13,20 @@ import android.widget.TextView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import patienthub.binary.com.patienthub.data.Dosage;
 import patienthub.binary.com.patienthub.data.Treatment;
@@ -24,11 +34,16 @@ import patienthub.binary.com.patienthub.data.TreatmentType;
 
 public class MainMenu extends Activity {
 
+
+    private String filePath;
+    public static final String completedFileName = "completed.txt";
+    private List<String> completedList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-
+        filePath =  MainMenu.this.getFilesDir()+File.separator+"completed.txt";
 
         String json = getIntent().getStringExtra("json");
 
@@ -45,6 +60,64 @@ public class MainMenu extends Activity {
         LinearLayout afternoonMedsLayout = (LinearLayout)findViewById(R.id.afternoon_med_item);
         LinearLayout eveningMedsLayout = (LinearLayout)findViewById(R.id.evening_med_item);
         LinearLayout exerciseLinearLayout = (LinearLayout)findViewById(R.id.exercise_manu_item);
+        LinearLayout quizItem = (LinearLayout) findViewById(R.id.quizItem);
+
+
+        File file = new File(filePath);
+        if(getIntent().hasExtra("timeMedicationTaken")){
+            String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+            String str = date+","+getIntent().getStringExtra("timeMedicationTaken")+";";
+            if(!(file.exists())){
+                writeToNewFile(completedFileName,str);
+            }else{
+                appendToFile(completedFileName,str);
+            }
+        }
+
+        if(getIntent().hasExtra("quizTaken")){
+            String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+            String str = date+",quiz"+";";
+            if(!(file.exists())){
+                writeToNewFile(completedFileName,str);
+            }else{
+                appendToFile(completedFileName,str);
+            }
+        }
+
+        if(getIntent().hasExtra("exerciseCompleted")){
+            String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+            String str = date+",exercise"+";";
+            if(!(file.exists())){
+                writeToNewFile(completedFileName,str);
+            }else{
+                appendToFile(completedFileName,str);
+            }
+        }
+
+        if(file.exists()){
+            try {
+                String completedString = readFromFile(completedFileName);
+                Log.d("CompletedString",completedString);
+                populateTodaysCompletedTasks(completedString);
+
+                for(String task: completedList){
+                    if(task.equals("Morning")){
+                        morningMedsLayout.setVisibility(View.GONE);
+                    }else if(task.equals("Afternoon")){
+                        afternoonMedsLayout.setVisibility(View.GONE);
+                    }else if(task.equals("Evening")){
+                        eveningMedsLayout.setVisibility(View.GONE);
+                    }else if(task.equals("quiz")){
+                        quizItem.setVisibility(View.GONE);
+                    }else if(task.equals("exercise")){
+                        exerciseLinearLayout.setVisibility(View.GONE);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
 
         morningMedsLayout.setOnClickListener(new View.OnClickListener(){
 
@@ -134,7 +207,6 @@ public class MainMenu extends Activity {
             setupMenuItem(dosages, TreatmentType.Medication, R.id.evening_med_snippet);
         }
 
-        LinearLayout quizItem = (LinearLayout) findViewById(R.id.quizItem);
         quizItem.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -258,6 +330,71 @@ public class MainMenu extends Activity {
         }
 
         return ret;
+    }
+
+    private void writeToNewFile(String fileName, String data) {
+        File file = new File(MainMenu.this.getFilesDir(),fileName);
+        FileOutputStream fop;
+
+        try{
+            fop = openFileOutput(fileName, Context.MODE_PRIVATE);
+            fop.write(data.getBytes());
+            fop.close();
+            Log.d("path",file.getPath());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void appendToFile (String fileName,String content) {
+        try {
+            FileOutputStream fOut = openFileOutput(fileName,MODE_APPEND);
+            OutputStreamWriter osw = new OutputStreamWriter(fOut);
+            osw.write(content);
+            osw.flush();
+            osw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+//        BufferedWriter bw = null;
+//
+//        try {
+//            // APPEND MODE SET HERE
+//            bw = new BufferedWriter(new FileWriter(fileName, true));
+//            bw.write(content);
+//            bw.flush();
+//        } catch (IOException ioe) {
+//            ioe.printStackTrace();
+//        } finally {                       // always close the file
+//            if (bw != null) try {
+//                bw.close();
+//            } catch (IOException ioe2) {
+//                // just ignore it
+//            }
+//        } // end try/catch/finally
+
+    } // end test()
+
+    public void populateTodaysCompletedTasks(String fileString){
+        String[] allTasks = fileString.split(";");
+
+        for(int i = 0; i<allTasks.length;i++){
+            String currentTask = allTasks[i];
+            String[] row = currentTask.split(",");
+
+            if(row.length==2){
+                String date = row[0];
+                String task = row[1];
+
+                String todaysDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+                if(date.equals(todaysDate)){
+                    completedList.add(task);
+                }
+            }
+        }
     }
 
 }

@@ -129,6 +129,7 @@ public class ExercisePage extends Activity {
 
 
                 Intent myIntent = new Intent(ExercisePage.this, MainMenu.class);
+                myIntent.putExtra("exerciseCompleted",true);
                 ExercisePage.this.startActivity(myIntent);
                finish();
             }
