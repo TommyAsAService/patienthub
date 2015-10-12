@@ -35,8 +35,8 @@ import patienthub.binary.com.patienthub.webservice.HttpManager;
 
 public class ExercisePage extends Activity {
 
-    private String q1Text = "What exercise did you do today?";
-    private String q2Text = "How long did you exercise for?";
+    private String q1Text = "\nWhat exercise did you do today?";
+    private String q2Text = "\nHow long did you exercise for?";
     private String[] exercises = null;
     private String[] times = null;
     private boolean exerciseSelected = false;

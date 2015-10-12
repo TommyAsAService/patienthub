@@ -36,7 +36,7 @@
         %td= link_to 'Show', patient, class: "btn btn-sm btn-primary"
         %td= link_to 'Edit', edit_patient_path(patient), class: "btn btn-sm btn-default"       
         %td= link_to ' ', patient_qr_download_path(patient), class: "btn btn-sm btn-default glyphicon glyphicon-qrcode"
-        %td= link_to ' ', mail_to_doctor_path(patient), class: "btn btn-sm btn-default glyphicon glyphicon-envelope"
+        %td= link_to ' ', {controller: 'patients', action: "mail_to_doctor", :id => patient.id}, class: "btn btn-sm btn-default glyphicon glyphicon-envelope"
 %br
   = link_to 'New Patient', new_patient_path, class: "btn btn btn-primary"
   %br

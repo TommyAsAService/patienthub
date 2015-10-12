@@ -51,8 +51,11 @@ class PatientsController < ApplicationController
   end
 
   def mail_to_doctor
-    DoctorMailer.summary_email(current_user, @patient).deliver
-    render :text=> "Successfully sent email. Please check your mail box.", :status => 200, :content_type => 'text/html'
+    doctor_mailer = DoctorMailer.summary_email(current_user, @patient)
+    doctor_mailer.deliver_now
+
+    head :no_content
+    # render :text=> "Successfully sent email. Please check your mail box.", :status => 200, :content_type => 'text/html'
   end
 
   private
