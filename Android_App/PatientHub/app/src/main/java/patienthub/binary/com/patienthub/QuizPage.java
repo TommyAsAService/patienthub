@@ -132,6 +132,8 @@ public class QuizPage extends Activity {
 
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Intent myIntent = new Intent(QuizPage.this, homeClass);
+                QuizPage.this.startActivity(myIntent);
                 finish();
             }
         });

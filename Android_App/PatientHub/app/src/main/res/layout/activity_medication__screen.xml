@@ -34,14 +34,14 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true">
     <Button
-        android:id="@+id/submit_medication_taken_button"
+        android:id="@+id/back_medication_taken_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/back_button"
         android:layout_weight="1"/>
 
     <Button
-        android:id="@+id/back_medication_taken_button"
+        android:id="@+id/submit_medication_taken_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/submit_button"

@@ -1,5 +1,6 @@
 package patienthub.binary.com.patienthub;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -21,7 +22,7 @@ import patienthub.binary.com.patienthub.data.Dosage;
 import patienthub.binary.com.patienthub.data.Treatment;
 import patienthub.binary.com.patienthub.data.TreatmentType;
 
-public class MainMenu extends ActionBarActivity {
+public class MainMenu extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class MainMenu extends ActionBarActivity {
                 Intent i = new Intent(MainMenu.this,Medication_Screen.class);
                 i.putExtra("timeOfDay","Morning");
                 startActivity(i);
+                finish();
             }
         });
 
@@ -63,6 +65,7 @@ public class MainMenu extends ActionBarActivity {
                 Intent i = new Intent(MainMenu.this,Medication_Screen.class);
                 i.putExtra("timeOfDay","Afternoon");
                 startActivity(i);
+                finish();
             }
         });
 
@@ -73,6 +76,7 @@ public class MainMenu extends ActionBarActivity {
                 Intent i = new Intent(MainMenu.this,Medication_Screen.class);
                 i.putExtra("timeOfDay","Evening");
                 startActivity(i);
+                finish();
             }
         });
 
@@ -81,6 +85,7 @@ public class MainMenu extends ActionBarActivity {
             public void onClick(View v) {
                 Intent i = new Intent(MainMenu.this,ExercisePage.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -143,6 +148,7 @@ public class MainMenu extends ActionBarActivity {
                 myIntent.putExtra("numQuestions",3);
 
                 startActivity(myIntent);
+                finish();
             }
         });
 
@@ -210,10 +216,15 @@ public class MainMenu extends ActionBarActivity {
                 } else {
                     String trimmed = builder.substring(0, builder.length() - 2);
 
-                    int lastComma = trimmed.lastIndexOf(",");
-                    String part1 = trimmed.substring(0,lastComma);
-                    String part2 = trimmed.substring(lastComma+1,trimmed.length());
-                    text.setText(part1+" or"+part2);
+                    if(trimmed.contains(",")){
+                        int lastComma = trimmed.lastIndexOf(",");
+                        String part1 = trimmed.substring(0,lastComma);
+                        String part2 = trimmed.substring(lastComma+1,trimmed.length());
+                        text.setText(part1+" or"+part2);
+                    }else{
+                        text.setText(trimmed);
+                    }
+
                 }
             }
 

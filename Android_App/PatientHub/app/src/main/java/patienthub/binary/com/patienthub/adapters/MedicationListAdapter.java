@@ -1,10 +1,13 @@
 package patienthub.binary.com.patienthub.adapters;
 
 import android.content.Context;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -15,8 +18,8 @@ import patienthub.binary.com.patienthub.data.Dosage;
 /**
  * Created by Mark on 9/10/2015.
  */
-public class MedicationListAdapter extends BaseAdapter {
-
+public class MedicationListAdapter extends BaseAdapter implements CompoundButton.OnCheckedChangeListener {
+    public SparseBooleanArray mCheckStates;
     Context context;
     List<Dosage> data;
     private static LayoutInflater inflater = null;
@@ -27,6 +30,7 @@ public class MedicationListAdapter extends BaseAdapter {
         this.data = data;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mCheckStates = new SparseBooleanArray(data.size());
     }
 
     @Override
@@ -54,7 +58,34 @@ public class MedicationListAdapter extends BaseAdapter {
 
         TextView qty = (TextView) vi.findViewById(R.id.dosageQuantity);
         qty.setText(data.get(position).getQuantity() +" "+data.get(position).getUnit());
+
+        CheckBox chkbox = (CheckBox) vi.findViewById(R.id.checkbox_1);
+        this.setChecked(position,false);
+        chkbox.setTag(position);
+        chkbox.setChecked(mCheckStates.get(position, false));
+        chkbox.setOnCheckedChangeListener(this);
         return vi;
+    }
+
+    public boolean isChecked(int position) {
+        return mCheckStates.get(position, false);
+    }
+
+    public void setChecked(int position, boolean isChecked) {
+        mCheckStates.put(position, isChecked);
+
+    }
+
+    public void toggle(int position) {
+        setChecked(position, !isChecked(position));
+
+    }
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView,
+                                 boolean isChecked) {
+
+        mCheckStates.put((Integer) buttonView.getTag(), isChecked);
+
     }
 
 }

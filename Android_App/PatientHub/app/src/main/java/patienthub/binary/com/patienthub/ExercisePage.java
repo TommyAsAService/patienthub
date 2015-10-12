@@ -36,7 +36,7 @@ import patienthub.binary.com.patienthub.webservice.HttpManager;
 public class ExercisePage extends Activity {
 
     private String q1Text = "What exercise did you do today?";
-    private String q2Text = "How long do you do it for?";
+    private String q2Text = "How long did you exercise for?";
     private String[] exercises = null;
     private String[] times = null;
     private boolean exerciseSelected = false;
@@ -104,34 +104,43 @@ public class ExercisePage extends Activity {
         dosageID = dosageList.get(q1Spinner.getSelectedItemPosition()).getId();
         System.out.println("THE ID IS: "+dosageID);
 
-        final Button nextButton = (Button) findViewById(R.id.exerciseButton);
+        final Button submitButton = (Button) findViewById(R.id.exercise_button);
 
-        nextButton.setEnabled(false);
+        submitButton.setEnabled(false);
 
-        nextButton.setText("Finish");
-        nextButton.setOnClickListener(new View.OnClickListener() {
+        submitButton.setText("Finish");
+        submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 String q1Answer = q1Spinner.getSelectedItem().toString();//POST THIS
                 String q2Answer = q2Spinner.getSelectedItem().toString();//POST THIS
 
-                dosageID = dosageList.get(q1Spinner.getSelectedItemPosition()).getId();
+                dosageID = dosageList.get(q1Spinner.getSelectedItemPosition()-1).getId();
                 System.out.println("THE ID IS: "+dosageID);
 
                 HttpManager POSTer = new HttpManager();
 
                 try {
                     System.out.println(POSTer.postMedicationData(q1Answer + q2Answer, token, dosageID,true));
-                    finish();
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
 
-                // Intent myIntent = new Intent(ExercisePage.this, MainActivity.class);
-              //  ExercisePage.this.startActivity(myIntent);
-               // finish();
+                Intent myIntent = new Intent(ExercisePage.this, MainMenu.class);
+                ExercisePage.this.startActivity(myIntent);
+               finish();
+            }
+        });
+
+        Button backButton = (Button)findViewById(R.id.exercise_back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ExercisePage.this,MainMenu.class);
+                startActivity(i);
+                finish();
             }
         });
 
@@ -140,19 +149,22 @@ public class ExercisePage extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
-                dosageID = dosageList.get(q1Spinner.getSelectedItemPosition()).getId();
-                System.out.println("THE ID IS: " + dosageID);
+
+
 
                 if (arg2 == 0) {
+
                     exerciseSelected = false;
                 } else {
+                    dosageID = dosageList.get(arg2-1).getId();
+                    System.out.println("THE ID IS: " + dosageID);
                     exerciseSelected = true;
                 }
 
                 if(exerciseSelected && durationSelected){
-                    nextButton.setEnabled(true);
+                    submitButton.setEnabled(true);
                 }else{
-                    nextButton.setEnabled(false);
+                    submitButton.setEnabled(false);
                 }
             }
 
@@ -172,9 +184,9 @@ public class ExercisePage extends Activity {
                 }
 
                 if(exerciseSelected && durationSelected){
-                    nextButton.setEnabled(true);
+                    submitButton.setEnabled(true);
                 }else{
-                    nextButton.setEnabled(false);
+                    submitButton.setEnabled(false);
                 }
             }
 
