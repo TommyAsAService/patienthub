@@ -31,7 +31,7 @@ import patienthub.binary.com.patienthub.webservice.HttpManager;
 
 public class QR_Code extends Activity {
 
-    public final static String GET_MEDICATIONS_URL = "http://patienthubstage.herokuapp.com/api/v1/patient/dosages";
+    public final static String GET_MEDICATIONS_URL = "http://patienthub.herokuapp.com/api/v1/patient/dosages";
     public final static String DOSAGES_FILENAME = "dosages.txt";
 
 
