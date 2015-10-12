@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import patienthub.binary.com.patienthub.R;
@@ -23,7 +24,7 @@ public class MedicationListAdapter extends BaseAdapter implements CompoundButton
     Context context;
     List<Dosage> data;
     private static LayoutInflater inflater = null;
-
+    public List<CheckBox> mCheckBoxes;
     public MedicationListAdapter(Context context, List<Dosage> data) {
         // TODO Auto-generated constructor stub
         this.context = context;
@@ -31,6 +32,7 @@ public class MedicationListAdapter extends BaseAdapter implements CompoundButton
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mCheckStates = new SparseBooleanArray(data.size());
+        mCheckBoxes = new ArrayList<CheckBox>();
     }
 
     @Override
@@ -64,6 +66,7 @@ public class MedicationListAdapter extends BaseAdapter implements CompoundButton
         chkbox.setTag(position);
         chkbox.setChecked(mCheckStates.get(position, false));
         chkbox.setOnCheckedChangeListener(this);
+        mCheckBoxes.add(chkbox);
         return vi;
     }
 
@@ -86,6 +89,12 @@ public class MedicationListAdapter extends BaseAdapter implements CompoundButton
 
         mCheckStates.put((Integer) buttonView.getTag(), isChecked);
 
+    }
+
+    public void setCheckBoxState(boolean bool){
+        for(CheckBox chkbox : mCheckBoxes){
+            chkbox.setChecked(bool);
+        }
     }
 
 }

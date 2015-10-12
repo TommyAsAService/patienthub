@@ -12,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -119,6 +121,25 @@ public class Medication_Screen extends Activity {
             }
 
         });
+
+        CheckBox checkAll = (CheckBox) findViewById(R.id.checkbox_all);
+        checkAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                if(buttonView.isChecked()){
+                    for (int i = 0; i < adapter.mCheckStates.size(); i++) {
+                        adapter.setChecked(i,true);
+                        adapter.setCheckBoxState(true);
+                    }
+                }
+                if(buttonView.isChecked()==false){
+                    for (int i = 0; i < adapter.mCheckStates.size(); i++) {
+                        adapter.setChecked(i,false);
+                        adapter.setCheckBoxState(false);
+                    }
+                }
+            }
+        }
+        );
 
     }
 
