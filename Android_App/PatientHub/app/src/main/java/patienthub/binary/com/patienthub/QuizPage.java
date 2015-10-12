@@ -16,6 +16,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -96,13 +98,16 @@ public class QuizPage extends Activity {
 
         final LinearLayout rLayout = (LinearLayout) findViewById(R.id.quizView2);
         final ProgressBar bar = (ProgressBar) findViewById(R.id.quizProgressBar);
+        final TextView header = (TextView) findViewById(R.id.quizHeader);
         bar.setMax(numQuestions);
 
         if(questionInt == 0){
             int currentQuestion = numQuestions + 1 - dosageFeedbackIDs.length;
             bar.setProgress(currentQuestion);
+            header.setText("Medication Feedback");
         }else{
             bar.setProgress(questionInt);
+            header.setText("Today's Feedback");
         }
 
 
