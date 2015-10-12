@@ -1,6 +1,6 @@
 class PatientsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_patient, only:[:show, :edit, :update, :generate_qr, :mail_to_doctor]
+  before_action :set_patient, only:[:show, :edit, :update, :generate_qr]
 
   autocomplete :treatment, :name
 
@@ -51,8 +51,10 @@ class PatientsController < ApplicationController
   end
 
   def mail_to_doctor
+    set_patient
     DoctorMailer.summary_email(current_user, @patient).deliver
-    render :text=> "Successfully sent email. Please check your mail box.", :status => 200, :content_type => 'text/html'
+    head :no_content
+    # render :text=> "Successfully sent email. Please check your mail box.", :status => 200, :content_type => 'text/html'
   end
 
   private
