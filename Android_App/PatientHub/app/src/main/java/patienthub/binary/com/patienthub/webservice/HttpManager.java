@@ -62,7 +62,7 @@ public class HttpManager {
 
         HttpURLConnection httpcon = null;
 
-        httpcon = (HttpURLConnection) ((new URL("http://patienthubstage.herokuapp.com/api/v1/patient/medication_feedback").openConnection()));
+        httpcon = (HttpURLConnection) ((new URL("http://patienthub.herokuapp.com/api/v1/patient/medication_feedback").openConnection()));
 
         httpcon.setDoOutput(true);
         httpcon.setRequestProperty("Content-Type", "application/json");
@@ -118,7 +118,7 @@ public class HttpManager {
 
         HttpURLConnection httpcon = null;
 
-        httpcon = (HttpURLConnection) ((new URL("http://patienthubstage.herokuapp.com/api/v1/patient/quiz_feedback").openConnection()));
+        httpcon = (HttpURLConnection) ((new URL("http://patienthub.herokuapp.com/api/v1/patient/quiz_feedback").openConnection()));
 
         httpcon.setDoOutput(true);
         httpcon.setRequestProperty("Content-Type", "application/json");
