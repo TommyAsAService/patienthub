@@ -92,7 +92,7 @@ public class Medication_Screen extends Activity {
                 // TODO Auto-generated method stub
                 dosageTaken.clear();
                 dosageNotTaken.clear();
-                StringBuilder result = new StringBuilder();
+
                 for (int i = 0; i < adapter.mCheckStates.size(); i++) {
                     if (adapter.mCheckStates.get(i) == true) {
                         dosageTaken.add(dosageList.get(i));
@@ -100,15 +100,6 @@ public class Medication_Screen extends Activity {
                         dosageNotTaken.add(dosageList.get(i));
                     }
                 }
-                result.append("TAKEN: ");
-                for (Dosage d : dosageTaken) {
-                    result.append(d.getTreatment_name() + " ");
-                }
-                result.append("\n" + "NOT TAKEN: ");
-                for (Dosage d : dosageNotTaken) {
-                    result.append(d.getTreatment_name() + " ");
-                }
-                Toast.makeText(Medication_Screen.this, result, Toast.LENGTH_LONG).show();
 
                 postMedsTaken(dosageTaken);
                 launchQuizForNotTakenMeds(dosageNotTaken);
