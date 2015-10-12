@@ -28,6 +28,7 @@ public class MainMenu extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+
         String json = getIntent().getStringExtra("json");
 
         if(json == null){
@@ -42,6 +43,7 @@ public class MainMenu extends ActionBarActivity {
         LinearLayout morningMedsLayout = (LinearLayout)findViewById(R.id.morning_med_item);
         LinearLayout afternoonMedsLayout = (LinearLayout)findViewById(R.id.afternoon_med_item);
         LinearLayout eveningMedsLayout = (LinearLayout)findViewById(R.id.evening_med_item);
+        LinearLayout exerciseLinearLayout = (LinearLayout)findViewById(R.id.exercise_manu_item);
 
         morningMedsLayout.setOnClickListener(new View.OnClickListener(){
 
@@ -74,6 +76,15 @@ public class MainMenu extends ActionBarActivity {
             }
         });
 
+        exerciseLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainMenu.this,ExercisePage.class);
+                startActivity(i);
+            }
+        });
+
+
 
         Dosage[] dosages = null;
         int morningMeds = 0;
@@ -83,7 +94,7 @@ public class MainMenu extends ActionBarActivity {
         try {
             dosages = mapper.readValue(json, Dosage[].class);
             for(Dosage dosage: dosages){
-                if(dosage.getTreatment().getTreatment_type().equals(TreatmentType.Medication.name())){
+                if(dosage.getTreatment().getTreatment_type().equals(TreatmentType.Medication.name()) && dosage.isScheduledToday()){
                     Log.d("Time Taken",dosage.getTime_taken());
 
                     if(dosage.getTime_taken().equals("Morning")){
@@ -125,7 +136,6 @@ public class MainMenu extends ActionBarActivity {
                 Intent myIntent = new Intent(MainMenu.this, QuizPage.class);
                 try {
                     myIntent.putExtra("token", readFromFile("token.txt"));
-                    System.out.println("```````THE FUCKIN TOKEN!!!!!!!!!!!" + readFromFile("token.txt"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -145,13 +155,14 @@ public class MainMenu extends ActionBarActivity {
     public void setupMenuItem(Dosage[] dosages, TreatmentType treatmentType, int snippetsId){
         StringBuilder builder = new StringBuilder();
         int num = 0;
+        boolean addDotDotDot = true;
         for(int i=0;i<dosages.length;i++){
             Dosage dos = dosages[i];
 
             if(dos.getTreatment().getTreatment_type().equals(treatmentType.name())){
 
                 if(snippetsId == R.id.morning_med_snippet && treatmentType.equals(TreatmentType.Medication)){
-                    if(dos.getTime_taken().equals("Morning")){
+                    if(dos.getTime_taken().equals("Morning") && dos.isScheduledToday()){
                         num++;
                         builder.append(dos.getTreatment_name()+", ");
                         if(num == 3){
@@ -159,7 +170,7 @@ public class MainMenu extends ActionBarActivity {
                         }
                     }
                 }else if(snippetsId == R.id.afternoon_med_snippet && treatmentType.equals(TreatmentType.Medication)){
-                    if(dos.getTime_taken().equals("Afternoon")){
+                    if(dos.getTime_taken().equals("Afternoon") && dos.isScheduledToday()){
                         num++;
                         builder.append(dos.getTreatment_name()+", ");
                         if(num == 3){
@@ -167,7 +178,7 @@ public class MainMenu extends ActionBarActivity {
                         }
                     }
                 } else if (snippetsId == R.id.evening_med_snippet && treatmentType.equals(TreatmentType.Medication)){
-                    if(dos.getTime_taken().equals("Evening")){
+                    if(dos.getTime_taken().equals("Evening") && dos.isScheduledToday()){
                         num++;
                         builder.append(dos.getTreatment_name()+", ");
                         if(num == 3){
@@ -175,11 +186,17 @@ public class MainMenu extends ActionBarActivity {
                         }
                     }
                 } else{
-                    num++;
-                    builder.append(dos.getTreatment_name() + ", ");
-                    if(num == 3){
-                        break;
+
+                    addDotDotDot = false;
+                    System.out.println("I IS "+i+" length is "+dosages.length);
+                    if(i == dosages.length-1){
+                        builder.append(dos.getTreatment_name()+" or ");
+                    }else{
+                        builder.append(dos.getTreatment_name()+", ");
                     }
+
+
+
                 }
 
             }
@@ -187,10 +204,17 @@ public class MainMenu extends ActionBarActivity {
 
             TextView text = (TextView) findViewById(snippetsId);
             // -2 to trim last comma
-            if(builder.length() > 2){
-                text.setText(builder.substring(0,builder.length()-2)+"...");
-            }else{
-                text.setText("");
+            if(builder.length() > 2) {
+                if (addDotDotDot) {
+                    text.setText(builder.substring(0, builder.length() - 2) + "...");
+                } else {
+                    String trimmed = builder.substring(0, builder.length() - 2);
+
+                    int lastComma = trimmed.lastIndexOf(",");
+                    String part1 = trimmed.substring(0,lastComma);
+                    String part2 = trimmed.substring(lastComma+1,trimmed.length());
+                    text.setText(part1+" or"+part2);
+                }
             }
 
     }

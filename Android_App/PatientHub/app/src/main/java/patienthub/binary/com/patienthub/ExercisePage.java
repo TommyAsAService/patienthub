@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,19 +12,25 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.apache.http.HttpResponse;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import patienthub.binary.com.patienthub.data.Dosage;
 import patienthub.binary.com.patienthub.webservice.HttpManager;
 
 public class ExercisePage extends Activity {
@@ -36,6 +43,9 @@ public class ExercisePage extends Activity {
     private boolean durationSelected = false;
     private int dosageID = -1;
     private String token = "";
+    List<Dosage> dosageList = new ArrayList<>();
+    public static final String[] timesArray = {"Choose Duration...","5 minutes", "10 minutes",
+            "30 minutes","60 minutes", "120 minutes"};
 
 
     @Override
@@ -43,12 +53,31 @@ public class ExercisePage extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_page);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            exercises = extras.getStringArray("exercises");
-            times = extras.getStringArray("times");
-            dosageID = extras.getInt("dosageID");
-            token = extras.getString("token");
+
+        List<String> timesList = Arrays.asList(timesArray);
+
+        String json = "";
+        try {
+            json = readFromFile(QR_Code.DOSAGES_FILENAME);
+            token = readFromFile("token.txt");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        List<String> exerciseList = new ArrayList<>();
+        exerciseList.add("Choose Exercise...");
+        try {
+            Dosage[] dosages = new ObjectMapper().readValue(json, Dosage[].class);
+            for(Dosage dose : dosages){
+                if(dose.getTreatment().getTreatment_type().equals("Exercise")) {
+                    dosageList.add(dose);
+                    exerciseList.add(dose.getTreatment_name());
+                    //timesList.add(String.valueOf(dose.getQuantity()) + " "+dose.getUnit());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         final TextView question1 =(TextView) findViewById(R.id.exerciseQ1);
@@ -59,7 +88,6 @@ public class ExercisePage extends Activity {
 
         final Spinner q1Spinner =(Spinner) findViewById(R.id.exerciseSpinner1);
 
-        List<String> exerciseList = Arrays.asList(exercises);
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, exerciseList);
         dataAdapter.setDropDownViewResource(R.layout.spinner_layout);
@@ -67,31 +95,35 @@ public class ExercisePage extends Activity {
 
         final Spinner q2Spinner =(Spinner) findViewById(R.id.exerciseSpinner2);
 
-        List<String> timesList = Arrays.asList(times);
 
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, timesList);
         dataAdapter2.setDropDownViewResource(R.layout.spinner_layout);
         q2Spinner.setAdapter(dataAdapter2);
 
 
+        dosageID = dosageList.get(q1Spinner.getSelectedItemPosition()).getId();
+        System.out.println("THE ID IS: "+dosageID);
+
         final Button nextButton = (Button) findViewById(R.id.exerciseButton);
 
-        nextButton.setText("Finish");
         nextButton.setEnabled(false);
 
-        nextButton.setEnabled(false);
+        nextButton.setText("Finish");
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 String q1Answer = q1Spinner.getSelectedItem().toString();//POST THIS
                 String q2Answer = q2Spinner.getSelectedItem().toString();//POST THIS
 
-                dosageID = dosageID; //POST THIS
+                dosageID = dosageList.get(q1Spinner.getSelectedItemPosition()).getId();
+                System.out.println("THE ID IS: "+dosageID);
 
-                HttpManager pOSTer = new HttpManager();
+                HttpManager POSTer = new HttpManager();
 
                 try {
-                    System.out.println(pOSTer.postMedicationData(q1Answer + q2Answer, token, dosageID,true));
+                    System.out.println(POSTer.postMedicationData(q1Answer + q2Answer, token, dosageID,true));
+                    finish();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -108,11 +140,20 @@ public class ExercisePage extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
-                if (arg2 == 0) exerciseSelected = false;
-                else exerciseSelected = true;
+                dosageID = dosageList.get(q1Spinner.getSelectedItemPosition()).getId();
+                System.out.println("THE ID IS: " + dosageID);
 
-                if (exerciseSelected && durationSelected) nextButton.setEnabled(true);
-                else nextButton.setEnabled(false);
+                if (arg2 == 0) {
+                    exerciseSelected = false;
+                } else {
+                    exerciseSelected = true;
+                }
+
+                if(exerciseSelected && durationSelected){
+                    nextButton.setEnabled(true);
+                }else{
+                    nextButton.setEnabled(false);
+                }
             }
 
             @Override
@@ -124,11 +165,17 @@ public class ExercisePage extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
-                if (arg2 == 0) durationSelected = false;
-                else durationSelected = true;
+                if (arg2 == 0) {
+                    durationSelected = false;
+                }else {
+                    durationSelected = true;
+                }
 
-                if (exerciseSelected && durationSelected) nextButton.setEnabled(true);
-                else nextButton.setEnabled(false);
+                if(exerciseSelected && durationSelected){
+                    nextButton.setEnabled(true);
+                }else{
+                    nextButton.setEnabled(false);
+                }
             }
 
             @Override
@@ -136,6 +183,36 @@ public class ExercisePage extends Activity {
             }
         });
 
+    }
+
+    private String readFromFile(String filename) throws IOException{
+
+        String ret = "";
+
+        try {
+            InputStream inputStream = openFileInput(filename);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
     }
 
 }
