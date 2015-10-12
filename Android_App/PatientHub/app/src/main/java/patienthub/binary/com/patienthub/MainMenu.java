@@ -34,11 +34,17 @@ import patienthub.binary.com.patienthub.data.TreatmentType;
 
 public class MainMenu extends Activity {
 
-
+    int numberOfTasks= 0;
     private String filePath;
     public static final String completedFileName = "completed.txt";
     private List<String> completedList = new ArrayList<>();
+    LinearLayout morningMedsLayout;
+    LinearLayout afternoonMedsLayout;
+    LinearLayout eveningMedsLayout;
+    LinearLayout exerciseLinearLayout;
+    LinearLayout quizItem;
 
+    LinearLayout greenTickLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +62,14 @@ public class MainMenu extends Activity {
         }
         ObjectMapper mapper = new ObjectMapper();
 
-        LinearLayout morningMedsLayout = (LinearLayout)findViewById(R.id.morning_med_item);
-        LinearLayout afternoonMedsLayout = (LinearLayout)findViewById(R.id.afternoon_med_item);
-        LinearLayout eveningMedsLayout = (LinearLayout)findViewById(R.id.evening_med_item);
-        LinearLayout exerciseLinearLayout = (LinearLayout)findViewById(R.id.exercise_manu_item);
-        LinearLayout quizItem = (LinearLayout) findViewById(R.id.quizItem);
+        morningMedsLayout = (LinearLayout)findViewById(R.id.morning_med_item);
+        afternoonMedsLayout = (LinearLayout)findViewById(R.id.afternoon_med_item);
+        eveningMedsLayout = (LinearLayout)findViewById(R.id.evening_med_item);
+        exerciseLinearLayout = (LinearLayout)findViewById(R.id.exercise_manu_item);
+        quizItem = (LinearLayout) findViewById(R.id.quizItem);
+        greenTickLayout = (LinearLayout) findViewById(R.id.completedLayout);
+
+//        greenTickLayout.setVisibility(View.GONE);
 
 
         File file = new File(filePath);
@@ -119,6 +128,7 @@ public class MainMenu extends Activity {
         }
 
 
+
         morningMedsLayout.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -168,6 +178,7 @@ public class MainMenu extends Activity {
         int morningMeds = 0;
         int afternoonMeds =0;
         int eveningMeds = 0;
+        int exercises = 0;
 
         try {
             dosages = mapper.readValue(json, Dosage[].class);
@@ -183,22 +194,30 @@ public class MainMenu extends Activity {
                         eveningMeds++;
                     }
 
+                }else if(dosage.getTreatment().getTreatment_type().equals(TreatmentType.Exercise.name()) && dosage.isScheduledToday()){
+                    exercises++;
                 }
             }
 
             if(morningMeds == 0){
-                findViewById(R.id.morning_med_item).setVisibility(View.GONE);
+                morningMedsLayout.setVisibility(View.GONE);
             }
             if(afternoonMeds == 0){
-                findViewById(R.id.afternoon_med_item).setVisibility(View.GONE);
+                afternoonMedsLayout.setVisibility(View.GONE);
             }
             if(eveningMeds == 0){
-                findViewById(R.id.evening_med_item).setVisibility(View.GONE);
+                eveningMedsLayout.setVisibility(View.GONE);
+            }
+            if(exercises == 0){
+                exerciseLinearLayout.setVisibility(View.GONE);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+
 
         if(dosages!=null){
             setupMenuItem(dosages,TreatmentType.Exercise, R.id.exercise_snippet);
@@ -225,8 +244,27 @@ public class MainMenu extends Activity {
         });
 
 
+        if(areAllGone()){
+            System.out.println("GONE!");
+            greenTickLayout = (LinearLayout) findViewById(R.id.completedLayout);
+            greenTickLayout.setVisibility(View.VISIBLE);
+
+            System.out.println("I AM ACTUALLY "+greenTickLayout.getVisibility());
+        }else{
+            System.out.println("NOT GONE!");
+            greenTickLayout.setVisibility(View.GONE);
+        }
 
 
+    }
+
+    private boolean areAllGone() {
+
+        return ((exerciseLinearLayout.getVisibility() == View.GONE)&&
+                (morningMedsLayout.getVisibility() == View.GONE)&&
+                (afternoonMedsLayout.getVisibility() == View.GONE)&&
+                (eveningMedsLayout.getVisibility() == View.GONE)&&
+                (quizItem.getVisibility() == View.GONE));
     }
 
 
