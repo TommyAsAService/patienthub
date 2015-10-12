@@ -196,7 +196,7 @@ public class MainMenu extends Activity {
                         eveningMeds++;
                     }
 
-                }else if(dosage.getTreatment().getTreatment_type().equals(TreatmentType.Exercise.name()) && dosage.isScheduledToday()){
+                }else if(dosage.getTreatment().getTreatment_type().equals(TreatmentType.Exercise.name())){
                     exercises++;
                 }
             }
@@ -320,10 +320,11 @@ public class MainMenu extends Activity {
 
                     addDotDotDot = false;
                     System.out.println("I IS "+i+" length is "+dosages.length);
+                    System.out.println("Exercises - "+exercises);
                     if(exercises == 1){
                         builder.append(dos.getTreatment_name());
                     }else if(i == dosages.length-1){
-                        builder.append(dos.getTreatment_name()+" or ");
+                        builder.append(dos.getTreatment_name());
                     }else{
                         builder.append(dos.getTreatment_name()+", ");
                     }
@@ -343,7 +344,12 @@ public class MainMenu extends Activity {
 
                         text.setText(builder.substring(0, builder.length() - 2) + "...");
                     } else {
-                        String trimmed = builder.substring(0, builder.length() - 2);
+
+                        String trimmed = builder.toString();
+                        if(builder.toString().endsWith(", ")){
+                            trimmed = builder.substring(0, builder.length() - 2);
+                        }
+
 
                         if(trimmed.contains(",")){
                             int lastComma = trimmed.lastIndexOf(",");
