@@ -123,14 +123,24 @@ public class QuizPage extends Activity {
 
         final Button nextButton = (Button) findViewById(R.id.quizNextButton);
 
+        final Button backButton = (Button) findViewById(R.id.quizBackButton);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+
         if(questionInt == 0){
             if(dosageFeedbackIDs.length == 1){
-                nextButton.setText("Finish");
+                nextButton.setText("Submit");
             }else {
                 nextButton.setText("Next");
             }
         }else if (questionInt == numQuestions){
-            nextButton.setText("Finish");
+            nextButton.setText("Submit");
         }else{
             nextButton.setText("Next");
         }
