@@ -33,6 +33,7 @@ public class QuizPage extends Activity {
     private String[] dosageFeedbackIDs = null;
     private String[] dosageNames = null;
     private String token = "";
+    private String timeOfDay = null;
 
     //FOR EASY CONFIG
     Class buttonDestination = QuizPage.class;
@@ -90,6 +91,7 @@ public class QuizPage extends Activity {
             dosageNames = extras.getStringArray("dosageNames");
             numQuestions = extras.getInt("numQuestions");
             token = extras.getString("token");
+            timeOfDay = extras.getString("timeMedicationTaken");
         }
 
         selectQuestions(questionInt);
@@ -174,6 +176,9 @@ public class QuizPage extends Activity {
                             myIntent.putExtra("token",token);
                         } else {
                             myIntent = new Intent(QuizPage.this, homeClass);
+
+                            //PUT THE TMIE OF DAY HERE
+                            if(timeOfDay != null) myIntent.putExtra("timeMedicationTaken",timeOfDay);
                         }
                     }
                 } else if (questionInt <= numQuestions) {
@@ -184,6 +189,7 @@ public class QuizPage extends Activity {
 
                 } else                {
                     myIntent = new Intent(QuizPage.this, homeClass);
+                    myIntent.putExtra("quizTaken",true);
                 }
 
                 QuizPage.this.startActivity(myIntent);
