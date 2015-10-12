@@ -179,14 +179,16 @@ public class Medication_Screen extends Activity {
         dosageIds = (String[]) dosageIdsList.toArray();
         dosageNames = (String[]) dosageNamesList.toArray();
 
-        Intent myIntent = new Intent(Medication_Screen.this, QuizPage.class);
-        myIntent.putExtra("questionNum", 0);
-        myIntent.putExtra("dosageFeedbackIDs", dosageIds);
-        myIntent.putExtra("dosageNames", dosageNames);
-        myIntent.putExtra("numQuestions",dosageIds.length);
-        myIntent.putExtra("token",token);
+        if(!dosagesList.isEmpty()) {
+            Intent myIntent = new Intent(Medication_Screen.this, QuizPage.class);
+            myIntent.putExtra("questionNum", 0);
+            myIntent.putExtra("dosageFeedbackIDs", dosageIds);
+            myIntent.putExtra("dosageNames", dosageNames);
+            myIntent.putExtra("numQuestions", dosageIds.length);
+            myIntent.putExtra("token", token);
 
-        startActivity(myIntent);
+            startActivity(myIntent);
+        }
     }
 
 
