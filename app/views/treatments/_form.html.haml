@@ -1,0 +1,15 @@
+= simple_form_for @treatment, html:{class: 'form_horizontal'} do |f|
+  - if @treatment.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@treatment.errors.count, "error")
+        prohibited this Treatment from being saved:
+      %ul
+        - @treatment.errors.full_messages.each do |message|
+          %li= message
+  .form-group
+    = f.input :name, input_html: { class: "form-control" }
+  .form-group
+    = f.input :treatment_type, input_html: { class: "form-control" }, collection: [ "Exercise", "Medication"]
+  .submit-button
+    = f.submit 'Create Treatment', class: "btn btn-primary"

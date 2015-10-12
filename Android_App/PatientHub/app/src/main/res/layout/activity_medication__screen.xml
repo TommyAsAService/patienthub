@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_small_margin"
+    android:paddingRight="@dimen/activity_horizontal_small_margin"
+    android:paddingTop="@dimen/activity_vertical_small_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="patienthub.binary.com.patienthub.Medication_Screen">
+
+    <!-- Header aligned to top -->
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#FC9"
+        android:gravity="center" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/medication_screen_header"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/medication_button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+    <Button
+        android:id="@+id/back_medication_taken_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/back_button"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/submit_medication_taken_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/submit_button"
+        android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/medicationListView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/header"
+        android:divider="@null"
+        android:layout_above="@id/medication_button_layout">
+    </ListView>
+
+
+</RelativeLayout>

@@ -1,11 +1,11 @@
 class PatientsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_patient, only:[:show, :edit, :update, :generate_qr]
+  before_action :set_patient, only:[:show, :edit, :update, :generate_qr, :mail_to_doctor]
 
-  autocomplete :medication, :name
+  autocomplete :treatment, :name
 
   def index
-    @patients = Patient.all
+    @patients = current_user.patients
   end
 
   def show
@@ -50,6 +50,14 @@ class PatientsController < ApplicationController
     send_file path,:type=>"application/png", :x_sendfile=>true
   end
 
+  def mail_to_doctor
+    doctor_mailer = DoctorMailer.summary_email(current_user, @patient)
+    doctor_mailer.deliver_now
+
+    head :no_content
+    # render :text=> "Successfully sent email. Please check your mail box.", :status => 200, :content_type => 'text/html'
+  end
+
   private
 
   def set_patient
@@ -59,6 +67,6 @@ class PatientsController < ApplicationController
   def patient_params
     params.require(:patient).permit(
       :name, :address, :contact_number, :age, :patient_number,
-      patient_medications_attributes: [:id, :_destroy, :label, :start_time, :notes, :time_take_per_day, :amount_given, :medication_id, :medication_name] )
+      dosages_attributes: [:id, :_destroy, :time_taken, :frequency, :start_date, :treatment_name, :patient_id, :quantity, :unit] )
   end
 end

@@ -1,0 +1,22 @@
+%h1 Listing Treatment
+%table#datatable{:border => "1", :style => "width:100%"}
+  %thead
+    %tr
+      %th Name
+      %th Type
+      %th
+      %th
+  %tbody
+    - @treatments = Treatment.all
+    - @treatments.each do |treatment|
+      %tr
+        %td= treatment.name
+        %td= treatment.treatment_type
+        %td= link_to 'Show', treatment, class: "btn btn-xs btn-primary"
+        %td= link_to 'Edit', edit_treatment_path(treatment), class: "btn btn-xs btn-default"
+%br
+  = link_to 'New Treatment', new_treatment_path, class: "btn btn-primary"
+= link_to "Back to Root", root_path, class: 'btn btn-default'
+
+= javascript_include_tag 'jquery.dataTables.min', 'data-turbolinks-track' => true
+= javascript_include_tag 'datatables.config', 'data-turbolinks-track' => true
