@@ -36,7 +36,7 @@ public class QuizPage extends Activity {
 
     //FOR EASY CONFIG
     Class buttonDestination = QuizPage.class;
-    Class homeClass = MainActivity.class;
+    Class homeClass = MainMenu.class;
     int numQuestions = 3;
 
     //PASS IN THESE FIELDS IN ORDER TO DYNAMICALLY CONFIGURE THE QUIZ PAGE
@@ -45,14 +45,14 @@ public class QuizPage extends Activity {
     String medName = "medication";
 
     //QUESTIONS AND ANSWERS
-    String quiz1q = "Did you sleep through the night last night?\n";
-    String quiz1a[] = { "Yes", "Woke once", "Woke a few times", "Slept very badly", "Other" };
+    String quiz1q = "How did you sleep last night?\n";
+    String quiz1a[] = { "I slept well", "I woke a few times", "I slept very badly", "Other" };
 
     String quiz2q = "Are you feeling in control of your recovery?\n";
-    String quiz2a[] = { "Yes", "I don't always know what I should be doing", "I need more guidance", "Other" };
+    String quiz2a[] = { "Yes", "I need some more guidance", "I am feeling very confused", "Other" };
 
-    String quiz3q = "How would you describe your overall motivation?\n";
-    String quiz3a[] = { "Great", "A bit lacking", "It's a struggle to motivate myself", "Other" };
+    String quiz3q = "Are you feeling motivated about your recovery?\n";
+    String quiz3a[] = { "Very motivated", "A bit lacking", "I am struggling to motivate myself", "Other" };
 
     String quizMedsQ = "Why didn't you take your " + medName + " today?\n";
     String quizMedsA[] = { "It makes me feel sick", "I'm feeling better", "I've run out", "It's too expensive", "Other" };
@@ -123,14 +123,24 @@ public class QuizPage extends Activity {
 
         final Button nextButton = (Button) findViewById(R.id.quizNextButton);
 
+        final Button backButton = (Button) findViewById(R.id.quizBackButton);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+
         if(questionInt == 0){
             if(dosageFeedbackIDs.length == 1){
-                nextButton.setText("Finish");
+                nextButton.setText("Submit");
             }else {
                 nextButton.setText("Next");
             }
         }else if (questionInt == numQuestions){
-            nextButton.setText("Finish");
+            nextButton.setText("Submit");
         }else{
             nextButton.setText("Next");
         }
@@ -174,9 +184,7 @@ public class QuizPage extends Activity {
                     myIntent = new Intent(QuizPage.this, homeClass);
                 }
 
-                QuizPage.this.
-
-                        startActivity(myIntent);
+                QuizPage.this.startActivity(myIntent);
 
                 finish();
             }
