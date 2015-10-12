@@ -1,6 +1,6 @@
 class PatientsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_patient, only:[:show, :edit, :update, :generate_qr]
+  before_action :set_patient, only:[:show, :edit, :update, :generate_qr, :mail_to_doctor]
 
   autocomplete :treatment, :name
 
@@ -48,6 +48,14 @@ class PatientsController < ApplicationController
     path = Rails.root + "tmp/" + name
     image.save(path)
     send_file path,:type=>"application/png", :x_sendfile=>true
+  end
+
+  def mail_to_doctor
+    doctor_mailer = DoctorMailer.summary_email(current_user, @patient)
+    doctor_mailer.deliver_now
+
+    head :no_content
+    # render :text=> "Successfully sent email. Please check your mail box.", :status => 200, :content_type => 'text/html'
   end
 
   private

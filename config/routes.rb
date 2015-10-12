@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :dosages  
   
   get 'patients/:id/qr_code' => "patients#generate_qr", :as => 'patient_qr_download'
+  get 'patients/:id/email_doctor', to: "patients#mail_to_doctor", :as => 'email_to_doctor'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

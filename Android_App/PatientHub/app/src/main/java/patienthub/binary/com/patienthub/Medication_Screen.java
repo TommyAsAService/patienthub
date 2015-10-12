@@ -58,7 +58,7 @@ public class Medication_Screen extends Activity {
         final ArrayList<Dosage> dosageNotTaken = new ArrayList<>();
         final ArrayList<Dosage> dosageTaken = new ArrayList<>();
 
-        String timeOfDay = getIntent().getStringExtra("timeOfDay");
+        final String timeOfDay = getIntent().getStringExtra("timeOfDay");
 
         String json = "";
         try {
@@ -104,7 +104,7 @@ public class Medication_Screen extends Activity {
                 }
 
                 postMedsTaken(dosageTaken);
-                launchQuizForNotTakenMeds(dosageNotTaken);
+                launchQuizForNotTakenMeds(dosageNotTaken,timeOfDay);
             }
 
         });
@@ -219,7 +219,7 @@ public class Medication_Screen extends Activity {
         }
     }
 
-    private void launchQuizForNotTakenMeds(List<Dosage> dosagesList){
+    private void launchQuizForNotTakenMeds(List<Dosage> dosagesList, String timeOfDay){
         String token = "";
         HttpManager httpMan = new HttpManager();
         try {
@@ -247,10 +247,12 @@ public class Medication_Screen extends Activity {
             myIntent.putExtra("dosageNames", dosageNames);
             myIntent.putExtra("numQuestions", dosageIds.length);
             myIntent.putExtra("token", token);
+            myIntent.putExtra("timeMedicationTaken", timeOfDay);
             startActivity(myIntent);
             finish();
         } else {
             Intent myIntent = new Intent(Medication_Screen.this, MainMenu.class);
+            myIntent.putExtra("timeMedicationTaken", timeOfDay);
             startActivity(myIntent);
             finish();
         }

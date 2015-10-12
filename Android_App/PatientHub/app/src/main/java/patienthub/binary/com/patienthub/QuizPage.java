@@ -3,6 +3,7 @@ package patienthub.binary.com.patienthub;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.BoringLayout;
@@ -15,6 +16,8 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -33,6 +36,7 @@ public class QuizPage extends Activity {
     private String[] dosageFeedbackIDs = null;
     private String[] dosageNames = null;
     private String token = "";
+    private String timeOfDay = null;
 
     //FOR EASY CONFIG
     Class buttonDestination = QuizPage.class;
@@ -90,21 +94,28 @@ public class QuizPage extends Activity {
             dosageNames = extras.getStringArray("dosageNames");
             numQuestions = extras.getInt("numQuestions");
             token = extras.getString("token");
+            timeOfDay = extras.getString("timeMedicationTaken");
         }
 
         selectQuestions(questionInt);
 
         final LinearLayout rLayout = (LinearLayout) findViewById(R.id.quizView2);
         final ProgressBar bar = (ProgressBar) findViewById(R.id.quizProgressBar);
+        final TextView header = (TextView) findViewById(R.id.quizHeader);
+
         bar.setMax(numQuestions);
+
 
         if(questionInt == 0){
             int currentQuestion = numQuestions + 1 - dosageFeedbackIDs.length;
             bar.setProgress(currentQuestion);
+            header.setText("Medication Feedback");
         }else{
             bar.setProgress(questionInt);
+            header.setText("Today's Feedback");
         }
-
+        Drawable draw=getResources().getDrawable(R.drawable.custom_progressbar);
+        bar.setProgressDrawable(draw);
 
         final TextView question =(TextView) findViewById(R.id.questionMessage);
         question.setText(questionText);
@@ -127,6 +138,8 @@ public class QuizPage extends Activity {
 
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Intent myIntent = new Intent(QuizPage.this, homeClass);
+                QuizPage.this.startActivity(myIntent);
                 finish();
             }
         });
@@ -172,6 +185,9 @@ public class QuizPage extends Activity {
                             myIntent.putExtra("token",token);
                         } else {
                             myIntent = new Intent(QuizPage.this, homeClass);
+
+                            //PUT THE TMIE OF DAY HERE
+                            if(timeOfDay != null) myIntent.putExtra("timeMedicationTaken",timeOfDay);
                         }
                     }
                 } else if (questionInt <= numQuestions) {
@@ -182,6 +198,7 @@ public class QuizPage extends Activity {
 
                 } else                {
                     myIntent = new Intent(QuizPage.this, homeClass);
+                    myIntent.putExtra("quizTaken",true);
                 }
 
                 QuizPage.this.startActivity(myIntent);

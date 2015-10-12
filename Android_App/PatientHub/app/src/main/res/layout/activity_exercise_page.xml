@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="patienthub.binary.com.patienthub.ExercisePage">
+    android:layout_height="match_parent"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    tools:context="patienthub.binary.com.patienthub.QuizPage"
+    android:id="@+id/exerciseView">
 
     <LinearLayout
         android:orientation="vertical"
@@ -16,6 +18,25 @@
         android:padding="0dp"
         android:id="@+id/exerciseView2"
         android:weightSum="1">
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="#FC9"
+            android:gravity="center" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:id="@+id/quizHeader"
+                android:text="Today's Exercise"
+                android:textColor="#000"
+                android:textSize="20sp" />
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,11 +90,8 @@
             android:text="@string/submit_button"
             android:layout_weight="1"/>
 
+
     </LinearLayout>
+
 </RelativeLayout>
-
-
-
-
-
 
