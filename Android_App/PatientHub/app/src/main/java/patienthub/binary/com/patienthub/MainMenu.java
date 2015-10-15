@@ -3,10 +3,12 @@ package patienthub.binary.com.patienthub;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -49,7 +51,6 @@ public class MainMenu extends Activity {
     int eveningMeds = 0;
     int exercises = 0;
 
-    LinearLayout greenTickLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,6 @@ public class MainMenu extends Activity {
         eveningMedsLayout = (LinearLayout)findViewById(R.id.evening_med_item);
         exerciseLinearLayout = (LinearLayout)findViewById(R.id.exercise_manu_item);
         quizItem = (LinearLayout) findViewById(R.id.quizItem);
-        greenTickLayout = (LinearLayout) findViewById(R.id.completedLayout);
 
 //        greenTickLayout.setVisibility(View.GONE);
 
@@ -116,15 +116,46 @@ public class MainMenu extends Activity {
 
                 for(String task: completedList){
                     if(task.equals("Morning")){
-                        morningMedsLayout.setVisibility(View.GONE);
+                        ImageView img = (ImageView)findViewById(R.id.morning_arrow);
+                        img.setImageResource(R.drawable.green_tick);
+
+                        TextView title = (TextView)findViewById(R.id.morning_title);
+                        title.setTextColor(Color.GRAY);
+
+                        morningMedsLayout.setEnabled(false);
+                        //morningMedsLayout.setVisibility(View.GONE);
                     }else if(task.equals("Afternoon")){
-                        afternoonMedsLayout.setVisibility(View.GONE);
+//                        afternoonMedsLayout.setVisibility(View.GONE);
+                        ImageView img = (ImageView)findViewById(R.id.afternoon_arrow);
+                        img.setImageResource(R.drawable.green_tick);
+
+                        TextView title = (TextView)findViewById(R.id.afternoon_title);
+                        title.setTextColor(Color.GRAY);
+                        afternoonMedsLayout.setEnabled(false);
                     }else if(task.equals("Evening")){
-                        eveningMedsLayout.setVisibility(View.GONE);
+//                        eveningMedsLayout.setVisibility(View.GONE);
+                        ImageView img = (ImageView)findViewById(R.id.evening_arrow);
+                        img.setImageResource(R.drawable.green_tick);
+
+                        TextView title = (TextView)findViewById(R.id.evening_title);
+                        title.setTextColor(Color.GRAY);
+                        eveningMedsLayout.setEnabled(false);
                     }else if(task.equals("quiz")){
-                        quizItem.setVisibility(View.GONE);
+//                        quizItem.setVisibility(View.GONE);
+                        ImageView img = (ImageView)findViewById(R.id.quiz_arrow);
+                        img.setImageResource(R.drawable.green_tick);
+
+                        TextView title = (TextView)findViewById(R.id.quiz_title);
+                        title.setTextColor(Color.GRAY);
+                        quizItem.setEnabled(false);
                     }else if(task.equals("exercise")){
-                        exerciseLinearLayout.setVisibility(View.GONE);
+//                        exerciseLinearLayout.setVisibility(View.GONE);
+                        ImageView img = (ImageView)findViewById(R.id.exercise_arrow);
+                        img.setImageResource(R.drawable.green_tick);
+
+                        TextView title = (TextView)findViewById(R.id.exercise_title);
+                        title.setTextColor(Color.GRAY);
+                        exerciseLinearLayout.setEnabled(false);
                     }
                 }
             } catch (IOException e) {
@@ -248,13 +279,9 @@ public class MainMenu extends Activity {
 
         if(areAllGone()){
             System.out.println("GONE!");
-            greenTickLayout = (LinearLayout) findViewById(R.id.completedLayout);
-            greenTickLayout.setVisibility(View.VISIBLE);
 
-            System.out.println("I AM ACTUALLY "+greenTickLayout.getVisibility());
         }else{
             System.out.println("NOT GONE!");
-            greenTickLayout.setVisibility(View.GONE);
         }
 
 
