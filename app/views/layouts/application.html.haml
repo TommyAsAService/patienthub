@@ -1,18 +1,20 @@
 !!!
 %html
   %head
-    %title PatientInformation
+    %title Patient Hub
     = stylesheet_link_tag    'application', media: 'all'
     = stylesheet_link_tag    'welcome', media: 'all'
     = stylesheet_link_tag    'jquery.dataTables.min', media: 'all'
     = javascript_include_tag 'application'
+    = favicon_link_tag 'favicon.ico'
     = csrf_meta_tags
   %body
     .navbar.navbar-default.inverse.navbar-top
       .navbar-inner
         .container
           .navbar-header
-            %a.navbar-brand{:href => "/"} PatientHub
+            %a.navbar-brand.no-padding{:href => "/"}
+              = image_tag("bannerLogoWhite.png", :height => 45, :width => 131)
           %ul.nav.navbar-nav.pull-right
             %li.pull-right
               - if user_signed_in?

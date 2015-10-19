@@ -1,6 +1,7 @@
 %div.row.signin-container
   .col-md-6.balloon-col
-    = image_tag("doctor-patient.svg", :height => 450, :width => 360)
+    %a{:href => "https://docs.google.com/presentation/d/1PEnR1EveAnljWA18a1Je8XIaHfpYMFZBkcLMdh-kNpI/edit#slide=id.g35f391192_00"}
+      = image_tag("loginScreenLogo.png", :height => 410, :width => 600)
   .col-md-6.signin-col
     = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'form-signin'}) do |f|
       %h2.form-signin-heading Log in
@@ -13,4 +14,5 @@
       %button.btn.btn-lg.btn-primary.btn-block{:type => "submit"} Log in
       = render "devise/shared/links"
 %div.row.signin-container
-  %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ultrices hendrerit sapien in pretium. Etiam sed tellus tristique, dictum urna ut, placerat neque. Quisque in ullamcorper arcu. Quisque interdum libero eget fringilla elementum. Morbi id varius odio. Praesent a purus nec ligula imperdiet iaculis. In quis sodales diam. Suspendisse imperdiet felis et placerat bibendum. Duis aliquet diam a lacinia ornare. Vivamus accumsan vitae ipsum ut viverra. In blandit nisi nec lorem faucibus, sit amet mattis erat venenatis.
+  %p Patient Hub is a mobile application which allows healthcare professionals to keep track of their Patients’ recovery process. Patients use our friendly app to provide feedback which is delivered back to interested parties via a weekly email summary.
+  %p The purpose of this website is for the configuration of PatientHub.
